@@ -1,0 +1,4076 @@
+/*
+Theme Name: Simply Starter
+Theme URI: https://simplydesign.com/simply-starter
+Description: Simply Design's battle-tested Genesis child theme starter. Working mobile menu, 4-column footer, CSS custom property system, wireframe mode, and zero bloat. Pair with Simply Client Config plugin to brand per client.
+Author: Simply Design
+Author URI: https://simplydesign.com
+
+Version: 2.8.0
+
+Tags: genesis, child-theme, starter, one-column, custom-colors, custom-logo, custom-menu, footer-widgets, full-width-template
+
+Template: genesis
+
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Text Domain: simply-starter
+Requires at least: 5.4
+Requires PHP: 5.6
+*/
+
+/* Table of Contents
+- HTML5 Reset
+	- Baseline Normalize
+	- Box Sizing
+	- Float Clearing
+- Defaults
+	- Typographical Elements
+	- Headings
+	- Objects
+	- Gallery
+	- Forms
+	- Tables
+	- Screen Reader Text
+- Structure and Layout
+	- Site Container
+	- Site Inner
+- Common Classes
+	- Avatar
+	- Genesis
+	- Search Form
+	- Titles
+	- WordPress
+- Widgets
+	- Featured Content
+- Plugins
+	- Genesis eNews Extended
+	- Genesis Simple FAQ
+	- WPForms
+- Skip Links
+- Site Header
+	- Title Area
+- Site Navigation
+	- Responsive Menu
+	- Header Menu
+	- Footer Menu
+- Content Area
+	- Entry Content
+	- Entry Meta
+	- Pagination
+	- Entry Comments
+- Sidebar
+- Footer Widgets
+- Site Footer
+- Media Queries
+	- Min-width: 960px
+		- Site Header
+		- Genesis Menu
+		- Responsive Menu
+		- Header Menu
+		- Site Inner
+		- Content
+		- Sidebar
+		- Author Box
+		- After Entry
+		- Column Classes
+		- Entry Misc.
+		- Footer Widgets
+- Print Styles
+*/
+
+
+/* HTML5 Reset
+---------------------------------------------------------------------------- */
+
+/* normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css
+---------------------------------------------------------------------------- */
+/* stylelint-disable */
+html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}[hidden],template{display:none}
+/* stylelint-enable */
+
+/* Box Sizing
+--------------------------------------------- */
+
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+/* Float Clearing
+--------------------------------------------- */
+
+.author-box::before,
+.clearfix::before,
+.entry::before,
+.entry-content::before,
+.footer-widgets::before,
+.nav-primary::before,
+.nav-secondary::before,
+.pagination::before,
+.site-container::before,
+.site-footer::before,
+.site-header::before,
+.site-inner::before,
+.widget::before,
+.wrap::before {
+	content: " ";
+	display: table;
+}
+
+.author-box::after,
+.clearfix::after,
+.entry::after,
+.entry-content::after,
+.footer-widgets::after,
+.nav-primary::after,
+.nav-secondary::after,
+.pagination::after,
+.site-container::after,
+.site-footer::after,
+.site-header::after,
+.site-inner::after,
+.widget::after,
+.wrap::after {
+	clear: both;
+	content: " ";
+	display: table;
+}
+
+
+/* Defaults
+---------------------------------------------------------------------------- */
+
+/* Typographical Elements
+--------------------------------------------- */
+
+html {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	background-color: #fff;
+	color: #333;
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1.625;
+	margin: 0;
+	overflow-x: hidden;
+}
+
+button,
+input:focus,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+textarea:focus,
+.button,
+.gallery img {
+	transition: all 0.2s ease-in-out;
+}
+
+a {
+	color: #0073e5;
+	text-decoration: underline;
+	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+a:focus,
+a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+p {
+	margin: 0 0 28px;
+	padding: 0;
+}
+
+ol,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+hr {
+	border: 0;
+	border-collapse: collapse;
+	border-bottom: 1px solid currentColor;
+	clear: both;
+	color: #eee;
+	margin: 1.65em auto;
+}
+
+b,
+strong {
+	font-weight: 700;
+}
+
+blockquote,
+cite,
+em,
+i {
+	font-style: italic;
+}
+
+mark {
+	background: #ddd;
+	color: #333;
+}
+
+blockquote {
+	margin: 30px;
+}
+
+/* Headings
+--------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Source Sans Pro", sans-serif;
+	font-weight: 400;
+	line-height: 1.2;
+	margin: 0 0 20px;
+}
+
+h1 {
+	font-size: 30px;
+}
+
+h2 {
+	font-size: 27px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+h4 {
+	font-size: 20px;
+}
+
+.entry-content h3,
+.entry-content h4 {
+	font-weight: 600;
+}
+
+.entry-content h4 {
+	margin-top: 40px;
+}
+
+h5 {
+	font-size: 18px;
+}
+
+h6 {
+	font-size: 16px;
+}
+
+/* Objects
+--------------------------------------------- */
+
+embed,
+iframe,
+img,
+object,
+video,
+.wp-caption {
+	max-width: 100%;
+}
+
+img {
+	height: auto;
+	vertical-align: top;
+}
+
+figure {
+	margin: 0;
+}
+
+/* Gallery
+--------------------------------------------- */
+
+.gallery {
+	overflow: hidden;
+}
+
+.gallery img {
+	border: 1px solid #eee;
+	height: auto;
+	padding: 4px;
+}
+
+.gallery img:focus,
+.gallery img:hover {
+	border: 1px solid #999;
+	outline: none;
+}
+
+.gallery-columns-1 .gallery-item {
+	width: 100%;
+}
+
+.gallery-columns-2 .gallery-item {
+	width: 50%;
+}
+
+.gallery-columns-3 .gallery-item {
+	width: 33%;
+}
+
+.gallery-columns-4 .gallery-item {
+	width: 25%;
+}
+
+.gallery-columns-5 .gallery-item {
+	width: 20%;
+}
+
+.gallery-columns-6 .gallery-item {
+	width: 16.6666%;
+}
+
+.gallery-columns-7 .gallery-item {
+	width: 14.2857%;
+}
+
+.gallery-columns-8 .gallery-item {
+	width: 12.5%;
+}
+
+.gallery-columns-9 .gallery-item {
+	width: 11.1111%;
+}
+
+.gallery-columns-2 .gallery-item:nth-child(2n+1),
+.gallery-columns-3 .gallery-item:nth-child(3n+1),
+.gallery-columns-4 .gallery-item:nth-child(4n+1),
+.gallery-columns-5 .gallery-item:nth-child(5n+1),
+.gallery-columns-6 .gallery-item:nth-child(6n+1),
+.gallery-columns-7 .gallery-item:nth-child(7n+1),
+.gallery-columns-8 .gallery-item:nth-child(8n+1),
+.gallery-columns-9 .gallery-item:nth-child(9n+1) {
+	clear: left;
+}
+
+.gallery-item {
+	float: left;
+	margin: 0 0 30px;
+	text-align: center;
+}
+
+/* Forms
+--------------------------------------------- */
+
+input,
+select,
+textarea {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	color: #333;
+	font-size: 18px;
+	font-weight: 400;
+	padding: 15px;
+	width: 100%;
+}
+
+input:focus,
+textarea:focus {
+	border: 1px solid #999;
+	outline: none;
+}
+
+input[type="checkbox"],
+input[type="image"],
+input[type="radio"] {
+	width: auto;
+}
+
+:-ms-input-placeholder {
+	color: #333;
+	opacity: 1;
+}
+
+::placeholder {
+	color: #333;
+	opacity: 1;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.site-container div.wpforms-container-full .wpforms-form input[type="submit"],
+.site-container div.wpforms-container-full .wpforms-form button[type="submit"],
+.button {
+	background-color: #333;
+	border: 0;
+	border-radius: 5px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 15px 30px;
+	text-align: center;
+	text-decoration: none;
+	white-space: normal;
+	width: auto;
+}
+
+button:focus,
+button:hover,
+input[type="button"]:focus,
+input[type="button"]:hover,
+input[type="reset"]:focus,
+input[type="reset"]:hover,
+input[type="submit"]:focus,
+input[type="submit"]:hover,
+.site-container div.wpforms-container-full .wpforms-form input[type="submit"]:focus,
+.site-container div.wpforms-container-full .wpforms-form input[type="submit"]:hover,
+.site-container div.wpforms-container-full .wpforms-form button[type="submit"]:focus,
+.site-container div.wpforms-container-full .wpforms-form button[type="submit"]:hover,
+.button:focus,
+.button:hover {
+	background-color: #0073e5;
+	border-width: 0;
+	color: #fff;
+}
+
+.entry-content .button:focus,
+.entry-content .button:hover {
+	color: #fff;
+}
+
+.button {
+	display: inline-block;
+}
+
+.site-container button:disabled,
+.site-container button:disabled:hover,
+.site-container input:disabled,
+.site-container input:disabled:hover,
+.site-container input[type="button"]:disabled,
+.site-container input[type="button"]:disabled:hover,
+.site-container input[type="reset"]:disabled,
+.site-container input[type="reset"]:disabled:hover,
+.site-container input[type="submit"]:disabled,
+.site-container input[type="submit"]:disabled:hover {
+	background-color: #eee;
+	border-width: 0;
+	color: #777;
+	cursor: not-allowed;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button {
+	display: none;
+}
+
+/* Tables
+--------------------------------------------- */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 40px;
+	width: 100%;
+	word-break: break-all;
+}
+
+tbody {
+	border-bottom: 1px solid #eee;
+}
+
+td,
+th {
+	line-height: 2;
+	text-align: left;
+	vertical-align: top;
+}
+
+td {
+	padding: 0.5em;
+}
+
+tr {
+	border-top: 1px solid #eee;
+}
+
+th {
+	font-weight: 600;
+	padding: 0.5em;
+}
+
+/* Screen Reader Text
+--------------------------------------------- */
+
+.screen-reader-shortcut,
+.screen-reader-text,
+.screen-reader-text span {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus,
+.screen-reader-shortcut:focus,
+.widget_search input[type="submit"]:focus {
+	background: #fff;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	color: #333;
+	display: block;
+	font-size: 1em;
+	font-weight: 700;
+	height: auto;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	width: auto;
+	z-index: 100000; /* Above WP toolbar. */
+}
+
+.more-link {
+	display: inline-block;
+	position: relative;
+	margin-bottom: 30px;
+}
+
+
+/* Structure and Layout
+---------------------------------------------------------------------------- */
+
+/* Site Container
+--------------------------------------------- */
+
+.site-container {
+	animation: fadein 1s;
+	word-wrap: break-word;
+}
+
+@keyframes fadein {
+
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+
+}
+
+/* Site Inner
+--------------------------------------------- */
+
+.site-inner {
+	clear: both;
+	margin: 0 auto;
+	padding: 60px 30px 0;
+}
+
+
+/* Common Classes
+---------------------------------------------------------------------------- */
+
+/* Avatar
+--------------------------------------------- */
+
+.avatar {
+	border-radius: 50%;
+	float: left;
+}
+
+.author-box .avatar,
+.alignleft .avatar {
+	margin-right: 20px;
+}
+
+.alignright .avatar {
+	margin-left: 20px;
+}
+
+.comment .avatar {
+	margin: 0 15px 20px 0;
+}
+
+/* Genesis
+--------------------------------------------- */
+
+.after-entry,
+.archive-description,
+.author-box {
+	margin-bottom: 40px;
+}
+
+.after-entry {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+	padding: 20px 30px;
+}
+
+.after-entry .widget:last-of-type {
+	margin-bottom: 0;
+}
+
+.breadcrumb {
+	border-bottom: 1px solid #eee;
+	font-size: 16px;
+	margin-bottom: 40px;
+	padding-bottom: 10px;
+}
+
+.genesis-title-hidden .breadcrumb {
+	margin-top: 40px;
+}
+
+.archive-description p:last-child,
+.author-box p:last-child {
+	margin-bottom: 0;
+}
+
+/* Search Form
+--------------------------------------------- */
+
+.search-form {
+	overflow: hidden;
+}
+
+.entry-content .search-form {
+	margin-bottom: 40px;
+	width: 50%;
+}
+
+.post-password-form input[type="submit"],
+.search-form input[type="submit"] {
+	margin-top: 10px;
+}
+
+.widget_search input[type="submit"] {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+/* Titles
+--------------------------------------------- */
+
+.archive-description .entry-title,
+.archive-title,
+.author-box-title {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.entry-title {
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+
+.entry-title a,
+.sidebar .widget-title a {
+	color: #333;
+	text-decoration: none;
+}
+
+.entry-title a:focus,
+.entry-title a:hover {
+	color: #0073e5;
+}
+
+.widget-title {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.genesis-title-hidden .site-inner {
+	padding-top: 0;
+}
+
+/* WordPress
+--------------------------------------------- */
+
+a.aligncenter img {
+	display: block;
+	margin: 0 auto;
+}
+
+a.alignnone {
+	display: inline-block;
+}
+
+.alignleft {
+	float: left;
+	text-align: left;
+}
+
+.alignright {
+	float: right;
+	text-align: right;
+}
+
+a.alignleft,
+a.alignnone,
+a.alignright {
+	max-width: 100%;
+}
+
+img.centered,
+.aligncenter,
+.singular-image {
+	display: block;
+	margin: 0 auto 30px;
+}
+
+img.alignnone,
+.alignnone {
+	margin-bottom: 15px;
+}
+
+a.alignleft,
+img.alignleft,
+.wp-caption.alignleft {
+	margin: 0 20px 20px 0;
+}
+
+a.alignright,
+img.alignright,
+.wp-caption.alignright {
+	margin: 0 0 20px 20px;
+}
+
+figcaption,
+.gallery-caption,
+.wp-caption-text {
+	font-size: 14px;
+	font-weight: 600;
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+.entry-content p.wp-caption-text {
+	margin-bottom: 0;
+}
+
+.entry-content .wp-audio-shortcode,
+.entry-content .wp-playlist,
+.entry-content .wp-video {
+	margin: 0 0 30px;
+}
+
+/* Widgets
+---------------------------------------------------------------------------- */
+
+.widget {
+	margin-bottom: 40px;
+}
+
+.widget p:last-child,
+.widget ul > li:last-of-type {
+	margin-bottom: 0;
+}
+
+.widget ul > li {
+	margin-bottom: 10px;
+}
+
+.widget ul > li:last-of-type {
+	padding-bottom: 0;
+}
+
+.widget ol > li {
+	list-style-position: inside;
+	list-style-type: decimal;
+	padding-left: 20px;
+	text-indent: -20px;
+}
+
+.widget li li {
+	border: 0;
+	margin: 0 0 0 30px;
+	padding: 0;
+}
+
+.widget_calendar table {
+	width: 100%;
+}
+
+.widget_calendar td,
+.widget_calendar th {
+	text-align: center;
+}
+
+/* Featured Content
+--------------------------------------------- */
+
+.featured-content .entry {
+	border-bottom: 1px solid #eee;
+	margin-bottom: 20px;
+}
+
+.featured-content .entry:last-of-type {
+	border-bottom: none;
+	margin-bottom: 0;
+}
+
+.featured-content .entry-title {
+	font-size: 16px;
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+
+
+/* Plugins
+---------------------------------------------------------------------------- */
+
+/* Genesis eNews Extended
+--------------------------------------------- */
+
+.after-entry .enews {
+	text-align: center;
+	padding: 10px;
+}
+
+.sidebar .enews {
+	background-color: #f5f5f5;
+	padding: 30px;
+}
+
+.enews-widget input {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.after-entry .enews-widget input {
+	text-align: center;
+}
+
+.enews-widget input[type="submit"] {
+	margin: 0;
+	width: 100%;
+}
+
+.enews form + p {
+	margin-top: 20px;
+}
+
+/* Genesis Simple FAQ
+--------------------------------------------- */
+
+.gs-faq__question {
+	background: transparent;
+	border-bottom: 1px solid #eee;
+	color: #333;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.gs-faq__question:focus,
+.gs-faq__question:hover {
+	background: transparent;
+	color: #0073e5;
+}
+
+.gs-faq__question::after {
+	content: "\f132";
+	font-family: dashicons; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+	float: right;
+}
+
+.gs-faq__question.gs-faq--expanded::after {
+	content: "\f460";
+}
+
+/* WP Forms
+--------------------------------------------- */
+
+.entry-content .wpforms-container {
+	margin-bottom: 40px;
+}
+
+.entry-content .wpforms-form .wpforms-field {
+	clear: both;
+	margin: 20px 0;
+	overflow: hidden;
+}
+
+.site-container .wpforms-container .wpforms-form .wpforms-field input {
+	border-radius: 0;
+	height: auto;
+	padding: 15px;
+}
+
+.site-container .entry-content .wpforms-form .wpforms-field-label {
+	font-weight: 600;
+}
+
+.site-container .entry-content .wpforms-form .wpforms-field-sublabel {
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.entry-content .wpforms-form .wpforms-field-hp {
+	display: none !important;
+	left: -9000px !important;
+	position: absolute !important;
+}
+
+.site-container .entry-content .wpforms-form textarea {
+	padding: 15px;
+}
+
+.site-container .entry-content .wpforms-form textarea.wpforms-field-small {
+	height: 120px;
+}
+
+.site-container .entry-content .wpforms-form textarea.wpforms-field-medium {
+	height: 200px;
+}
+
+.site-container .entry-content .wpforms-form textarea.wpforms-field-large {
+	height: 300px;
+}
+
+
+/* Skip Links
+---------------------------------------------------------------------------- */
+
+.genesis-skip-link {
+	margin: 0;
+}
+
+.genesis-skip-link .skip-link-hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.genesis-skip-link li {
+	height: 0;
+	list-style: none;
+	width: 0;
+}
+
+/* Display outline on focus */
+:focus {
+	color: #333;
+	outline: #ccc solid 1px;
+}
+
+
+/* Site Header
+---------------------------------------------------------------------------- */
+
+.site-header {
+	background-color: #fff;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+	padding: 0 30px;
+}
+
+/* Title Area
+--------------------------------------------- */
+
+.title-area {
+	float: left;
+	padding-bottom: 25px;
+	padding-top: 25px;
+}
+
+.wp-custom-logo .title-area {
+	max-width: 350px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	width: 100%;
+}
+
+.wp-custom-logo .custom-logo-link {
+	display: block;
+}
+
+.wp-custom-logo .title-area img {
+	width: auto;
+}
+
+.site-title {
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1;
+	margin-bottom: 0;
+}
+
+.site-title a,
+.site-title a:focus,
+.site-title a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+.site-description,
+.wp-custom-logo .site-title {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+
+/* Site Navigation
+---------------------------------------------------------------------------- */
+
+.genesis-nav-menu {
+	clear: both;
+	line-height: 1;
+	width: 100%;
+}
+
+.genesis-nav-menu .menu-item {
+	display: block;
+	float: none;
+	position: relative;
+}
+
+.genesis-nav-menu a {
+	color: #333;
+	display: block;
+	font-size: 15px;
+	font-weight: 400;
+	outline-offset: -1px;
+	padding-bottom: 12px;
+	padding-top: 12px;
+	text-decoration: none;
+}
+
+.genesis-nav-menu a:focus,
+.genesis-nav-menu a:hover,
+.genesis-nav-menu .current-menu-item > a,
+.genesis-nav-menu .sub-menu .current-menu-item > a:focus,
+.genesis-nav-menu .sub-menu .current-menu-item > a:hover {
+	color: #0073e5;
+	text-decoration: none;
+}
+
+.genesis-nav-menu .sub-menu,
+.genesis-nav-menu .sub-menu a {
+	width: 100%;
+}
+
+.genesis-nav-menu .sub-menu {
+	clear: both;
+	display: none;
+	left: -9999px;
+	margin: 0;
+	opacity: 1;
+	padding-left: 15px;
+	position: static;
+	z-index: 99;
+}
+
+.genesis-nav-menu .sub-menu a {
+	background-color: #fff;
+	font-size: 14px;
+	position: relative;
+	word-wrap: break-word;
+}
+
+.genesis-nav-menu .menu-item:focus,
+.genesis-nav-menu .menu-item:hover {
+	position: relative;
+}
+
+.genesis-nav-menu .menu-item:hover > .sub-menu {
+	display: block;
+	left: auto;
+	opacity: 1;
+}
+
+/* Responsive Menu
+--------------------------------------------- */
+
+.menu .menu-item:focus {
+	position: static;
+}
+
+.menu .menu-item > a:focus + ul.sub-menu,
+.menu .menu-item.sfHover > ul.sub-menu {
+	left: auto;
+	opacity: 1;
+}
+
+.js .nav-primary {
+	display: none;
+	position: relative;
+}
+
+.genesis-responsive-menu .genesis-nav-menu .menu-item:hover > .sub-menu {
+	display: none;
+}
+
+.menu-toggle,
+.sub-menu-toggle {
+	background-color: transparent;
+	border-width: 0;
+	color: #333;
+	display: block;
+	margin: 0 auto;
+	overflow: hidden;
+	text-align: center;
+	visibility: visible;
+}
+
+.menu-toggle:focus,
+.menu-toggle:hover,
+.sub-menu-toggle:focus,
+.sub-menu-toggle:hover {
+	background-color: transparent;
+	border-width: 0;
+	color: #0073e5;
+}
+
+.menu-toggle {
+	float: right;
+	line-height: 20px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding: 15px 0;
+	position: relative;
+	z-index: 1000;
+}
+
+.menu-toggle.activated::before {
+	content: "\f335";
+}
+
+.site-header .dashicons-before::before {
+	transition: none;
+}
+
+.site-header .menu-toggle::before {
+	float: left;
+	margin-right: 5px;
+	position: relative;
+	text-rendering: auto;
+	top: 1px;
+}
+
+.sub-menu-toggle {
+	float: right;
+	padding: 9px 10px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 100;
+}
+
+.sub-menu .sub-menu-toggle {
+	padding: 12px 10px;
+}
+
+.sub-menu-toggle::before {
+	display: inline-block;
+	text-rendering: auto;
+	transform: rotate(0);
+	transition: transform 0.25s ease-in-out;
+}
+
+.sub-menu-toggle.activated::before {
+	transform: rotate(180deg);
+}
+
+/* Header Menu
+--------------------------------------------- */
+
+.nav-primary {
+	clear: left;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	width: 100%;
+}
+
+/* Footer Menu
+--------------------------------------------- */
+
+.nav-secondary {
+	margin-top: 10px;
+}
+
+.nav-secondary .genesis-nav-menu {
+	line-height: 1.5;
+}
+
+.nav-secondary .menu-item {
+	display: inline-block;
+}
+
+.nav-secondary a {
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 0;
+}
+
+
+/* Content Area
+---------------------------------------------------------------------------- */
+
+/* Entry Content
+--------------------------------------------- */
+
+.entry {
+	margin-bottom: 40px;
+}
+
+.entry-content ol,
+.entry-content ul {
+	margin-bottom: 30px;
+	padding-left: 40px;
+}
+
+.entry-content ol > li {
+	list-style-type: decimal;
+}
+
+.entry-content ul > li {
+	list-style-type: disc;
+}
+
+.entry-content ol ul > li,
+.entry-content ul ul > li {
+	list-style-type: circle;
+}
+
+.entry-content ol ol,
+.entry-content ul ul {
+	margin-bottom: 0;
+}
+
+.entry-content code {
+	background-color: #f5f5f5;
+}
+
+.content .sticky {
+	background-color: #f5f5f5;
+	padding: 30px;
+}
+
+/* Entry Meta
+--------------------------------------------- */
+
+p.entry-meta {
+	font-size: 16px;
+	margin-bottom: 0;
+}
+
+.entry-header .entry-meta {
+	margin-bottom: 20px;
+}
+
+.entry-footer .entry-meta {
+	border-top: 1px solid #eee;
+	padding-top: 20px;
+}
+
+.entry-categories,
+.entry-tags {
+	display: block;
+}
+
+.entry-comments-link::before {
+	content: "\2014";
+	margin: 0 6px 0 2px;
+}
+
+/* Pagination
+--------------------------------------------- */
+
+.pagination {
+	clear: both;
+	margin: 60px 0;
+}
+
+.adjacent-entry-pagination {
+	margin-bottom: 0;
+}
+
+.archive-pagination li {
+	display: inline;
+}
+
+.archive-pagination li a {
+	background-color: #f5f5f5;
+	color: #333;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 4px;
+	padding: 8px 12px;
+	text-decoration: none;
+}
+
+.archive-pagination li a:focus,
+.archive-pagination li a:hover,
+.archive-pagination li.active a {
+	background-color: #333;
+	color: #fff;
+}
+
+/* Entry Comments
+--------------------------------------------- */
+
+.comment-respond,
+.entry-comments,
+.entry-pings {
+	margin-bottom: 40px;
+}
+
+.comment-list li {
+	padding: 40px 0 0 30px;
+}
+
+.comment-list .depth-1 {
+	padding-left: 0;
+}
+
+.comment-header {
+	margin-bottom: 30px;
+}
+
+.comment-content {
+	clear: both;
+}
+
+.comment-content ul > li {
+	list-style-type: disc;
+}
+
+.comment-respond input[type="email"],
+.comment-respond input[type="text"],
+.comment-respond input[type="url"] {
+	width: 50%;
+}
+
+.comment-respond label {
+	display: block;
+	margin-right: 12px;
+}
+
+.comment-header p {
+	margin-bottom: 0;
+}
+
+.entry-pings .reply {
+	display: none;
+}
+
+.comment-form-cookies-consent label {
+	display: inline;
+	padding-left: 10px;
+}
+
+/* Sidebar
+---------------------------------------------------------------------------- */
+
+.sidebar {
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+.sidebar .widget {
+	margin-bottom: 40px;
+}
+
+.sidebar p {
+	margin-bottom: 20px;
+}
+
+/* Footer Widgets
+---------------------------------------------------------------------------- */
+
+.footer-widgets {
+	border-top: 1px solid #eee;
+	background-color: #fff;
+	clear: both;
+	padding: 60px 0;
+}
+
+.footer-widgets .wrap {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.footer-widget-area {
+	margin-bottom: 40px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.footer-widget-area:last-child,
+.footer-widgets .widget:last-child {
+	margin-bottom: 0;
+}
+
+
+/* Site Footer
+---------------------------------------------------------------------------- */
+
+.site-footer {
+	background-color: #fff;
+	border-top: 1px solid #eee;
+	font-size: 15px;
+	line-height: 1.5;
+	padding: 30px;
+	text-align: center;
+}
+
+.site-footer p {
+	margin-bottom: 0;
+}
+
+
+/* Media Queries
+---------------------------------------------------------------------------- */
+
+@media only screen and (min-width: 480px) {
+
+	table {
+		table-layout: auto;
+		word-break: normal;
+	}
+
+}
+
+@media only screen and (min-width: 960px) {
+
+	/* Site Header
+	--------------------------------------------- */
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 9999;
+	}
+
+	.admin-bar .site-header {
+		top: 32px;
+	}
+
+	/* Genesis Menu
+	--------------------------------------------- */
+
+	.genesis-nav-menu .menu-item {
+		display: inline-block;
+	}
+
+	.genesis-nav-menu .menu-item:focus,
+	.genesis-nav-menu .menu-item:hover {
+		position: relative;
+	}
+
+	.genesis-nav-menu > .menu-bold > a {
+		font-weight: 700;
+	}
+
+	.genesis-nav-menu > .menu-highlight > a {
+		background-color: #333;
+		border-radius: 3px;
+		color: #fff;
+		font-weight: 600;
+		margin-left: 15px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.genesis-nav-menu > .menu-highlight > a:focus,
+	.genesis-nav-menu > .menu-highlight > a:hover {
+		background-color: #0073e5;
+	}
+
+	.genesis-nav-menu .sub-menu,
+	.genesis-nav-menu .sub-menu a {
+		width: 180px;
+	}
+
+	.genesis-nav-menu .sub-menu {
+		border-top: 1px solid #eee;
+		opacity: 0;
+		padding-left: 0;
+		position: absolute;
+		transition: opacity 0.4s ease-in-out;
+	}
+
+	.genesis-nav-menu .sub-menu a {
+		border: 1px solid #eee;
+		border-top: 0;
+		padding-bottom: 15px;
+		padding-top: 15px;
+	}
+
+	.genesis-nav-menu .sub-menu .sub-menu {
+		margin: -46px 0 0 179px;
+	}
+
+	/* Responsive Menu
+	--------------------------------------------- */
+
+	.js .nav-primary {
+		display: block;
+		padding-top: 15px;
+	}
+
+	.menu-toggle,
+	.sub-menu-toggle {
+		display: none;
+		visibility: hidden;
+	}
+
+	/* Header Menu
+	--------------------------------------------- */
+
+	.nav-primary {
+		clear: none;
+		float: right;
+		width: auto;
+	}
+
+	.nav-primary .genesis-nav-menu a {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	/* Site-Inner
+	--------------------------------------------- */
+
+	.site-inner {
+		max-width: 1140px;
+	}
+
+	/* Content
+	--------------------------------------------- */
+
+	.content {
+		float: left;
+		width: 65%;
+	}
+
+	.sidebar-content .content {
+		float: right;
+	}
+
+	.full-width-content .content {
+		float: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Sidebar
+	--------------------------------------------- */
+
+	.sidebar {
+		float: right;
+		width: 30%;
+	}
+
+	.sidebar-content .sidebar {
+		float: left;
+	}
+
+	/* Author Box
+	--------------------------------------------- */
+
+	.author-box {
+		background-color: #f5f5f5;
+		padding: 30px;
+	}
+
+	/* After Entry
+	--------------------------------------------- */
+
+	.after-entry {
+		padding: 40px 60px;
+	}
+
+	.after-entry .enews {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+
+	/* Column Classes
+	--------------------------------------------- */
+
+	.five-sixths,
+	.four-sixths,
+	.one-fourth,
+	.one-half,
+	.one-sixth,
+	.one-third,
+	.three-fourths,
+	.three-sixths,
+	.two-fourths,
+	.two-sixths,
+	.two-thirds {
+		float: left;
+		margin-left: 2.564102564102564%;
+	}
+
+	.one-half,
+	.three-sixths,
+	.two-fourths {
+		width: 48.717948717948715%;
+	}
+
+	.one-third,
+	.two-sixths {
+		width: 31.623931623931625%;
+	}
+
+	.four-sixths,
+	.two-thirds {
+		width: 65.81196581196582%;
+	}
+
+	.one-fourth {
+		width: 23.076923076923077%;
+	}
+
+	.three-fourths {
+		width: 74.35897435897436%;
+	}
+
+	.one-sixth {
+		width: 14.52991452991453%;
+	}
+
+	.five-sixths {
+		width: 82.90598290598291%;
+	}
+
+	.first {
+		clear: both;
+		margin-left: 0;
+	}
+
+	/* Entry Misc.
+	--------------------------------------------- */
+
+	.after-entry,
+	.archive-description,
+	.author-box,
+	.comment-respond,
+	.entry,
+	.entry-comments,
+	.entry-pings {
+		margin-bottom: 60px;
+	}
+
+	/* Footer Widgets
+	--------------------------------------------- */
+
+	.footer-widgets .wrap {
+		max-width: 1140px;
+	}
+
+	.footer-widget-area {
+		float: left;
+		margin-bottom: 0;
+		width: calc(100% / 3);
+	}
+
+}
+
+/* Print Styles
+---------------------------------------------------------------------------- */
+
+@media print {
+
+	*,
+	*::before,
+	*::after {
+		background: transparent !important;
+		box-shadow: none !important;
+		color: #333 !important;
+		text-shadow: none !important;
+	}
+
+	a,
+	a:visited {
+		text-decoration: underline;
+	}
+
+	a[href]::after {
+		content: " (" attr(href) ")";
+	}
+
+	abbr[title]::after {
+		content: " (" attr(title) ")";
+	}
+
+	a[href^="javascript:"]::after,
+	a[href^="#"]::after,
+	.site-title > a::after {
+		content: "";
+	}
+
+	thead {
+		display: table-header-group;
+	}
+
+	img,
+	tr {
+		page-break-inside: avoid;
+	}
+
+	img {
+		max-width: 100% !important;
+	}
+
+	@page {
+		margin: 2cm 0.5cm;
+	}
+
+	p,
+	h2,
+	h3 {
+		orphans: 3;
+		widows: 3;
+	}
+
+	blockquote,
+	pre {
+		border: 1px solid #999;
+		page-break-inside: avoid;
+	}
+
+	.content,
+	.content-sidebar {
+		width: 100%;
+	}
+
+	button,
+	input,
+	select,
+	textarea,
+	.breadcrumb,
+	.comment-edit-link,
+	.comment-form,
+	.comment-list .reply a,
+	.comment-reply-title,
+	.edit-link,
+	.entry-comments-link,
+	.entry-footer,
+	.genesis-box,
+	.header-widget-area,
+	.hidden-print,
+	.home-top,
+	.nav-primary,
+	.nav-secondary,
+	.post-edit-link,
+	.sidebar {
+		display: none !important;
+	}
+
+	.title-area {
+		text-align: center;
+		width: 100%;
+	}
+
+	.site-title > a {
+		margin: 0;
+		text-decoration: none;
+		text-indent: 0;
+	}
+
+	.site-inner {
+		padding-top: 0;
+		position: relative;
+	}
+
+	.author-box {
+		margin-bottom: 0;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		orphans: 3;
+		page-break-after: avoid;
+		page-break-inside: avoid;
+		widows: 3;
+	}
+
+
+	img {
+		page-break-after: avoid;
+		page-break-inside: avoid;
+	}
+
+	blockquote,
+	pre,
+	table {
+		page-break-inside: avoid;
+	}
+
+	dl,
+	ol,
+	ul {
+		page-break-before: avoid;
+	}
+
+}
+
+
+/* ==========================================================================
+   SIMPLY STARTER — THEME OVERRIDES
+   Simply Design — https://simplydesign.com
+   All structural overrides live here, below Genesis Sample defaults.
+   Brand colors and fonts are set by the Simply Client Config plugin.
+   Do NOT add client-specific values here — use the client config plugin.
+   Version: 2.8.0
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   TOKEN SYSTEM
+   Wireframe defaults — intentional neutral palette for UX presentations.
+   Simply Client Config plugin overrides ALL --client-* tokens.
+   Internal --ss-* tokens are theme structural values, never client-overridden.
+   -------------------------------------------------------------------------- */
+
+:root {
+
+	/* ----------------------------------------------------------
+	   STRUCTURAL TOKENS (internal — not overridden by client)
+	   ---------------------------------------------------------- */
+	--ss-white:           #ffffff;
+	--ss-off-white:       #f5f5f5;
+	--ss-light-gray:      #f2f2f2;
+	--ss-dark-gray:       #555555;
+	--ss-near-black:      #1a1a1a;
+	--ss-header-height:   80px;
+	--ss-max-width:       1200px;
+	--ss-transition:      0.3s ease;
+	--ss-shadow:          0 2px 12px rgba(0,0,0,0.10);
+
+	/* ----------------------------------------------------------
+	   CLIENT TOKENS
+	   Wireframe neutral defaults — overridden by client config.
+	   ---------------------------------------------------------- */
+
+	/* Global defaults — page bg and text outside sections */
+	--client-bg:                    #ffffff;
+	--client-text:                  #2d2d2d;
+	--client-heading:               #2d2d2d;
+	--client-link:                  #6b6b6b;
+	--client-link-hover:            #2d2d2d;
+
+	/* Navigation */
+	--client-nav-bg:                #2d2d2d;
+	--client-nav-text:              #ffffff;
+	--client-nav-highlight:         #6b6b6b;
+	--client-nav-highlight-text:    #ffffff;
+
+	/* Accent / UI — buttons, badges, highlights sitewide */
+	--client-accent:                #6b6b6b;
+	--client-accent-text:           #ffffff;
+	--client-accent-hover:          #2d2d2d;
+
+	/* Fonts */
+	--client-font-display:          Georgia, serif;
+	--client-font-primary:          Arial, sans-serif;
+	--client-font-script:           Georgia, serif;
+
+	/* Section — Dark */
+	--client-section-dark-bg:       #2d2d2d;
+	--client-section-dark-text:     #f5f5f5;
+	--client-section-dark-heading:  #ffffff;
+	--client-section-dark-highlight:#6b6b6b;
+
+	/* Section — Light */
+	--client-section-light-bg:      #f5f5f5;
+	--client-section-light-text:    #2d2d2d;
+	--client-section-light-heading: #2d2d2d;
+	--client-section-light-highlight:#6b6b6b;
+
+	/* Section — Brand 1 (optional — define in client config) */
+	--client-section-brand1-bg:         #4a4a4a;
+	--client-section-brand1-text:       #ffffff;
+	--client-section-brand1-heading:    #ffffff;
+	--client-section-brand1-highlight:  #888888;
+
+	/* Section — Brand 2 (optional — define in client config) */
+	--client-section-brand2-bg:         #888888;
+	--client-section-brand2-text:       #ffffff;
+	--client-section-brand2-heading:    #ffffff;
+	--client-section-brand2-highlight:  #4a4a4a;
+
+	/* ----------------------------------------------------------
+	   INTERNAL ALIASES
+	   Maps --ss-* and legacy --imf-* to --client-* tokens.
+	   Theme CSS uses --imf-* internally — these aliases mean
+	   the client config only needs to set --client-* values.
+	   ---------------------------------------------------------- */
+
+	/* Nav aliases */
+	--imf-navy:           var(--client-nav-bg);
+	--imf-navy-dark:      var(--client-nav-bg);
+	--imf-navy-light:     var(--client-nav-bg);
+	--imf-red:            var(--client-accent);
+	--imf-red-dark:       var(--client-accent-hover);
+
+	/* Structural aliases */
+	--imf-white:          var(--ss-white);
+	--imf-off-white:      var(--ss-off-white);
+	--imf-light-gray:     var(--ss-light-gray);
+	--imf-dark-gray:      var(--ss-dark-gray);
+	--imf-near-black:     var(--ss-near-black);
+	--imf-header-height:  var(--ss-header-height);
+	--imf-max-width:      var(--ss-max-width);
+	--imf-transition:     var(--ss-transition);
+
+	/* Font aliases */
+	--imf-font-display:   var(--client-font-display);
+	--imf-font-primary:   var(--client-font-primary);
+	--imf-font-script:    var(--client-font-script);
+}
+
+
+/* --------------------------------------------------------------------------
+   BASE OVERRIDES
+   -------------------------------------------------------------------------- */
+
+body {
+	font-family: var(--imf-font-primary);
+	color: var(--imf-near-black);
+	background-color: var(--imf-white);
+}
+
+a {
+	color: var(--imf-red);
+}
+
+a:focus,
+a:hover {
+	color: var(--imf-red-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--imf-font-display);
+	font-weight: 700;
+	color: var(--imf-navy);
+}
+
+p {
+	font-family: var(--imf-font-primary);
+}
+
+
+/* --------------------------------------------------------------------------
+   SELF-HOSTED FONT — Nothing You Could Do (script/tagline)
+   Rift + DIN 2014 load via Typekit (see functions.php).
+   -------------------------------------------------------------------------- */
+
+@font-face {
+	font-family: 'Nothing You Could Do';
+	src: url('assets/fonts/NothingYouCouldDo-Regular.woff') format('woff'),
+	     url('assets/fonts/NothingYouCouldDo-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   SITE HEADER
+   Always solid navy. Fixed position. Overlays hero on homepage.
+   Utility bar sits above it — header shifts down when bar is present,
+   shifts back up when bar scrolls away.
+   -------------------------------------------------------------------------- */
+
+.site-header {
+	background-color: var(--imf-navy);
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+	padding: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 9999;
+	transition: top var(--imf-transition);
+}
+
+/* Admin bar offset */
+.admin-bar .site-header {
+	top: 32px;
+}
+
+/* When utility bar is present, push header below it */
+.has-utility-bar .site-header {
+	top: 40px;
+}
+
+.admin-bar.has-utility-bar .site-header {
+	top: 72px; /* 32px admin bar + 40px utility bar */
+}
+
+/* When utility bar scrolls away, header slides up to top */
+.has-utility-bar.scrolled .site-header {
+	top: 0;
+}
+
+.admin-bar.has-utility-bar.scrolled .site-header {
+	top: 32px;
+}
+
+/* Interior pages — push content below fixed header */
+.imf-interior .site-container {
+	padding-top: var(--imf-header-height);
+}
+
+/* Homepage — NO padding-top, hero slides behind the fixed nav */
+.imf-homepage .site-container {
+	padding-top: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   TITLE AREA (LOGO)
+   Genesis Sample handles logo via Customizer — we just restyle the container.
+   -------------------------------------------------------------------------- */
+
+.title-area {
+	float: left;
+	padding-top: 0;
+	padding-bottom: 0;
+	display: flex;
+	align-items: center;
+	height: var(--imf-header-height);
+}
+
+.wp-custom-logo .title-area {
+	padding-top: 0;
+	padding-bottom: 0;
+	max-width: 220px;
+}
+
+.wp-custom-logo .title-area img {
+	max-height: 60px;
+	width: auto;
+}
+
+/* Hide site text title when logo is set — Genesis Sample already does this,
+   but we reinforce it */
+.wp-custom-logo .site-title {
+	display: none;
+}
+
+.site-description {
+	display: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   PRIMARY NAVIGATION
+   Float right, Rift font, white text, full height.
+   CTA item: use .menu-highlight class in dashboard (already in Genesis Sample)
+   OR add class "cta" — both are styled below.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 960px) {
+
+	.nav-primary {
+		float: right;
+		clear: none;
+		width: auto;
+		display: flex;
+		align-items: stretch;
+		height: var(--imf-header-height);
+		padding-top: 0; /* override Genesis Sample's 15px */
+	}
+
+	.nav-primary .genesis-nav-menu {
+		display: flex;
+		align-items: stretch;
+		height: 100%;
+	}
+
+	.nav-primary .genesis-nav-menu .menu-item {
+		display: flex;
+		align-items: center;
+	}
+
+	/* All nav links — white, Rift, uppercase */
+	.nav-primary .genesis-nav-menu a {
+		font-family: var(--imf-font-display);
+		font-weight: 700;
+		font-size: 14px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--imf-white);
+		padding: 0 18px;
+		display: flex;
+		align-items: center;
+		height: 100%;
+		transition: background-color var(--imf-transition), color var(--imf-transition);
+	}
+
+	.nav-primary .genesis-nav-menu a:hover,
+	.nav-primary .genesis-nav-menu a:focus,
+	.nav-primary .genesis-nav-menu .current-menu-item > a {
+		color: var(--imf-white);
+		background-color: rgba(255, 255, 255, 0.1);
+		text-decoration: none;
+	}
+
+	/* CTA button — add class "menu-highlight" OR "cta" to menu item
+	   in Appearance -> Menus -> Screen Options -> CSS Classes */
+	.nav-primary .genesis-nav-menu > .menu-highlight > a,
+	.nav-primary .genesis-nav-menu > .cta > a {
+		background-color: var(--imf-red);
+		color: var(--imf-white);
+		padding: 0 32px;
+		border-radius: 0;
+		font-weight: 700;
+		margin-left: 0;
+		height: var(--imf-header-height);
+	}
+
+	.nav-primary .genesis-nav-menu > .menu-highlight > a:hover,
+	.nav-primary .genesis-nav-menu > .menu-highlight > a:focus,
+	.nav-primary .genesis-nav-menu > .cta > a:hover,
+	.nav-primary .genesis-nav-menu > .cta > a:focus {
+		background-color: var(--imf-red-dark);
+		color: var(--imf-white);
+	}
+
+	/* Dropdown menus */
+	.nav-primary .genesis-nav-menu .sub-menu {
+		background-color: var(--imf-navy);
+		border-top: 2px solid var(--imf-red);
+		top: var(--imf-header-height);
+	}
+
+	.nav-primary .genesis-nav-menu .sub-menu a {
+		background-color: var(--imf-navy);
+		color: rgba(255, 255, 255, 0.85);
+		border: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.nav-primary .genesis-nav-menu .sub-menu a:hover {
+		background-color: rgba(255, 255, 255, 0.08);
+		color: var(--imf-white);
+	}
+
+}
+
+
+/* --------------------------------------------------------------------------
+   UTILITY BAR
+   Output by simply-utility-bar plugin. Styles here for theme integration.
+   Sits above the fixed header, scrolls away smoothly.
+   -------------------------------------------------------------------------- */
+
+.simply-utility-bar {
+	background-color: transparent;
+	color: var(--imf-white);
+	font-family: var(--imf-font-display);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	padding: 8px 30px;
+	text-align: right;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10000; /* above header */
+	transition: max-height var(--imf-transition),
+	            opacity var(--imf-transition),
+	            padding var(--imf-transition);
+	max-height: 40px;
+	overflow: hidden;
+}
+
+.simply-utility-bar a {
+	color: var(--imf-white);
+	opacity: 0.85;
+	text-decoration: none;
+	transition: opacity var(--imf-transition);
+}
+
+.simply-utility-bar a:hover {
+	opacity: 1;
+	color: var(--imf-white);
+}
+
+/* When utility bar is present, push header down below it */
+.has-utility-bar .site-header {
+	top: 40px;
+}
+
+.admin-bar.has-utility-bar .site-header {
+	top: 72px; /* 32px admin bar + 40px utility bar */
+}
+
+/* Utility bar scrolls away — JS adds .scrolled-away */
+.simply-utility-bar.scrolled-away {
+	max-height: 0;
+	opacity: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+/* Header moves up when utility bar hides */
+.has-utility-bar .site-header {
+	transition: top var(--imf-transition),
+	            background-color var(--imf-transition),
+	            box-shadow var(--imf-transition);
+}
+
+.has-utility-bar.scrolled .site-header {
+	top: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   UTILITY CLASSES
+   -------------------------------------------------------------------------- */
+
+.imf-script {
+	font-family: var(--imf-font-script);
+	font-weight: 400;
+}
+
+.imf-eyebrow {
+	font-family: var(--imf-font-display);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--imf-dark-gray);
+}
+
+.imf-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   BUTTONS
+   -------------------------------------------------------------------------- */
+
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.imf-btn {
+	background-color: var(--imf-red);
+	border: none;
+	border-radius: 100px;
+	color: var(--imf-white);
+	font-family: var(--imf-font-display);
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	padding: 12px 24px;
+	cursor: pointer;
+	transition: background-color var(--imf-transition), transform var(--imf-transition);
+	text-decoration: none;
+	display: inline-block;
+}
+
+.button:hover,
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+.imf-btn:hover {
+	background-color: var(--imf-red-dark);
+	color: var(--imf-white);
+	transform: translateY(-1px);
+}
+
+.imf-btn-outline {
+	background-color: transparent;
+	border: 2px solid var(--imf-white);
+	color: var(--imf-white);
+}
+
+.imf-btn-outline:hover {
+	background-color: var(--imf-white);
+	color: var(--imf-navy);
+}
+
+.imf-btn-navy {
+	background-color: var(--imf-navy);
+	color: var(--imf-white);
+}
+
+.imf-btn-navy:hover {
+	background-color: var(--imf-navy-dark);
+	color: var(--imf-white);
+}
+
+
+/* --------------------------------------------------------------------------
+   BADGES (Series labels)
+   -------------------------------------------------------------------------- */
+
+.imf-badge {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-family: var(--imf-font-display);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.imf-badge-devo    { background-color: var(--imf-red);   color: var(--imf-white); }
+.imf-badge-mogul   { background-color: var(--imf-navy);  color: var(--imf-white); }
+.imf-badge-aerial  { background-color: #4a7c59;          color: var(--imf-white); }
+.imf-badge-fis     { background-color: #1a6496;          color: var(--imf-white); }
+
+
+/* --------------------------------------------------------------------------
+   SECTION WRAPPERS
+   -------------------------------------------------------------------------- */
+
+.imf-section {
+	padding: 80px 30px;
+}
+
+.imf-section-navy {
+	background-color: var(--imf-navy);
+	color: var(--imf-white);
+}
+
+.imf-section-navy h1,
+.imf-section-navy h2,
+.imf-section-navy h3,
+.imf-section-navy h4 {
+	color: var(--imf-white);
+}
+
+.imf-section-gray {
+	background-color: var(--imf-light-gray);
+}
+
+.imf-container {
+	max-width: var(--imf-max-width);
+	margin: 0 auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   CARDS
+   -------------------------------------------------------------------------- */
+
+.imf-card {
+	background-color: var(--imf-white);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	transition: box-shadow var(--imf-transition), transform var(--imf-transition);
+}
+
+.imf-card:hover {
+	box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+	transform: translateY(-2px);
+}
+
+.imf-card-body {
+	padding: 16px 20px;
+}
+
+.imf-card-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+}
+
+@media (max-width: 768px) {
+	.imf-card-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.imf-card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+	background-color: var(--imf-navy);
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.site-footer a {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.site-footer a:hover {
+	color: var(--imf-white);
+}
+
+.site-footer p {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* --------------------------------------------------------------------------
+   HERO SECTION
+   Output by [imf_hero] shortcode.
+   Sits behind the fixed nav — full viewport width, no top padding.
+   Left: square athlete photo with diagonal clip + credit overlay.
+   Right: eyebrow + Rift headline + script tagline + CTA button.
+   -------------------------------------------------------------------------- */
+
+.imf-hero {
+	display: flex;
+	align-items: stretch;
+	min-height: 60vh;
+	width: 100%;
+	overflow: hidden;
+	background-color: var(--imf-white);
+	position: relative;
+}
+
+/* LEFT — athlete photo panel */
+.imf-hero__photo {
+	position: relative;
+	width: 55%;
+	min-height: 60vh;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.imf-hero__photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+	display: block;
+}
+
+/* Photo credit — bottom left, script font */
+.imf-hero__credit {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	font-family: var(--imf-font-script);
+	font-size: 13px;
+	line-height: 1.7;
+	color: var(--imf-near-black);
+}
+
+.imf-hero__credit strong {
+	font-family: var(--imf-font-primary);
+	font-weight: 600;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+/* RIGHT — text content */
+.imf-hero__content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* Top padding accounts for fixed header height so text isn't hidden */
+	padding: calc(var(--imf-header-height) + 40px) 60px 60px 40px;
+}
+
+/* "INTERMOUNTAIN DIVISION" eyebrow */
+.imf-hero__eyebrow {
+	font-family: var(--imf-font-display);
+	font-size: 28px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--imf-navy);
+	margin: 0;
+}
+
+/* "FREESTYLE" — large Rift display */
+.imf-hero__title {
+	font-family: var(--imf-font-display);
+	font-size: clamp(4rem, 8vw, 7rem);
+	font-weight: 700;
+	line-height: 0.95;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: var(--imf-navy);
+	margin: 0;
+}
+
+/* "Competition Starts Here" — Nothing You Could Do */
+/* Rotated slightly uphill left-to-right (-5deg), right-aligned */
+.imf-hero__tagline {
+	font-family: var(--imf-font-script);
+	font-size: clamp(1.4rem, 2.5vw, 2rem);
+	font-weight: 400;
+	color: var(--imf-navy);
+	margin: 0 -10px 32px 0;
+	line-height: 1.3;
+	text-align: right;
+	display: block;
+	transform: rotate(-2deg);
+	transform-origin: right center;
+}
+
+/* CTA button */
+.imf-hero__cta .button,
+.imf-hero__cta .imf-btn {
+	display: inline-block;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+	/* Hero becomes a single stacked block —
+	   photo fills full width, text overlays on top of it */
+	.imf-hero {
+		flex-direction: column;
+		min-height: 80vh;
+		position: relative;
+	}
+
+	/* Photo fills full width, full hero height — no clip-path */
+	.imf-hero__photo {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		min-height: 60vh;
+		clip-path: none;
+	}
+
+	.imf-hero__photo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* Text overlays the photo — sits above it in z-order */
+	.imf-hero__content {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		padding: calc(var(--imf-header-height) + 32px) 24px 120px;
+	}
+
+	.imf-hero__eyebrow {
+		font-size: 18px;
+		text-align: left;
+	}
+
+	.imf-hero__title {
+		font-size: 3.5rem;
+	}
+
+	.imf-hero__tagline {
+		text-align: left;
+		transform: none;
+		margin: 0 0 32px 0;
+	}
+
+	/* Photo credit stays visible at bottom of hero */
+	.imf-hero__credit {
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
+		z-index: 2;
+	}
+
+}
+
+
+/* --------------------------------------------------------------------------
+   CONTENT WIDTH FIXES
+   Genesis Sample default widths/paddings removed.
+   -------------------------------------------------------------------------- */
+
+.entry-content {
+	margin: 0;
+	padding: 0;
+}
+
+.content {
+	width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   LOGO PADDING
+   -------------------------------------------------------------------------- */
+
+.title-area {
+	padding-left: 5%;
+}
+
+
+/* --------------------------------------------------------------------------
+   SITE INNER — full width, no padding
+   -------------------------------------------------------------------------- */
+
+.site-inner {
+	max-width: 100%;
+	padding: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   DESKTOP HEADER HEIGHT FIX
+   Ensure header, title-area, nav and CTA all share the same height.
+   CTA was bleeding below because flex children weren't stretching.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 960px) {
+
+	.site-header {
+		height: var(--imf-header-height);
+		display: flex;
+		align-items: stretch;
+	}
+
+	/* Genesis Sample .site-header .wrap — make it flex and full width */
+	.site-header > .wrap {
+		display: flex;
+		align-items: stretch;
+		width: 100%;
+		max-width: 100%;
+		padding: 0;
+		height: var(--imf-header-height);
+	}
+
+	.title-area {
+		height: var(--imf-header-height);
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+	}
+
+	/* Nav stretches full header height so CTA block can fill it */
+	.nav-primary {
+		height: var(--imf-header-height);
+		display: flex;
+		align-items: stretch;
+		margin-left: auto;
+	}
+
+	.nav-primary .genesis-nav-menu {
+		height: 100%;
+		display: flex;
+		align-items: stretch;
+	}
+
+	.nav-primary .genesis-nav-menu > .menu-item {
+		display: flex;
+		align-items: center;
+		height: 100%;
+	}
+
+	/* CTA fills full height — no border radius, flush block */
+	.nav-primary .genesis-nav-menu > .menu-highlight > a,
+	.nav-primary .genesis-nav-menu > .cta > a {
+		height: var(--imf-header-height);
+		display: flex;
+		align-items: center;
+		border-radius: 0;
+	}
+}
+
+
+/* --------------------------------------------------------------------------
+   DESKTOP SUB-NAVIGATION
+   Red caret at top, gap between parent and sub-menu,
+   extra padding on sub-items.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 960px) {
+
+	/* Gap between parent and sub-menu */
+	.nav-primary .genesis-nav-menu .sub-menu {
+		top: calc(var(--imf-header-height) + 8px);
+		border-top: 3px solid var(--imf-red);
+	}
+
+	/* Red upward caret — CSS triangle pointing up in red */
+	.nav-primary .genesis-nav-menu .sub-menu::before {
+		content: '';
+		position: absolute;
+		top: -11px; /* sits just above the red border */
+		left: 20px;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-bottom: 8px solid var(--imf-red);
+	}
+
+	/* Extra padding on sub-items */
+	.nav-primary .genesis-nav-menu .sub-menu a {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE NAVIGATION
+   Full-height slide-in from left, 75% width, navy bg.
+   Hamburger only — no "Menu" text.
+   Accordion sub-items, closed by default.
+   -------------------------------------------------------------------------- */
+
+/* Hide "Menu" text in Genesis responsive menu toggle */
+.menu-toggle .menu-toggle-text {
+	display: none;
+}
+
+/* Hamburger button */
+.menu-toggle {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	margin-left: auto;
+}
+
+.menu-toggle .menu-toggle-icon,
+.menu-toggle::before {
+	display: none;
+}
+
+/* Draw our own clean hamburger bars */
+.menu-toggle .hamburger-bar {
+	display: block;
+	width: 24px;
+	height: 2px;
+	background-color: var(--imf-white);
+	transition: transform var(--imf-transition), opacity var(--imf-transition);
+}
+
+/* Mobile menu overlay — full height, slides in from left */
+@media (max-width: 959px) {
+
+	/* Overlay behind the menu */
+	.nav-primary::before {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 9998;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity var(--imf-transition), visibility var(--imf-transition);
+	}
+
+	.nav-primary.is-open::before {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	/* Menu panel */
+	.nav-primary .genesis-nav-menu {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 75%;
+		height: 100vh;
+		background-color: var(--imf-navy);
+		z-index: 9999;
+		transform: translateX(-100%);
+		transition: transform 0.35s ease;
+		overflow-y: auto;
+		padding: 50px 10px;
+		flex-direction: column;
+		align-items: flex-start;
+		display: flex;
+	}
+
+	.nav-primary.is-open .genesis-nav-menu {
+		transform: translateX(0);
+	}
+
+	/* All menu items */
+	.nav-primary .genesis-nav-menu .menu-item {
+		width: 100%;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.nav-primary .genesis-nav-menu .menu-item:last-child {
+		border-bottom: none;
+	}
+
+	/* All links */
+	.nav-primary .genesis-nav-menu a {
+		color: var(--imf-white);
+		font-family: var(--imf-font-display);
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 14px 8px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.nav-primary .genesis-nav-menu a:hover {
+		background-color: rgba(255, 255, 255, 0.08);
+		color: var(--imf-white);
+	}
+
+	/* CTA item — red pill in mobile menu */
+	.nav-primary .genesis-nav-menu > .menu-highlight > a,
+	.nav-primary .genesis-nav-menu > .cta > a {
+		background-color: var(--imf-red);
+		border-radius: 100px;
+		padding: 12px 20px;
+		margin: 8px 0;
+		justify-content: center;
+		height: auto;
+	}
+
+	/* Sub-menu — accordion, hidden by default */
+	.nav-primary .genesis-nav-menu .sub-menu {
+		position: static;
+		width: 100%;
+		background: transparent;
+		border-top: none;
+		padding: 0;
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		box-shadow: none;
+		display: none; /* hidden until accordion opens */
+		margin-left: 5px; /* slight indent */
+	}
+
+	/* Accordion open state — JS adds .sub-menu-open to parent li */
+	.nav-primary .genesis-nav-menu .menu-item.sub-menu-open > .sub-menu {
+		display: block;
+	}
+
+	/* Sub-menu links */
+	.nav-primary .genesis-nav-menu .sub-menu a {
+		font-size: 13px;
+		padding: 10px 8px;
+		color: rgba(255, 255, 255, 0.8);
+		border: none;
+		background: transparent;
+		width: 180px; /* override Genesis desktop width */
+	}
+
+	.nav-primary .genesis-nav-menu .sub-menu a:hover {
+		color: var(--imf-white);
+	}
+
+	/* Accordion arrow indicator on parent items with sub-menus */
+	.nav-primary .genesis-nav-menu .menu-item-has-children > a::after {
+		content: '+';
+		font-size: 18px;
+		font-weight: 300;
+		line-height: 1;
+		color: rgba(255, 255, 255, 0.6);
+		transition: transform var(--imf-transition);
+	}
+
+	.nav-primary .genesis-nav-menu .menu-item-has-children.sub-menu-open > a::after {
+		content: '−';
+	}
+
+	/* Sub-menu width override for mobile */
+	.nav-primary .genesis-nav-menu .sub-menu,
+	.nav-primary .genesis-nav-menu .sub-menu a {
+		width: 100%;
+	}
+
+}
+
+
+/* --------------------------------------------------------------------------
+   NAV FINAL FIXES v1.7.0
+   -------------------------------------------------------------------------- */
+
+/* --- TAGLINE — desktop and mobile both --- */
+.imf-hero__tagline {
+	text-align: left !important;
+	margin: -20px 0px 32px 100px !important;
+	transform: rotate(-2deg) !important;
+	transform-origin: left center !important;
+}
+
+/* Mobile tagline — same indent, no rotation */
+@media (max-width: 768px) {
+	.imf-hero__tagline {
+		transform: none !important;
+		margin: -20px 0px 32px 100px !important;
+	}
+}
+
+
+/* --- DESKTOP NAV FIXES --- */
+
+/* Remove Genesis Sample padding-top from .js .nav-primary */
+.js .nav-primary {
+	padding: 0 !important;
+}
+
+/* Remove all top/bottom padding from nav-primary */
+.nav-primary {
+	padding: 0 !important;
+}
+
+@media (min-width: 960px) {
+
+	/* Vertically center all nav items */
+	.nav-primary .genesis-nav-menu {
+		display: flex !important;
+		align-items: center !important;
+		height: var(--imf-header-height) !important;
+	}
+
+	.nav-primary .genesis-nav-menu > .menu-item {
+		display: flex !important;
+		align-items: stretch !important;
+		height: var(--imf-header-height) !important;
+	}
+
+	/* Links fill full height — full clickable + hover area */
+	.nav-primary .genesis-nav-menu > .menu-item > a {
+		display: flex !important;
+		align-items: center !important;
+		height: 100% !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+	}
+
+	/* CTA full height */
+	.nav-primary .genesis-nav-menu > .menu-highlight > a,
+	.nav-primary .genesis-nav-menu > .cta > a {
+		height: var(--imf-header-height) !important;
+		display: flex !important;
+		align-items: center !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		border-radius: 0 !important;
+	}
+}
+
+
+/* --- MOBILE HAMBURGER --- */
+
+/* Hide Genesis Dashicons hamburger icon and text completely */
+.site-header .menu-toggle::before {
+	display: none !important;
+	content: none !important;
+}
+
+.menu-toggle .menu-toggle-text {
+	display: none !important;
+}
+
+/* Style the toggle button itself */
+.menu-toggle {
+	background: none !important;
+	border: none !important;
+	cursor: pointer !important;
+	padding: 14px 16px !important;
+	margin: 0 !important;
+	float: right !important;
+	display: flex !important;
+	flex-direction: column !important;
+	justify-content: center !important;
+	gap: 5px !important;
+	line-height: 1 !important;
+	color: var(--imf-white) !important;
+}
+
+/* White hamburger bars via box-shadow trick —
+   works even if Genesis injects extra elements */
+.menu-toggle .hamburger-bar {
+	display: block !important;
+	width: 24px !important;
+	height: 2px !important;
+	background-color: var(--imf-white) !important;
+	border-radius: 2px !important;
+	transition: transform 0.3s ease, opacity 0.3s ease !important;
+}
+
+/* Fallback: if Genesis doesn't let our JS inject bars,
+   use outline to draw hamburger lines in white */
+.menu-toggle:not(:has(.hamburger-bar))::after {
+	content: '';
+	display: block;
+	width: 24px;
+	height: 2px;
+	background: var(--imf-white);
+	box-shadow: 0 7px 0 var(--imf-white), 0 14px 0 var(--imf-white);
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE FIXES v1.8.0
+   -------------------------------------------------------------------------- */
+
+/* Mobile tagline — no negative margin */
+@media (max-width: 768px) {
+	.imf-hero__tagline {
+		margin: 0px 0px 32px 0px !important;
+		transform: none !important;
+	}
+}
+
+/* Menu toggle — remove all Genesis border-radius, border, circle styling */
+.menu-toggle,
+.menu-toggle:hover,
+.menu-toggle:focus {
+	border-radius: 0 !important;
+	border: none !important;
+	outline: none !important;
+	box-shadow: none !important;
+	background: none !important;
+	padding: 14px 16px !important;
+}
+
+/* Hide "Menu" text — Genesis outputs a span.menu-toggle-text */
+.menu-toggle-text,
+.menu-toggle .menu-toggle-text {
+	display: none !important;
+	visibility: hidden !important;
+	width: 0 !important;
+	height: 0 !important;
+	overflow: hidden !important;
+	position: absolute !important;
+}
+
+/* Also hide via content if Genesis renders it as ::before text */
+.site-header .menu-toggle::before {
+	display: none !important;
+	content: '' !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   HAMBURGER TOGGLE v1.8.0
+   Our own button — Genesis responsive menu fully removed.
+   Show only on mobile, hide on desktop.
+   -------------------------------------------------------------------------- */
+
+/* Hide on desktop */
+@media (min-width: 960px) {
+	.menu-toggle {
+		display: none !important;
+	}
+}
+
+/* Mobile button — clean, no Genesis artifacts */
+@media (max-width: 959px) {
+	.menu-toggle {
+		display: flex !important;
+		flex-direction: column !important;
+		justify-content: center !important;
+		gap: 5px !important;
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		outline: none !important;
+		cursor: pointer !important;
+		padding: 14px 16px !important;
+		margin: 0 0 0 auto !important; /* push to right */
+		float: none !important;
+		position: relative !important;
+		z-index: 10000 !important;
+	}
+
+	.menu-toggle .hamburger-bar {
+		display: block !important;
+		width: 24px !important;
+		height: 2px !important;
+		background-color: var(--imf-white) !important;
+		border-radius: 2px !important;
+		transition: transform 0.3s ease, opacity 0.3s ease !important;
+	}
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE MENU v1.9.0 — body class approach
+   JS adds .mobile-menu-open to body. CSS does the rest.
+   Much more reliable than targeting .nav-primary.is-open
+   -------------------------------------------------------------------------- */
+
+/* Overlay */
+.imf-menu-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 9998;
+}
+
+.mobile-menu-open .imf-menu-overlay {
+	display: block;
+}
+
+/* Menu panel — hidden off-screen left by default */
+@media (max-width: 959px) {
+
+	.nav-primary .genesis-nav-menu {
+		position: fixed !important;
+		top: 0 !important;
+		left: 0 !important;
+		width: 75% !important;
+		height: 100vh !important;
+		background-color: var(--imf-navy) !important;
+		z-index: 9999 !important;
+		transform: translateX(-100%) !important;
+		transition: transform 0.35s ease !important;
+		overflow-y: auto !important;
+		padding: 50px 10px !important;
+		flex-direction: column !important;
+		align-items: flex-start !important;
+		display: flex !important;
+	}
+
+	/* Open state — body class triggers slide in */
+	.mobile-menu-open .nav-primary .genesis-nav-menu {
+		transform: translateX(0) !important;
+	}
+
+	/* Hamburger position fix — vertically center in header */
+	.menu-toggle {
+		position: absolute !important;
+		right: 16px !important;
+		top: 50% !important;
+		transform: translateY(-50%) !important;
+		margin: 0 !important;
+	}
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE MENU FINAL FIX v1.14.0
+   Overlay z-index must be BELOW menu panel so clicks on panel don't close it.
+   Menu panel must have explicit background and be clearly visible.
+   -------------------------------------------------------------------------- */
+
+/* Overlay — behind menu panel, clicking it closes menu */
+.imf-menu-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.55);
+	z-index: 9990; /* below menu panel at 9999 */
+	cursor: pointer;
+}
+
+.mobile-menu-open .imf-menu-overlay {
+	display: block;
+}
+
+/* Menu panel — explicit overrides to ensure it's visible */
+@media (max-width: 959px) {
+
+	.nav-primary .genesis-nav-menu {
+		position: fixed !important;
+		top: 0 !important;
+		left: 0 !important;
+		width: 75vw !important;
+		max-width: 320px !important;
+		height: 100vh !important;
+		background: #0D1F3C !important; /* hard-coded navy — no variable risk */
+		z-index: 9999 !important;
+		transform: translateX(-100%) !important;
+		transition: transform 0.3s ease !important;
+		overflow-y: auto !important;
+		padding: 60px 10px 40px !important;
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-start !important;
+		margin: 0 !important;
+		border: none !important;
+		box-shadow: 4px 0 20px rgba(0,0,0,0.4) !important;
+	}
+
+	/* Slide in when body has mobile-menu-open */
+	.mobile-menu-open .nav-primary .genesis-nav-menu {
+		transform: translateX(0) !important;
+	}
+
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE MENU FINAL FIX v1.15.0
+   Genesis Sample hides .nav-primary on mobile when .js body class is present.
+   We removed Genesis's responsive menu JS so nothing was showing it back.
+   Override: always show nav-primary, let the menu panel handle visibility.
+   -------------------------------------------------------------------------- */
+
+/* Override Genesis's .js .nav-primary { display: none } */
+.js .nav-primary {
+	display: block !important;
+}
+
+/* Hamburger X animation — bars transform into X when menu is open */
+.mobile-menu-open .menu-toggle .hamburger-bar:nth-child(1) {
+	transform: translateY(7px) rotate(45deg) !important;
+}
+.mobile-menu-open .menu-toggle .hamburger-bar:nth-child(2) {
+	opacity: 0 !important;
+	transform: scaleX(0) !important;
+}
+.mobile-menu-open .menu-toggle .hamburger-bar:nth-child(3) {
+	transform: translateY(-7px) rotate(-45deg) !important;
+}
+
+/* Smooth transition on all bars */
+.menu-toggle .hamburger-bar {
+	transition: transform 0.3s ease, opacity 0.2s ease !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER — 4 column widgets + bottom bar
+   -------------------------------------------------------------------------- */
+
+/* Override Genesis footer widget columns for 4-up layout */
+.footer-widgets .wrap {
+	max-width: 100%;
+	padding: 0 30px;
+}
+
+.footer-widgets-1,
+.footer-widgets-2,
+.footer-widgets-3,
+.footer-widgets-4 {
+	width: 25% !important;
+	padding: 0 15px;
+}
+
+/* Footer widget text styles */
+.footer-widgets {
+	background-color: var(--imf-navy);
+	padding: 60px 0 40px;
+}
+
+.footer-widgets .widget-title {
+	color: var(--imf-white);
+	font-family: var(--imf-font-display);
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	margin-bottom: 16px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid var(--imf-red);
+	display: inline-block;
+}
+
+.footer-widgets p,
+.footer-widgets li,
+.footer-widgets a {
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.7);
+	line-height: 1.8;
+}
+
+.footer-widgets a:hover {
+	color: var(--imf-white);
+}
+
+.footer-widgets ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.footer-widgets ul li {
+	padding: 3px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile — stack footer columns */
+@media (max-width: 768px) {
+	.footer-widgets-1,
+	.footer-widgets-2,
+	.footer-widgets-3,
+	.footer-widgets-4 {
+		width: 100% !important;
+		margin-bottom: 32px;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.footer-widgets-1,
+	.footer-widgets-2,
+	.footer-widgets-3,
+	.footer-widgets-4 {
+		width: 50% !important;
+		margin-bottom: 32px;
+	}
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER BOTTOM BAR
+   Full-width row below 4 columns.
+   Use for partner logos, social icons, copyright, etc.
+   -------------------------------------------------------------------------- */
+
+.footer-bottom-bar {
+	background-color: var(--imf-navy-dark);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 24px 30px;
+	width: 100%;
+}
+
+.footer-bottom-bar__inner {
+	max-width: var(--imf-max-width);
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 24px;
+}
+
+/* Partner logo images in the bottom bar */
+.footer-bottom-bar img {
+	max-height: 48px;
+	width: auto;
+	opacity: 0.75;
+	transition: opacity var(--imf-transition);
+	filter: brightness(0) invert(1); /* make logos white */
+}
+
+.footer-bottom-bar img:hover {
+	opacity: 1;
+}
+
+/* If logos have links */
+.footer-bottom-bar a {
+	display: inline-flex;
+	align-items: center;
+}
+
+.footer-bottom-bar .textwidget {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 24px;
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER STYLE OVERRIDES v1.17.0
+   -------------------------------------------------------------------------- */
+
+.footer-widgets {
+	background-color: rgba(0, 0, 0, 0.05);
+	padding: 60px 0 40px;
+}
+
+.footer-widgets .widget-title {
+	color: var(--imf-navy);
+	font-family: var(--imf-font-display);
+	font-size: 22px;
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: uppercase;
+	margin-bottom: 16px;
+	padding-bottom: 0;
+	border-bottom: none;
+	display: inline-block;
+}
+
+.footer-widgets p,
+.footer-widgets li,
+.footer-widgets a {
+	font-family: var(--imf-font-primary);
+	font-size: 14px;
+	color: #091f40;
+	line-height: 1.2;
+}
+
+.footer-widgets a:hover {
+	color: var(--imf-navy);
+	text-decoration: underline;
+}
+
+/* Footer bottom bar — remove logo invert filter, show full color */
+.footer-bottom-bar img {
+	filter: none;
+	opacity: 1;
+}
+
+.footer-bottom-bar img:hover {
+	opacity: 0.85;
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER STYLE OVERRIDES v1.18.0
+   -------------------------------------------------------------------------- */
+
+/* Contain footer content to 1200px centered */
+.footer-widgets .wrap {
+	max-width: 1200px !important;
+	margin: 0 auto !important;
+	padding: 0 30px !important;
+}
+
+/* List items — no padding, no border */
+.footer-widgets ul li {
+	padding: 0 !important;
+	border-bottom: none !important;
+}
+
+/* Body text — DIN, 18px, navy, 700, no underline */
+.footer-widgets p,
+.footer-widgets li,
+.footer-widgets a {
+	font-family: var(--imf-font-primary) !important;
+	font-size: 18px !important;
+	color: var(--imf-navy) !important;
+	line-height: 1.2 !important;
+	font-weight: 700 !important;
+	text-decoration: none !important;
+}
+
+/* Hover — no underline, subtle fade */
+.footer-widgets a:hover {
+	text-decoration: none !important;
+	opacity: 0.8 !important;
+	color: var(--imf-navy) !important;
+	transition: opacity 0.3s ease !important;
+}
+
+/* Footer bottom bar — match footer bg, full width gallery */
+.footer-bottom-bar {
+	background-color: rgba(0, 0, 0, 0.05) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Gallery widget inside bottom bar — full width, no constraints */
+.footer-bottom-bar .widget_media_gallery,
+.footer-bottom-bar .footer-bottom-widget {
+	width: 100% !important;
+	max-width: 100% !important;
+	float: none !important;
+}
+
+.footer-bottom-bar .gallery {
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+/* Remove WordPress default gallery image border */
+.gallery img,
+.gallery .gallery-item img {
+	border: none !important;
+	box-shadow: none !important;
+}
+
+
+/* Footer li margin */
+.footer-widgets ul li {
+	margin-bottom: 3px !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER BOTTOM BAR — logo white bg removal trick
+   mix-blend-mode: multiply makes white pixels transparent-looking
+   on light backgrounds. Works well with rgba(0,0,0,0.05) bg.
+   Add class "no-blend" to any img that looks wrong.
+   -------------------------------------------------------------------------- */
+
+.footer-bottom-bar img {
+	mix-blend-mode: multiply;
+}
+
+.footer-bottom-bar img.no-blend {
+	mix-blend-mode: normal;
+}
+
+
+/* --------------------------------------------------------------------------
+   GLOBAL DEFAULT STYLES
+   Applied outside of sections — white bg, dark text.
+   -------------------------------------------------------------------------- */
+
+body {
+	background-color: var(--client-bg);
+	color: var(--client-text);
+	font-family: var(--client-font-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--client-heading);
+	font-family: var(--client-font-display);
+	margin: 10px 0 5px;
+}
+
+a {
+	color: var(--client-link);
+	transition: color var(--ss-transition);
+}
+
+a:hover {
+	color: var(--client-link-hover);
+}
+
+/* Buttons */
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.wp-block-button__link,
+.simply-btn {
+	background-color: var(--client-accent) !important;
+	color: var(--client-accent-text) !important;
+	border-color: var(--client-accent) !important;
+	border-radius: 100px !important;
+	font-family: var(--client-font-display) !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.06em !important;
+	text-transform: uppercase !important;
+	transition: background-color var(--ss-transition),
+	            transform var(--ss-transition) !important;
+}
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+.wp-block-button__link:hover,
+.simply-btn:hover {
+	background-color: var(--client-accent-hover) !important;
+	color: var(--client-accent-text) !important;
+	transform: translateY(-1px) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   SECTION COLOR SCHEMES
+   Apply to any Gutenberg Group block or Toolset container.
+   Classes: .is-dark  .is-light  .is-brand-1  .is-brand-2
+
+   Usage in Gutenberg:
+     Select Group block -> Styles panel -> choose scheme
+     OR manually add class in Advanced -> Additional CSS class(es)
+
+   Usage in Toolset:
+     Container settings -> CSS Classes -> add "is-dark" etc.
+
+   Background images: override in client config CSS:
+     .is-dark { background-image: url('...'); background-size: cover; }
+   -------------------------------------------------------------------------- */
+
+/* Shared section base — FULL WIDTH bg, inner content contained */
+.is-dark,
+.is-light,
+.is-brand-1,
+.is-brand-2 {
+	width: 100%;
+	max-width: 100%;
+	padding: 80px 0; /* no horizontal padding here — lives on inner */
+}
+
+/* Inner containers — max-width centered, horizontal padding */
+.is-dark > .wp-block-group__inner-container,
+.is-light > .wp-block-group__inner-container,
+.is-brand-1 > .wp-block-group__inner-container,
+.is-brand-2 > .wp-block-group__inner-container,
+.is-dark > .tb-container-inner,
+.is-light > .tb-container-inner,
+.is-brand-1 > .tb-container-inner,
+.is-brand-2 > .tb-container-inner,
+.is-dark > .inner,
+.is-light > .inner,
+.is-brand-1 > .inner,
+.is-brand-2 > .inner {
+	max-width: var(--ss-max-width);
+	margin: 0 auto;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+/* --- DARK section --- */
+.is-dark {
+	background-color: var(--client-section-dark-bg);
+	color: var(--client-section-dark-text);
+}
+
+.is-dark h1,
+.is-dark h2,
+.is-dark h3,
+.is-dark h4,
+.is-dark h5,
+.is-dark h6 {
+	color: var(--client-section-dark-heading);
+}
+
+.is-dark a {
+	color: var(--client-section-dark-highlight);
+}
+
+.is-dark a:hover {
+	color: var(--client-section-dark-text);
+}
+
+.is-dark .button,
+.is-dark .wp-block-button__link,
+.is-dark .simply-btn {
+	background-color: var(--client-section-dark-highlight) !important;
+	border-color: var(--client-section-dark-highlight) !important;
+}
+
+/* --- LIGHT section --- */
+.is-light {
+	background-color: var(--client-section-light-bg);
+	color: var(--client-section-light-text);
+}
+
+.is-light h1,
+.is-light h2,
+.is-light h3,
+.is-light h4,
+.is-light h5,
+.is-light h6 {
+	color: var(--client-section-light-heading);
+}
+
+.is-light a {
+	color: var(--client-section-light-highlight);
+}
+
+.is-light a:hover {
+	opacity: 0.8;
+}
+
+.is-light .button,
+.is-light .wp-block-button__link,
+.is-light .simply-btn {
+	background-color: var(--client-section-light-highlight) !important;
+	border-color: var(--client-section-light-highlight) !important;
+}
+
+/* --- BRAND 1 section --- */
+.is-brand-1 {
+	background-color: var(--client-section-brand1-bg);
+	color: var(--client-section-brand1-text);
+}
+
+.is-brand-1 h1,
+.is-brand-1 h2,
+.is-brand-1 h3,
+.is-brand-1 h4,
+.is-brand-1 h5,
+.is-brand-1 h6 {
+	color: var(--client-section-brand1-heading);
+}
+
+.is-brand-1 a {
+	color: var(--client-section-brand1-highlight);
+}
+
+.is-brand-1 .button,
+.is-brand-1 .wp-block-button__link,
+.is-brand-1 .simply-btn {
+	background-color: var(--client-section-brand1-highlight) !important;
+	border-color: var(--client-section-brand1-highlight) !important;
+}
+
+/* --- BRAND 2 section --- */
+.is-brand-2 {
+	background-color: var(--client-section-brand2-bg);
+	color: var(--client-section-brand2-text);
+}
+
+.is-brand-2 h1,
+.is-brand-2 h2,
+.is-brand-2 h3,
+.is-brand-2 h4,
+.is-brand-2 h5,
+.is-brand-2 h6 {
+	color: var(--client-section-brand2-heading);
+}
+
+.is-brand-2 a {
+	color: var(--client-section-brand2-highlight);
+}
+
+.is-brand-2 .button,
+.is-brand-2 .wp-block-button__link,
+.is-brand-2 .simply-btn {
+	background-color: var(--client-section-brand2-highlight) !important;
+	border-color: var(--client-section-brand2-highlight) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   WIREFRAME MODE BANNER
+   Shown when simply_wireframe_mode option is true.
+   Clients see it. Admin bar toggle turns it off.
+   -------------------------------------------------------------------------- */
+
+.simply-wireframe-banner {
+	background-color: #f0a500;
+	color: #1a1a1a;
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	text-align: center;
+	padding: 10px 20px;
+	position: relative;
+	z-index: 99999;
+	letter-spacing: 0.04em;
+}
+
+.simply-wireframe-banner a {
+	color: #1a1a1a;
+	text-decoration: underline;
+	margin-left: 16px;
+	font-weight: 700;
+}
+
+.simply-wireframe-banner a:hover {
+	opacity: 0.7;
+}
+
+.simply-wireframe-banner__dismiss {
+	position: absolute;
+	right: 16px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	font-size: 18px;
+	line-height: 1;
+	opacity: 0.6;
+	background: none;
+	border: none;
+	padding: 0;
+	color: #1a1a1a;
+}
+
+.simply-wireframe-banner__dismiss:hover {
+	opacity: 1;
+}
+
+
+/* --------------------------------------------------------------------------
+   TOOLSET CONTAINER DEFAULTS
+   Outer container = full width (bg color/image bleeds edge to edge).
+   Inner container = max 1200px centered (content readable width).
+   Client config or inline Toolset settings override these.
+   -------------------------------------------------------------------------- */
+
+/* Outer container — full width, bg goes edge to edge */
+.tb-container {
+	width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
+}
+
+/* Inner container — constrained content width, centered */
+.tb-container .tb-container-inner {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	box-sizing: border-box !important;
+}
+
+/* Full-width inner override — add class "full-width" to container */
+.tb-container.full-width .tb-container-inner {
+	max-width: 100% !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+/* Narrow inner override — add class "narrow" to container (800px) */
+.tb-container.narrow .tb-container-inner {
+	max-width: 800px !important;
+}
+
+/* Section classes on Toolset containers — bg full width, inner contained */
+.tb-container.is-dark,
+.tb-container.is-light,
+.tb-container.is-brand-1,
+.tb-container.is-brand-2 {
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   GUTENBERG EDITOR — BLOCK STYLE PREVIEWS
+   Shows section colors in the Styles panel when selecting a style.
+   Makes it visual so you can see the color before applying.
+   -------------------------------------------------------------------------- */
+
+/* These target the editor iframe style previews */
+.editor-styles-wrapper .is-dark,
+.block-editor-block-list__layout .is-dark {
+	background-color: var(--client-section-dark-bg, #2d2d2d) !important;
+	color: var(--client-section-dark-text, #f5f5f5) !important;
+	padding: 20px !important;
+}
+
+.editor-styles-wrapper .is-light,
+.block-editor-block-list__layout .is-light {
+	background-color: var(--client-section-light-bg, #f5f5f5) !important;
+	color: var(--client-section-light-text, #2d2d2d) !important;
+	padding: 20px !important;
+}
+
+.editor-styles-wrapper .is-brand-1,
+.block-editor-block-list__layout .is-brand-1 {
+	background-color: var(--client-section-brand1-bg, #4a4a4a) !important;
+	color: var(--client-section-brand1-text, #ffffff) !important;
+	padding: 20px !important;
+}
+
+.editor-styles-wrapper .is-brand-2,
+.block-editor-block-list__layout .is-brand-2 {
+	background-color: var(--client-section-brand2-bg, #888888) !important;
+	color: var(--client-section-brand2-text, #ffffff) !important;
+	padding: 20px !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   SECTION FIX v2.3.0
+   Gutenberg outputs wp-block-group with is-style-dark class.
+   Genesis/Gutenberg's own CSS on .wp-block-group has high specificity.
+   Using !important + full selector path to win the cascade.
+   Also targeting is-layout-constrained which Gutenberg applies its own
+   max-width to — we need to override that too.
+   -------------------------------------------------------------------------- */
+
+/* DARK */
+.wp-block-group.is-style-dark,
+.wp-block-group.is-dark {
+	background-color: var(--client-section-dark-bg) !important;
+	color: var(--client-section-dark-text) !important;
+	padding-top: 80px !important;
+	padding-bottom: 80px !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.wp-block-group.is-style-dark h1, .wp-block-group.is-style-dark h2,
+.wp-block-group.is-style-dark h3, .wp-block-group.is-style-dark h4,
+.wp-block-group.is-dark h1, .wp-block-group.is-dark h2,
+.wp-block-group.is-dark h3, .wp-block-group.is-dark h4 {
+	color: var(--client-section-dark-heading) !important;
+}
+.wp-block-group.is-style-dark > .wp-block-group__inner-container,
+.wp-block-group.is-dark > .wp-block-group__inner-container {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	box-sizing: border-box !important;
+}
+
+/* LIGHT */
+.wp-block-group.is-style-light,
+.wp-block-group.is-light {
+	background-color: var(--client-section-light-bg) !important;
+	color: var(--client-section-light-text) !important;
+	padding-top: 80px !important;
+	padding-bottom: 80px !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.wp-block-group.is-style-light h1, .wp-block-group.is-style-light h2,
+.wp-block-group.is-style-light h3, .wp-block-group.is-style-light h4,
+.wp-block-group.is-light h1, .wp-block-group.is-light h2,
+.wp-block-group.is-light h3, .wp-block-group.is-light h4 {
+	color: var(--client-section-light-heading) !important;
+}
+.wp-block-group.is-style-light > .wp-block-group__inner-container,
+.wp-block-group.is-light > .wp-block-group__inner-container {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	box-sizing: border-box !important;
+}
+
+/* BRAND 1 */
+.wp-block-group.is-style-brand-1,
+.wp-block-group.is-brand-1 {
+	background-color: var(--client-section-brand1-bg) !important;
+	color: var(--client-section-brand1-text) !important;
+	padding-top: 80px !important;
+	padding-bottom: 80px !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.wp-block-group.is-style-brand-1 h1, .wp-block-group.is-style-brand-1 h2,
+.wp-block-group.is-style-brand-1 h3, .wp-block-group.is-style-brand-1 h4,
+.wp-block-group.is-brand-1 h1, .wp-block-group.is-brand-1 h2,
+.wp-block-group.is-brand-1 h3, .wp-block-group.is-brand-1 h4 {
+	color: var(--client-section-brand1-heading) !important;
+}
+.wp-block-group.is-style-brand-1 > .wp-block-group__inner-container,
+.wp-block-group.is-brand-1 > .wp-block-group__inner-container {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	box-sizing: border-box !important;
+}
+
+/* BRAND 2 */
+.wp-block-group.is-style-brand-2,
+.wp-block-group.is-brand-2 {
+	background-color: var(--client-section-brand2-bg) !important;
+	color: var(--client-section-brand2-text) !important;
+	padding-top: 80px !important;
+	padding-bottom: 80px !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.wp-block-group.is-style-brand-2 h1, .wp-block-group.is-style-brand-2 h2,
+.wp-block-group.is-style-brand-2 h3, .wp-block-group.is-style-brand-2 h4,
+.wp-block-group.is-brand-2 h1, .wp-block-group.is-brand-2 h2,
+.wp-block-group.is-brand-2 h3, .wp-block-group.is-brand-2 h4 {
+	color: var(--client-section-brand2-heading) !important;
+}
+.wp-block-group.is-style-brand-2 > .wp-block-group__inner-container,
+.wp-block-group.is-brand-2 > .wp-block-group__inner-container {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	box-sizing: border-box !important;
+}
+
+/* Group inner container — constrain content, match Toolset pattern
+   Outer .wp-block-group gets 25px default (Gutenberg) which our
+   padding-top/bottom/left/right overrides handle.
+   Inner .wp-block-group__inner-container gets 1200px + 5px buffer padding. */
+.wp-block-group.is-style-dark .wp-block-group__inner-container,
+.wp-block-group.is-style-light .wp-block-group__inner-container,
+.wp-block-group.is-style-brand-1 .wp-block-group__inner-container,
+.wp-block-group.is-style-brand-2 .wp-block-group__inner-container,
+.wp-block-group.is-dark .wp-block-group__inner-container,
+.wp-block-group.is-light .wp-block-group__inner-container,
+.wp-block-group.is-brand-1 .wp-block-group__inner-container,
+.wp-block-group.is-brand-2 .wp-block-group__inner-container {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+	box-sizing: border-box !important;
+}
+
+/* Override Gutenberg's is-layout-constrained — let our inner container rule win */
+.wp-block-group.is-style-dark .is-layout-constrained,
+.wp-block-group.is-style-light .is-layout-constrained,
+.wp-block-group.is-style-brand-1 .is-layout-constrained,
+.wp-block-group.is-style-brand-2 .is-layout-constrained,
+.wp-block-group.is-dark .is-layout-constrained,
+.wp-block-group.is-light .is-layout-constrained,
+.wp-block-group.is-brand-1 .is-layout-constrained,
+.wp-block-group.is-brand-2 .is-layout-constrained {
+	max-width: var(--ss-max-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}
+
+/* Toolset inner container — only applied when .tb-container-inner exists.
+   Outer .tb-container padding left to Toolset default (25px). */
+.tb-container.is-dark > .tb-container-inner,
+.tb-container.is-light > .tb-container-inner,
+.tb-container.is-brand-1 > .tb-container-inner,
+.tb-container.is-brand-2 > .tb-container-inner {
+	max-width: var(--ss-max-width) !important;
+	width: 100% !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+	box-sizing: border-box !important;
+}
+
+
+/* Toolset container — outer untouched (Toolset default 25px padding).
+   Only .tb-container-inner gets our max-width constraint when present.
+   If no inner container: colors apply, Toolset handles padding. */
+
