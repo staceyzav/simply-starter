@@ -1,13 +1,13 @@
 /**
  * Simply Starter — simply-scroll.js
- * Version: 1.7.0
+ * Version: 1.8.0
  * Author: Simply Design
  *
- * 1. Utility bar scroll-away
- * 2. Mobile menu — slide-in panel, X animation on hamburger
- * 3. Smooth scroll for menu anchor links
- * 4. Mobile sub-menu accordion
+ * 1. Mobile menu — slide-in panel, X animation on hamburger
+ * 2. Smooth scroll for menu anchor links
+ * 3. Mobile sub-menu accordion
  *
+ * Utility bar scroll-away moved to simply-utility-bar plugin.
  * No jQuery. Vanilla JS only.
  */
 
@@ -18,47 +18,11 @@
 	document.addEventListener( 'DOMContentLoaded', function () {
 
 		var body       = document.body;
-		var utilityBar = document.querySelector( '.simply-utility-bar' );
 		var menuToggle = document.querySelector( '.menu-toggle' );
-		var THRESHOLD  = 20;
-		var ticking    = false;
-		var wasScrolled = false;
-
-		console.log( 'Simply Starter scroll JS v1.0.0 loaded' );
 
 
 		// -----------------------------------------------------------------
-		// 1. UTILITY BAR SCROLL-AWAY
-		// -----------------------------------------------------------------
-
-		if ( utilityBar ) body.classList.add( 'has-utility-bar' );
-
-		function onScroll() {
-			var y = window.scrollY || window.pageYOffset;
-			var scrolled = y > THRESHOLD;
-			if ( scrolled === wasScrolled ) return;
-			wasScrolled = scrolled;
-			if ( scrolled ) {
-				if ( utilityBar ) utilityBar.classList.add( 'scrolled-away' );
-				body.classList.add( 'scrolled' );
-			} else {
-				if ( utilityBar ) utilityBar.classList.remove( 'scrolled-away' );
-				body.classList.remove( 'scrolled' );
-			}
-		}
-
-		window.addEventListener( 'scroll', function () {
-			if ( ! ticking ) {
-				ticking = true;
-				requestAnimationFrame( function () { onScroll(); ticking = false; } );
-			}
-		}, { passive: true } );
-
-		onScroll();
-
-
-		// -----------------------------------------------------------------
-		// 2. MOBILE MENU
+		// 1. MOBILE MENU
 		// -----------------------------------------------------------------
 
 		if ( ! menuToggle ) return;
@@ -100,7 +64,7 @@
 
 
 		// -----------------------------------------------------------------
-		// 3. SMOOTH SCROLL — menu anchor links close menu then scroll
+		// 2. SMOOTH SCROLL — menu anchor links close menu then scroll
 		// -----------------------------------------------------------------
 
 		document.querySelectorAll( '.nav-primary a[href*="#"]' ).forEach( function ( link ) {
@@ -121,7 +85,7 @@
 
 
 		// -----------------------------------------------------------------
-		// 4. ACCORDION (mobile only)
+		// 3. ACCORDION (mobile only)
 		// -----------------------------------------------------------------
 
 		document.querySelectorAll( '.nav-primary .menu-item-has-children' )

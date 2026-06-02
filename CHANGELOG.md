@@ -1,6 +1,108 @@
 # Simply Starter — Changelog
 https://simplydesign.com
 
+## [2.9.2] — 2026-06-02
+
+### Fixed
+- Override Genesis 60px entry margin-bottom at 960px+ (zeroed out)
+
+---
+
+## [2.9.1] — 2026-06-02
+
+### Changed
+- Removed front-end post edit link (the "(Edit)" link shown to logged-in users)
+
+---
+
+## [2.9.0] — 2026-06-02
+
+### Changed
+- Hero CSS removed — moved to imf-core plugin (assets/css/imf-hero.css)
+  Consolidated 3 scattered tagline override blocks into one clean rule
+
+---
+
+## [2.8.9] — 2026-06-02
+
+### Fixed
+- Removed Genesis's responsive menu toggle button — emptied responsive-menus.php
+  so Genesis no longer outputs its own <button class="menu-toggle">
+  (was rendering a stray = character over the logo from unloaded dashicons)
+- Logo padding-left changed from 5% to 15px
+
+---
+
+## [2.8.8] — 2026-06-02
+
+### Fixed
+- Hamburger button no longer drops on hover — global button:hover transform
+  was overwriting the translateY(-50%) centering; locked it on :hover
+
+---
+
+## [2.8.7] — 2026-06-02
+
+### Fixed
+- Section colors: added explicit p/li/span color rules with !important for all four
+  section types (.is-dark, .is-light, .is-brand-1, .is-brand-2)
+  Toolset generates per-container p color CSS with high specificity that beats
+  inherited color — explicit rules win it back
+
+---
+
+## [2.8.6] — 2026-06-02
+
+### Changed
+- Header wrap: padding-right 5px default (was 0) — baseline buffer for nav right edge
+  IMF config overrides to 0 so CTA button sits flush with screen edge
+
+---
+
+## [2.8.5] — 2026-06-02
+
+### Changed
+- simply-scroll.js v1.8.0 — utility bar scroll-away removed (moved to simply-utility-bar plugin)
+  Remaining: mobile menu, smooth scroll, accordion
+
+---
+
+## [2.8.4] — 2026-06-02
+
+### Fixed
+- Section color class inner containers: padding-left/right changed from 5% to 5px
+  to match the JS-set default on Toolset containers
+
+---
+
+## [2.8.3] — 2026-06-02
+
+### Changed
+- simply-editor.js v1.1.0 — now sets padding defaults on new Toolset containers
+  (80px top/bottom, 5px left/right) via block attributes, same pattern as inner width
+- Reverted CSS padding on .tb-container-inner — padding belongs on outer container,
+  set via JS so it's stored as block attribute and editable per-container in the editor
+
+---
+
+## [2.8.2] — 2026-06-02
+
+### Changed
+- Toolset container inner: default padding set to 80px top/bottom, 5px left/right
+- Section-class container inner: vertical padding zeroed (outer section class provides 80px)
+
+---
+
+## [2.8.1] — 2026-06-02
+
+### Fixed
+- Toolset container inner width now overridable per-container — removed `!important`
+  from `max-width` on `.tb-container .tb-container-inner` and section-class variants.
+  Higher specificity (two-class selector) still beats Toolset's stylesheet default (1024px).
+  Toolset inline styles set per-container in the editor now correctly take effect.
+
+---
+
 ## [2.8.0] — 2026-05-27
 
 ### Fixed

@@ -1,16 +1,18 @@
 /**
  * Simply Starter — simply-editor.js
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Simply Design
  *
- * Sets default inner container width on Toolset containers.
+ * Sets default inner container width AND padding on new Toolset containers.
  * Runs in the block editor only — not on the front end.
  *
  * Uses wp.data.subscribe to watch for newly inserted Toolset containers
- * with null inner width and immediately sets them to the configured default.
+ * with null inner width and immediately sets them to the configured defaults.
  *
  * Width value localized from PHP via simplyEditorData.containerWidth
  * (set in Appearance -> Simply Starter -> Container Settings)
+ *
+ * Padding defaults: 80px top/bottom, 5px left/right
  */
 
 ( function () {
@@ -64,17 +66,29 @@
 
 					processed[ block.clientId ] = true;
 
+					// Spread existing style so we don't wipe other style properties
+					var existingStyle = block.attributes.style || {};
+
 					dispatch.updateBlockAttributes( block.clientId, {
 						inner: {
 							width:     containerWidth,
 							widthUnit: 'px',
-						}
+						},
+						style: Object.assign( {}, existingStyle, {
+							padding: {
+								enabled:       true,
+								paddingTop:    '80px',
+								paddingBottom: '80px',
+								paddingLeft:   '5px',
+								paddingRight:  '5px',
+							}
+						} )
 					} );
 
 					console.log(
 						'Simply Starter: set Toolset container ' +
 						block.clientId +
-						' inner width to ' + containerWidth + 'px'
+						' — width: ' + containerWidth + 'px, padding: 80px 5px'
 					);
 				} else {
 					// Already has a width set — mark as processed, don't touch

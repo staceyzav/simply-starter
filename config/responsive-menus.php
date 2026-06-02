@@ -1,23 +1,10 @@
 <?php
 /**
- * Genesis Sample child theme.
+ * Genesis Sample child theme — responsive menus config.
  *
- * @package Genesis Sample
- * @author  StudioPress
- * @license GPL-2.0-or-later
- * @link    https://my.studiopress.com/themes/genesis-sample/
+ * Returning empty array disables Genesis's toggle button output.
+ * Simply Starter uses its own hamburger button (simply_hamburger_toggle
+ * hooked to genesis_header at priority 11) and its own mobile menu JS.
  */
 
-/**
- * Genesis responsive menus settings. (Requires Genesis 3.0+.)
- */
-return [
-	'script' => [
-		'menuClasses' => [
-			'others' => [ '.nav-primary' ],
-		],
-	],
-	'extras' => [
-		'media_query_width' => '960px',
-	],
-];
+return [];

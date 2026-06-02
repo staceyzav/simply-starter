@@ -323,7 +323,7 @@ function simply_enqueue_scroll_js() {
 		'imf-scroll',
 		get_stylesheet_directory_uri() . '/assets/js/simply-scroll.js',
 		array(),
-		'1.7.0', // bump this version any time imf-scroll.js changes to bust cache
+		'1.8.0', // bump this version any time simply-scroll.js changes to bust cache
 		true     // load in footer
 	);
 }
@@ -894,7 +894,7 @@ function simply_enqueue_editor_script() {
 		'simply-editor',
 		get_stylesheet_directory_uri() . '/assets/js/simply-editor.js',
 		array( 'wp-blocks', 'wp-dom-ready', 'wp-data', 'wp-edit-post' ),
-		'1.0.0',
+		'1.2.0',
 		true
 	);
 
@@ -938,3 +938,6 @@ function simply_footer_bottom_bar() {
 	echo '</div>';
 	echo '</div>';
 }
+
+// Remove the front-end post edit link for logged-in users
+add_filter( 'edit_post_link', '__return_empty_string' );
