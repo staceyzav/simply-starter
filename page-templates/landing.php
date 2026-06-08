@@ -47,6 +47,7 @@ function genesis_sample_dequeue_skip_links() {
 remove_action( 'genesis_header', 'genesis_header_markup_open', 5 );
 remove_action( 'genesis_header', 'genesis_do_header' );
 remove_action( 'genesis_header', 'genesis_header_markup_close', 15 );
+remove_action( 'genesis_header', 'simply_hamburger_toggle', 11 );
 
 // Removes page title.
 remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
