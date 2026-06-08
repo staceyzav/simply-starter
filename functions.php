@@ -1321,6 +1321,42 @@ function simply_save_featured_image_toggle( $post_id ) {
 
 
 // ==========================================================================
+// OPEN GRAPH — og:image + basic tags for link previews (iMessage, Slack, etc.)
+// Uses the page/post featured image. Falls back to the site icon if set.
+// ==========================================================================
+
+add_action( 'wp_head', 'simply_og_tags', 1 );
+
+function simply_og_tags() {
+	if ( ! is_singular() ) return;
+
+	$post_id = get_queried_object_id();
+
+	$title       = get_the_title( $post_id );
+	$url         = get_permalink( $post_id );
+	$description = has_excerpt( $post_id )
+		? get_the_excerpt()
+		: wp_trim_words( get_post_field( 'post_content', $post_id ), 30, '' );
+
+	$image_url = '';
+	if ( has_post_thumbnail( $post_id ) ) {
+		$image_url = get_the_post_thumbnail_url( $post_id, 'full' );
+	} elseif ( has_site_icon() ) {
+		$image_url = get_site_icon_url( 512 );
+	}
+
+	echo '<meta property="og:type"        content="website">' . "\n";
+	echo '<meta property="og:url"         content="' . esc_url( $url ) . '">' . "\n";
+	echo '<meta property="og:title"       content="' . esc_attr( $title ) . '">' . "\n";
+	echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+	if ( $image_url ) {
+		echo '<meta property="og:image"       content="' . esc_url( $image_url ) . '">' . "\n";
+		echo '<meta name="twitter:card"       content="summary_large_image">' . "\n";
+		echo '<meta name="twitter:image"      content="' . esc_url( $image_url ) . '">' . "\n";
+	}
+}
+
+// ==========================================================================
 // COMMENTS — sitewide disable toggle
 // Controlled via Appearance → Simply Starter → Site Settings.
 // ==========================================================================
