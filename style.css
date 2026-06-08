@@ -3848,6 +3848,10 @@ input[type="submit"]:hover,
 	padding-top: 0;
 }
 
+.landing-page .menu-toggle {
+	display: none;
+}
+
 
 /* Override Genesis entry margin-bottom at 960px+ */
 @media only screen and (min-width: 960px) {
