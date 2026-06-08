@@ -367,6 +367,16 @@ Duplicate the Simply Branded plugin template, rename for the client, then:
 
 ---
 
+## Roadmap — Before Going Public
+
+Things to complete before releasing Simply plugins publicly or to additional clients:
+
+- [ ] **Simply Events → Simply Blocks integration** — Build a Simply Events block inside Simply Blocks so events can be placed as a native Gutenberg block (like Simply Section/News). The shortcode version stays but the block version should be the primary interface. Do this before any public release.
+- [ ] Tag v1.0.0 releases on GitHub for simply-evite, simply-blocks, and simply-starter once stable
+- [ ] Generate a read-only fine-grained GitHub token scoped to Simply repos only (replace the full-scope token in wp-config.php files)
+
+---
+
 ## Wireframe Mode
 
 Toggle from the WordPress admin bar. When ON:
