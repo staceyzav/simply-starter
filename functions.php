@@ -15,6 +15,10 @@
 // Starts the engine.
 require_once get_template_directory() . '/lib/init.php';
 
+// GitHub auto-updater — checks staceyzav/simply-starter for new releases.
+require_once get_stylesheet_directory() . '/includes/class-github-updater.php';
+new Simply_GitHub_Updater( 'theme', 'simply-starter', 'staceyzav/simply-starter', '2.10.1' );
+
 // Sets up the Theme.
 require_once get_stylesheet_directory() . '/lib/theme-defaults.php';
 
@@ -58,8 +62,10 @@ function genesis_child_gutenberg_support() { // phpcs:ignore WordPress.NamingCon
 	require_once get_stylesheet_directory() . '/lib/gutenberg/init.php';
 }
 
+require_once get_stylesheet_directory() . '/includes/style-guide-content.php';
+
 // Genesis responsive menu system removed entirely.
-// IMF uses its own slide-in mobile menu via imf-scroll.js.
+// Simply Starter uses its own slide-in mobile menu via simply-scroll.js.
 
 // Dequeue Genesis responsive menu scripts — we don't use them.
 add_action( 'wp_enqueue_scripts', 'simply_dequeue_genesis_responsive_menu', 99 );
@@ -77,7 +83,7 @@ function simply_hamburger_toggle() {
 		. '<span class="hamburger-bar"></span>'
 		. '<span class="hamburger-bar"></span>'
 		. '<span class="hamburger-bar"></span>'
-		. '<span class="imf-sr-only">Open menu</span>'
+		. '<span class="sr-only">Open menu</span>'
 		. '</button>';
 }
 
@@ -291,7 +297,7 @@ function genesis_sample_comments_gravatar( $args ) {
 
 
 // ==========================================================================
-// IMF THEME ADDITIONS — Simply Design
+// SIMPLY STARTER ADDITIONS — Simply Design
 // Appended below all Genesis Sample functions.
 // ==========================================================================
 
@@ -299,14 +305,14 @@ function genesis_sample_comments_gravatar( $args ) {
 
 // --------------------------------------------------------------------------
 // BODY CLASSES
-// .imf-homepage → transparent header overlays hero
-// .imf-interior → always solid navy header
+// .ss-homepage → transparent header overlays hero on front page
+// .ss-interior → solid header on all interior pages
 // --------------------------------------------------------------------------
 
 add_filter( 'body_class', 'simply_body_classes' );
 
 function simply_body_classes( $classes ) {
-	$classes[] = is_front_page() ? 'imf-homepage' : 'imf-interior';
+	$classes[] = is_front_page() ? 'ss-homepage' : 'ss-interior';
 	return $classes;
 }
 
@@ -320,7 +326,7 @@ add_action( 'wp_enqueue_scripts', 'simply_enqueue_scroll_js' );
 
 function simply_enqueue_scroll_js() {
 	wp_enqueue_script(
-		'imf-scroll',
+		'simply-scroll',
 		get_stylesheet_directory_uri() . '/assets/js/simply-scroll.js',
 		array(),
 		'1.8.0', // bump this version any time simply-scroll.js changes to bust cache
@@ -344,6 +350,9 @@ function simply_container_css() {
 	$width = (int) get_option( 'simply_container_width', 1200 );
 
 	$css = "
+		:root {
+			--ss-max-width: {$width}px;
+		}
 		.tb-container-inner {
 			max-width: {$width}px;
 			margin-left: auto;
@@ -415,6 +424,12 @@ function simply_register_block_styles() {
 			register_block_style( $block, $style );
 		}
 	}
+
+	// Eyebrow / Label style for heading blocks
+	register_block_style( 'core/heading', array(
+		'name'  => 'eyebrow',
+		'label' => 'Label / Eyebrow',
+	) );
 }
 
 
@@ -574,6 +589,38 @@ function simply_render_welcome_page() {
 				<span style="margin-left:12px;color:#666;font-size:13px;">Client config will be auto-reactivated when you turn wireframe off.</span>
 			<?php endif; ?>
 		</p>
+
+		<hr>
+
+		<!-- SITE SETTINGS -->
+		<h2>Site Settings</h2>
+
+		<?php if ( isset( $_GET['settings-updated'] ) ) : ?>
+		<div style="background:#d4edda;border:1px solid #28a745;border-radius:6px;padding:12px 16px;margin-bottom:20px;">
+			<strong>✓ Settings saved.</strong>
+		</div>
+		<?php endif; ?>
+
+		<form method="post">
+			<?php wp_nonce_field( 'simply_site_settings', 'simply_site_settings_nonce' ); ?>
+
+			<table class="form-table" style="max-width:600px;">
+				<tr>
+					<th style="width:200px;padding:12px 0;">
+						<label for="simply_disable_comments">Disable Comments</label>
+					</th>
+					<td style="padding:12px 0;">
+						<label>
+							<input type="checkbox" id="simply_disable_comments" name="simply_disable_comments" value="1"
+								<?php checked( get_option( 'simply_disable_comments', 0 ), 1 ); ?>>
+							Disable comments sitewide (hides comment forms, closes comments on all posts)
+						</label>
+					</td>
+				</tr>
+			</table>
+
+			<?php submit_button( 'Save Settings', 'primary', 'submit', false ); ?>
+		</form>
 
 		<hr>
 
@@ -886,6 +933,36 @@ function simply_welcome_page_output() {
 // Configurable in Appearance -> Simply Starter -> Container Settings.
 // ==========================================================================
 
+// Inject list styles directly into the block editor iframe.
+// Frontend uses .entry-content scope; editor has no such wrapper so styles
+// must be injected separately via block_editor_settings_all.
+add_filter( 'block_editor_settings_all', 'simply_editor_list_styles' );
+
+function simply_editor_list_styles( $settings ) {
+	$settings['styles'][] = array( 'css' => '
+		ul, ol { padding-left: 40px; margin-bottom: 30px; }
+		ul > li { list-style-type: disc; margin-bottom: 10px; }
+		ol > li { list-style-type: decimal; margin-bottom: 10px; }
+		ul ul > li, ol ul > li { list-style-type: circle; }
+		ul ol > li, ol ol > li { list-style-type: decimal; }
+		ul ul, ol ul, ul ol, ol ol { margin-bottom: 0; }
+	' );
+	return $settings;
+}
+
+
+add_action( 'enqueue_block_editor_assets', 'simply_enqueue_editor_blocks' );
+
+function simply_enqueue_editor_blocks() {
+	wp_enqueue_script(
+		'simply-editor-blocks',
+		get_stylesheet_directory_uri() . '/assets/js/simply-editor-blocks.js',
+		array( 'wp-hooks', 'wp-element', 'wp-compose', 'wp-block-editor', 'wp-components' ),
+		'1.0.0',
+		true
+	);
+}
+
 add_action( 'enqueue_block_editor_assets', 'simply_enqueue_editor_script' );
 
 function simply_enqueue_editor_script() {
@@ -941,3 +1018,331 @@ function simply_footer_bottom_bar() {
 
 // Remove the front-end post edit link for logged-in users
 add_filter( 'edit_post_link', '__return_empty_string' );
+
+// ==========================================================================
+// FOOTER CREDITS
+// Appends "Website by Simply Design" to the Genesis footer text.
+// Falls back to copyright + site name if no footer text is set in Genesis.
+// ==========================================================================
+
+add_filter( 'genesis_pre_get_option_footer_text', 'simply_footer_credits' );
+
+function simply_footer_credits( $value ) {
+	$settings    = get_option( 'genesis-settings', array() );
+	$footer_text = ! empty( $settings['footer_text'] )
+		? $settings['footer_text']
+		: 'Copyright &copy; ' . date( 'Y' ) . ' &middot; ' . get_bloginfo( 'name' );
+
+	return $footer_text
+		. ' &nbsp;&nbsp;&bull;&nbsp;&nbsp; Website by <a href="https://simplydesign.com" target="_blank" rel="noopener noreferrer">Simply Design</a>';
+}
+
+// Replace linked author with plain name in post meta
+add_filter( 'genesis_post_info', function( $info ) {
+	return str_replace( '[post_author_posts_link]', '[post_author]', $info );
+} );
+
+// Remove "Filed Under" categories from post footer meta
+add_filter( 'genesis_post_meta', function( $meta ) {
+	return str_replace( '[post_categories]', '', trim( $meta ) );
+} );
+
+
+// ==========================================================================
+// STYLE GUIDE PAGE
+// Created automatically on theme activation. Skipped if already exists.
+// ==========================================================================
+
+add_action( 'after_switch_theme', 'simply_create_style_guide' );
+
+function simply_create_style_guide() {
+	$existing = get_page_by_path( 'style-guide' );
+	if ( $existing ) return;
+
+	$page_id = wp_insert_post( array(
+		'post_title'     => 'Style Guide',
+		'post_name'      => 'style-guide',
+		'post_content'   => simply_style_guide_content(),
+		'post_status'    => 'draft',
+		'post_type'      => 'page',
+		'page_template'  => 'page-templates/page-builder.php',
+		'comment_status' => 'closed',
+	) );
+
+	if ( $page_id && ! is_wp_error( $page_id ) ) {
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/page-builder.php' );
+	}
+}
+
+
+// ==========================================================================
+// WIDGET CSS CLASS
+// Adds a "CSS Class" field to every widget settings form.
+// The class is applied to the widget's outer wrapper element.
+// In the block widget editor, individual blocks also support
+// Advanced → Additional CSS class(es) per block.
+// ==========================================================================
+
+// Add CSS class input to each widget form
+add_action( 'in_widget_form', function( $widget, $return, $instance ) {
+	$css_class = isset( $instance['simply_css_class'] ) ? $instance['simply_css_class'] : '';
+	?>
+	<div style="border-top:1px solid #ddd;margin-top:10px;padding-top:10px;">
+		<label for="<?php echo esc_attr( $widget->get_field_id( 'simply_css_class' ) ); ?>" style="display:block;font-weight:600;font-size:12px;margin-bottom:4px;">
+			<?php esc_html_e( 'CSS Class', 'simply-starter' ); ?>
+		</label>
+		<input type="text"
+			id="<?php echo esc_attr( $widget->get_field_id( 'simply_css_class' ) ); ?>"
+			name="<?php echo esc_attr( $widget->get_field_name( 'simply_css_class' ) ); ?>"
+			value="<?php echo esc_attr( $css_class ); ?>"
+			style="width:100%;"
+			placeholder="my-class another-class">
+	</div>
+	<?php
+}, 10, 3 );
+
+// Save the CSS class value
+add_filter( 'widget_update_callback', function( $instance, $new_instance ) {
+	$instance['simply_css_class'] = isset( $new_instance['simply_css_class'] )
+		? sanitize_text_field( $new_instance['simply_css_class'] )
+		: '';
+	return $instance;
+}, 10, 2 );
+
+// Inject class into the widget wrapper before_widget
+add_filter( 'dynamic_sidebar_params', function( $params ) {
+	global $wp_registered_widgets;
+
+	$widget_id = $params[0]['widget_id'];
+
+	if ( ! isset( $wp_registered_widgets[ $widget_id ] ) ) return $params;
+
+	$widget_obj = $wp_registered_widgets[ $widget_id ];
+
+	if ( ! isset( $widget_obj['callback'][0] ) || ! is_object( $widget_obj['callback'][0] ) ) return $params;
+
+	$widget        = $widget_obj['callback'][0];
+	$all_instances = $widget->get_settings();
+	$number        = $params[1]['number'];
+
+	if ( ! isset( $all_instances[ $number ]['simply_css_class'] ) ) return $params;
+
+	$extra = trim( $all_instances[ $number ]['simply_css_class'] );
+
+	if ( empty( $extra ) ) return $params;
+
+	// Append to the first class=" attribute found in before_widget, whatever its value
+	$params[0]['before_widget'] = preg_replace(
+		'/class="([^"]*)"/',
+		'class="$1 ' . esc_attr( $extra ) . '"',
+		$params[0]['before_widget'],
+		1
+	);
+
+	return $params;
+} );
+
+
+// ==========================================================================
+// YOU MAY ALSO LIKE — related posts section
+// Outputs before footer on single posts. Same-category posts first,
+// falls back to most recent if category has fewer than 3 matches.
+// Uses sn-card markup (simply-news plugin) for consistent card design.
+// ==========================================================================
+
+add_action( 'genesis_before_footer', 'simply_also_like_section', 5 );
+
+function simply_also_like_section() {
+	if ( ! is_singular( 'post' ) ) return;
+
+	$post_id = get_the_ID();
+	$limit   = 3;
+
+	// Try same-category posts first
+	$cats  = get_the_category( $post_id );
+	$posts = array();
+
+	if ( $cats ) {
+		$posts = get_posts( array(
+			'post_type'      => 'post',
+			'posts_per_page' => $limit,
+			'post__not_in'   => array( $post_id ),
+			'category__in'   => wp_list_pluck( $cats, 'term_id' ),
+			'post_status'    => 'publish',
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		) );
+	}
+
+	// Fall back to most recent posts
+	if ( count( $posts ) < $limit ) {
+		$exclude = array_merge( array( $post_id ), wp_list_pluck( $posts, 'ID' ) );
+		$fill    = get_posts( array(
+			'post_type'      => 'post',
+			'posts_per_page' => $limit - count( $posts ),
+			'post__not_in'   => $exclude,
+			'post_status'    => 'publish',
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		) );
+		$posts = array_merge( $posts, $fill );
+	}
+
+	if ( empty( $posts ) ) return;
+
+	?>
+	<section class="simply-also-like is-dark">
+		<div class="simply-also-like__inner">
+
+			<h2>You May Also Like</h2>
+
+			<div class="sn-feed" style="--sn-columns: 3">
+				<?php foreach ( $posts as $post ) : setup_postdata( $post ); ?>
+					<?php
+					$permalink = get_permalink( $post->ID );
+					$cats      = get_the_category( $post->ID );
+					$cat_label = $cats ? esc_html( strtoupper( $cats[0]->name ) ) : '';
+					$thumb_url = get_the_post_thumbnail_url( $post->ID, 'large' );
+					?>
+					<article class="sn-card">
+						<a class="sn-card__link" href="<?php echo esc_url( $permalink ); ?>" aria-label="<?php echo esc_attr( get_the_title( $post->ID ) ); ?>"></a>
+						<?php if ( $thumb_url ) : ?>
+						<div class="sn-card__photo">
+							<img src="<?php echo esc_url( $thumb_url ); ?>" alt="<?php echo esc_attr( get_the_title( $post->ID ) ); ?>" loading="lazy">
+						</div>
+						<?php endif; ?>
+						<div class="sn-card__body">
+							<?php if ( $cat_label ) : ?>
+							<p class="sn-card__category"><?php echo $cat_label; ?></p>
+							<?php endif; ?>
+							<h3 class="sn-card__title"><?php echo esc_html( get_the_title( $post->ID ) ); ?></h3>
+							<span class="sn-card__read-more"><?php esc_html_e( 'Read Now', 'simply-starter' ); ?></span>
+						</div>
+					</article>
+				<?php endforeach; wp_reset_postdata(); ?>
+			</div>
+
+		</div>
+	</section>
+	<?php
+}
+
+
+// ==========================================================================
+// DEFAULT TEMPLATE BEHAVIOR
+// Pages default to Page Builder (full-width, no title/meta).
+// Posts default to Standard Post (800px reading width).
+// User overrides by choosing a different template in the editor.
+// ==========================================================================
+
+add_action( 'genesis_before', 'simply_apply_default_layout' );
+
+function simply_apply_default_layout() {
+	$template   = get_page_template_slug();
+	$is_default = empty( $template ) || $template === 'default';
+
+	if ( is_page() && $is_default ) {
+		add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
+		remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+		remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
+		remove_action( 'genesis_entry_footer', 'genesis_post_meta' );
+	}
+}
+
+// body_class fires before genesis_before so post layout class needs its own hook
+add_filter( 'body_class', 'simply_post_layout_body_class' );
+
+function simply_post_layout_body_class( $classes ) {
+	if ( ! is_singular( 'post' ) ) return $classes;
+	$template = get_page_template_slug();
+	if ( empty( $template ) || $template === 'default' ) {
+		$classes[] = 'simply-post-layout';
+		// Also hook featured image for default posts
+		add_action( 'genesis_before_entry_content', 'simply_post_featured_image_default' );
+	}
+	return $classes;
+}
+
+function simply_post_featured_image_default() {
+	if ( ! has_post_thumbnail() ) return;
+	if ( get_post_meta( get_the_ID(), '_simply_hide_featured_image', true ) ) return;
+	echo '<div class="simply-post-hero">';
+	the_post_thumbnail( 'large', array( 'alt' => esc_attr( get_the_title() ) ) );
+	echo '</div>';
+}
+
+
+// ==========================================================================
+// FEATURED IMAGE TOGGLE — meta box on posts
+// ==========================================================================
+
+add_action( 'add_meta_boxes', 'simply_featured_image_meta_box' );
+
+function simply_featured_image_meta_box() {
+	add_meta_box(
+		'simply_featured_image_toggle',
+		__( 'Featured Image Display', 'simply-starter' ),
+		'simply_featured_image_meta_box_cb',
+		'post',
+		'side',
+		'low'
+	);
+}
+
+function simply_featured_image_meta_box_cb( $post ) {
+	wp_nonce_field( 'simply_featured_image_toggle', 'simply_featured_image_nonce' );
+	$hide = get_post_meta( $post->ID, '_simply_hide_featured_image', true );
+	?>
+	<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+		<input type="checkbox" name="simply_hide_featured_image" value="1" <?php checked( $hide, '1' ); ?>>
+		<?php esc_html_e( 'Hide featured image in single post view', 'simply-starter' ); ?>
+	</label>
+	<?php
+}
+
+add_action( 'save_post_post', 'simply_save_featured_image_toggle' );
+
+function simply_save_featured_image_toggle( $post_id ) {
+	if (
+		! isset( $_POST['simply_featured_image_nonce'] ) ||
+		! wp_verify_nonce( $_POST['simply_featured_image_nonce'], 'simply_featured_image_toggle' ) ||
+		defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ||
+		! current_user_can( 'edit_post', $post_id )
+	) {
+		return;
+	}
+
+	if ( isset( $_POST['simply_hide_featured_image'] ) ) {
+		update_post_meta( $post_id, '_simply_hide_featured_image', '1' );
+	} else {
+		delete_post_meta( $post_id, '_simply_hide_featured_image' );
+	}
+}
+
+
+// ==========================================================================
+// COMMENTS — sitewide disable toggle
+// Controlled via Appearance → Simply Starter → Site Settings.
+// ==========================================================================
+
+add_action( 'admin_init', 'simply_handle_site_settings' );
+
+function simply_handle_site_settings() {
+	if ( ! isset( $_POST['simply_site_settings_nonce'] ) ) return;
+	if ( ! wp_verify_nonce( $_POST['simply_site_settings_nonce'], 'simply_site_settings' ) ) return;
+	if ( ! current_user_can( 'manage_options' ) ) return;
+
+	update_option( 'simply_disable_comments', isset( $_POST['simply_disable_comments'] ) ? 1 : 0 );
+
+	wp_safe_redirect( admin_url( 'themes.php?page=simply-starter-welcome&settings-updated=1' ) );
+	exit;
+}
+
+if ( get_option( 'simply_disable_comments', 0 ) ) {
+	add_filter( 'comments_open',  '__return_false', 20 );
+	add_filter( 'pings_open',     '__return_false', 20 );
+	add_filter( 'comments_array', '__return_empty_array', 20 );
+	add_action( 'admin_menu', function() {
+		remove_menu_page( 'edit-comments.php' );
+	}, 99 );
+}

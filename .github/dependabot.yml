@@ -1,0 +1,15 @@
+version: 2
+updates:
+
+  # GitHub Actions — monitors workflow dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # npm — uncomment when Simply Blocks package.json is added
+  # - package-ecosystem: "npm"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   open-pull-requests-limit: 5

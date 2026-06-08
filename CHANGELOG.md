@@ -1,6 +1,30 @@
 # Simply Starter — Changelog
 https://simplydesign.com
 
+## [2.10.0] — 2026-06-04
+
+### Added
+- Page Builder template — full-width, removes entry title/meta for Toolset layouts (default for all pages)
+- Standard Post template — 800px centered, 40px/5px padding, featured image hero (default for all posts)
+- Featured image outputs above content on standard posts, styled 16:9 with rounded corners
+- Disable Comments toggle in Appearance → Simply Starter → Site Settings
+
+---
+
+## [2.9.4] — 2026-06-03
+
+### Changed
+- Toolset buttons: hover background now uses section highlight color (not text color), border matches
+
+---
+
+## [2.9.3] — 2026-06-03
+
+### Added
+- Toolset button outline styles — automatically adapts to section color context (.is-dark, .is-light, .is-brand-1, .is-brand-2) using section tokens
+
+---
+
 ## [2.9.2] — 2026-06-02
 
 ### Fixed

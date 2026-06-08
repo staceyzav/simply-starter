@@ -5,7 +5,7 @@ Description: Simply Design's battle-tested Genesis child theme starter. Working 
 Author: Simply Design
 Author URI: https://simplydesign.com
 
-Version: 2.9.2
+Version: 2.10.1
 
 Tags: genesis, child-theme, starter, one-column, custom-colors, custom-logo, custom-menu, footer-widgets, full-width-template
 
@@ -242,43 +242,22 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: "Source Sans Pro", sans-serif;
+	font-family: var(--client-font-display, "Source Sans Pro", sans-serif);
 	font-weight: 400;
-	line-height: 1.2;
-	margin: 0 0 20px;
+	line-height: 1.15;
+	margin: 1.5rem 0 5px;
 }
 
-h1 {
-	font-size: 30px;
-}
-
-h2 {
-	font-size: 27px;
-}
-
-h3 {
-	font-size: 24px;
-}
-
-h4 {
-	font-size: 20px;
-}
+h1 { font-size: clamp(2.25rem, 5vw,   3.5rem);  }
+h2 { font-size: clamp(1.75rem, 3.5vw, 2.6rem);  }
+h3 { font-size: clamp(1.4rem,  2.75vw, 2rem);   }
+h4 { font-size: 1.6rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
 
 .entry-content h3,
 .entry-content h4 {
 	font-weight: 600;
-}
-
-.entry-content h4 {
-	margin-top: 40px;
-}
-
-h5 {
-	font-size: 18px;
-}
-
-h6 {
-	font-size: 16px;
 }
 
 /* Objects
@@ -685,7 +664,7 @@ th {
 }
 
 .entry-title {
-	font-size: 30px;
+	font-size: clamp(2.25rem, 5vw, 3.5rem);
 	margin-bottom: 10px;
 }
 
@@ -1248,16 +1227,18 @@ figcaption,
 
 .entry-content ol,
 .entry-content ul {
-	margin-bottom: 30px;
-	padding-left: 40px;
+	margin-bottom: 20px;
+	padding-left: 24px;
 }
 
 .entry-content ol > li {
 	list-style-type: decimal;
+	margin-bottom: 4px;
 }
 
 .entry-content ul > li {
 	list-style-type: disc;
+	margin-bottom: 4px;
 }
 
 .entry-content ol ul > li,
@@ -1268,6 +1249,7 @@ figcaption,
 .entry-content ol ol,
 .entry-content ul ul {
 	margin-bottom: 0;
+	margin-top: 4px;
 }
 
 .entry-content code {
@@ -1534,6 +1516,22 @@ p.entry-meta {
 
 	.genesis-nav-menu .sub-menu .sub-menu {
 		margin: -46px 0 0 179px;
+	}
+
+	/* Hover bridge — transparent zone below each top-level item prevents blink
+	   when moving from nav link to sub-menu. Uses ::after (not ::before) to avoid
+	   conflicting with any caret triangles on the sub-menu itself. */
+	.genesis-nav-menu > .menu-item {
+		position: relative;
+	}
+
+	.genesis-nav-menu > .menu-item::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -20px;
+		height: 20px;
 	}
 
 	/* Responsive Menu
@@ -1854,7 +1852,7 @@ p.entry-meta {
    All structural overrides live here, below Genesis Sample defaults.
    Brand colors and fonts are set by the Simply Client Config plugin.
    Do NOT add client-specific values here — use the client config plugin.
-   Version: 2.9.2
+   Version: 2.10.1
    ========================================================================== */
 
 
@@ -1882,84 +1880,58 @@ p.entry-meta {
 
 	/* ----------------------------------------------------------
 	   CLIENT TOKENS
-	   Wireframe neutral defaults — overridden by client config.
+	   Three-tier fallback chain:
+	   1. Simply Client Config overrides (full brand)
+	   2. WordPress global style presets (any FSE/block theme)
+	   3. Simply Starter defaults (clean standalone look)
 	   ---------------------------------------------------------- */
 
-	/* Global defaults — page bg and text outside sections */
-	--client-bg:                    #ffffff;
-	--client-text:                  #2d2d2d;
-	--client-heading:               #2d2d2d;
-	--client-link:                  #6b6b6b;
-	--client-link-hover:            #2d2d2d;
+	/* Page */
+	--client-bg:              var(--wp--preset--color--base,     #ffffff);
+	--client-text:            var(--wp--preset--color--contrast, #374151);
+	--client-heading:         var(--wp--preset--color--contrast, #111827);
+	--client-link:            var(--wp--preset--color--primary,  #2563eb);
+	--client-link-hover:      var(--wp--preset--color--primary,  #1d4ed8);
 
 	/* Navigation */
-	--client-nav-bg:                #2d2d2d;
-	--client-nav-text:              #ffffff;
-	--client-nav-highlight:         #6b6b6b;
-	--client-nav-highlight-text:    #ffffff;
+	--client-nav-bg:             #111827;
+	--client-nav-text:           #ffffff;
+	--client-nav-highlight:      var(--wp--preset--color--primary, #2563eb);
+	--client-nav-highlight-text: #ffffff;
 
-	/* Accent / UI — buttons, badges, highlights sitewide */
-	--client-accent:                #6b6b6b;
-	--client-accent-text:           #ffffff;
-	--client-accent-hover:          #2d2d2d;
+	/* Accent / buttons sitewide */
+	--client-accent:          var(--wp--preset--color--primary, #2563eb);
+	--client-accent-text:     #ffffff;
+	--client-accent-hover:    var(--wp--preset--color--primary, #1d4ed8);
 
-	/* Fonts */
-	--client-font-display:          Georgia, serif;
-	--client-font-primary:          Arial, sans-serif;
-	--client-font-script:           Georgia, serif;
+	/* Fonts — WP global styles first, system UI fallback, no web requests */
+	--client-font-display:    var(--wp--preset--font-family--heading, system-ui, -apple-system, 'Segoe UI', sans-serif);
+	--client-font-primary:    var(--wp--preset--font-family--body,    system-ui, -apple-system, 'Segoe UI', sans-serif);
+	--client-font-script:     Georgia, 'Times New Roman', serif;
 
-	/* Section — Dark */
-	--client-section-dark-bg:       #2d2d2d;
-	--client-section-dark-text:     #f5f5f5;
-	--client-section-dark-heading:  #ffffff;
-	--client-section-dark-highlight:#6b6b6b;
+	/* Section — Dark (near-black, works with any accent) */
+	--client-section-dark-bg:        #111827;
+	--client-section-dark-text:      #f9fafb;
+	--client-section-dark-heading:   #ffffff;
+	--client-section-dark-highlight: #2563eb;
 
-	/* Section — Light */
-	--client-section-light-bg:      #f5f5f5;
-	--client-section-light-text:    #2d2d2d;
-	--client-section-light-heading: #2d2d2d;
-	--client-section-light-highlight:#6b6b6b;
+	/* Section — Light (very light gray, clean) */
+	--client-section-light-bg:        #f9fafb;
+	--client-section-light-text:      #374151;
+	--client-section-light-heading:   #111827;
+	--client-section-light-highlight: #2563eb;
 
-	/* Section — Brand 1 (optional — define in client config) */
-	--client-section-brand1-bg:         #4a4a4a;
+	/* Section — Brand 1 (accent color as section) */
+	--client-section-brand1-bg:         #2563eb;
 	--client-section-brand1-text:       #ffffff;
 	--client-section-brand1-heading:    #ffffff;
-	--client-section-brand1-highlight:  #888888;
+	--client-section-brand1-highlight:  #ffffff;
 
-	/* Section — Brand 2 (optional — define in client config) */
-	--client-section-brand2-bg:         #888888;
-	--client-section-brand2-text:       #ffffff;
+	/* Section — Brand 2 (deep complementary) */
+	--client-section-brand2-bg:         #0f2444;
+	--client-section-brand2-text:       #e0eaff;
 	--client-section-brand2-heading:    #ffffff;
-	--client-section-brand2-highlight:  #4a4a4a;
-
-	/* ----------------------------------------------------------
-	   INTERNAL ALIASES
-	   Maps --ss-* and legacy --imf-* to --client-* tokens.
-	   Theme CSS uses --imf-* internally — these aliases mean
-	   the client config only needs to set --client-* values.
-	   ---------------------------------------------------------- */
-
-	/* Nav aliases */
-	--imf-navy:           var(--client-nav-bg);
-	--imf-navy-dark:      var(--client-nav-bg);
-	--imf-navy-light:     var(--client-nav-bg);
-	--imf-red:            var(--client-accent);
-	--imf-red-dark:       var(--client-accent-hover);
-
-	/* Structural aliases */
-	--imf-white:          var(--ss-white);
-	--imf-off-white:      var(--ss-off-white);
-	--imf-light-gray:     var(--ss-light-gray);
-	--imf-dark-gray:      var(--ss-dark-gray);
-	--imf-near-black:     var(--ss-near-black);
-	--imf-header-height:  var(--ss-header-height);
-	--imf-max-width:      var(--ss-max-width);
-	--imf-transition:     var(--ss-transition);
-
-	/* Font aliases */
-	--imf-font-display:   var(--client-font-display);
-	--imf-font-primary:   var(--client-font-primary);
-	--imf-font-script:    var(--client-font-script);
+	--client-section-brand2-highlight:  #60a5fa;
 }
 
 
@@ -1968,55 +1940,40 @@ p.entry-meta {
    -------------------------------------------------------------------------- */
 
 body {
-	font-family: var(--imf-font-primary);
-	color: var(--imf-near-black);
-	background-color: var(--imf-white);
+	font-family: var(--client-font-primary);
+	color: var(--ss-near-black);
+	background-color: var(--ss-white);
 }
 
 a {
-	color: var(--imf-red);
+	color: var(--client-accent);
 }
 
 a:focus,
 a:hover {
-	color: var(--imf-red-dark);
+	color: var(--client-accent-hover);
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: var(--imf-font-display);
+	font-family: var(--client-font-display);
 	font-weight: 700;
-	color: var(--imf-navy);
+	color: var(--client-heading);
 }
 
 p {
-	font-family: var(--imf-font-primary);
-}
-
-
-/* --------------------------------------------------------------------------
-   SELF-HOSTED FONT — Nothing You Could Do (script/tagline)
-   Rift + DIN 2014 load via Typekit (see functions.php).
-   -------------------------------------------------------------------------- */
-
-@font-face {
-	font-family: 'Nothing You Could Do';
-	src: url('assets/fonts/NothingYouCouldDo-Regular.woff') format('woff'),
-	     url('assets/fonts/NothingYouCouldDo-Regular.ttf') format('truetype');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+	font-family: var(--client-font-primary);
 }
 
 
 /* --------------------------------------------------------------------------
    SITE HEADER
-   Always solid navy. Fixed position. Overlays hero on homepage.
+   Fixed position. Overlays hero on homepage.
    Utility bar sits above it — header shifts down when bar is present,
    shifts back up when bar scrolls away.
    -------------------------------------------------------------------------- */
 
 .site-header {
-	background-color: var(--imf-navy);
+	background-color: var(--client-nav-bg);
 	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
 	padding: 0;
 	position: fixed;
@@ -2025,7 +1982,7 @@ p {
 	right: 0;
 	width: 100%;
 	z-index: 9999;
-	transition: top var(--imf-transition);
+	transition: top var(--ss-transition);
 }
 
 /* Admin bar offset */
@@ -2052,12 +2009,12 @@ p {
 }
 
 /* Interior pages — push content below fixed header */
-.imf-interior .site-container {
-	padding-top: var(--imf-header-height);
+.ss-interior .site-container {
+	padding-top: var(--ss-header-height);
 }
 
 /* Homepage — NO padding-top, hero slides behind the fixed nav */
-.imf-homepage .site-container {
+.ss-homepage .site-container {
 	padding-top: 0;
 }
 
@@ -2073,7 +2030,7 @@ p {
 	padding-bottom: 0;
 	display: flex;
 	align-items: center;
-	height: var(--imf-header-height);
+	height: var(--ss-header-height);
 }
 
 .wp-custom-logo .title-area {
@@ -2113,7 +2070,7 @@ p {
 		width: auto;
 		display: flex;
 		align-items: stretch;
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 		padding-top: 0; /* override Genesis Sample's 15px */
 	}
 
@@ -2130,23 +2087,23 @@ p {
 
 	/* All nav links — white, Rift, uppercase */
 	.nav-primary .genesis-nav-menu a {
-		font-family: var(--imf-font-display);
+		font-family: var(--client-font-display);
 		font-weight: 700;
 		font-size: 14px;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--imf-white);
+		color: var(--ss-white);
 		padding: 0 18px;
 		display: flex;
 		align-items: center;
 		height: 100%;
-		transition: background-color var(--imf-transition), color var(--imf-transition);
+		transition: background-color var(--ss-transition), color var(--ss-transition);
 	}
 
 	.nav-primary .genesis-nav-menu a:hover,
 	.nav-primary .genesis-nav-menu a:focus,
 	.nav-primary .genesis-nav-menu .current-menu-item > a {
-		color: var(--imf-white);
+		color: var(--ss-white);
 		background-color: rgba(255, 255, 255, 0.1);
 		text-decoration: none;
 	}
@@ -2155,32 +2112,31 @@ p {
 	   in Appearance -> Menus -> Screen Options -> CSS Classes */
 	.nav-primary .genesis-nav-menu > .menu-highlight > a,
 	.nav-primary .genesis-nav-menu > .cta > a {
-		background-color: var(--imf-red);
-		color: var(--imf-white);
+		background-color: var(--client-accent);
+		color: var(--ss-white);
 		padding: 0 32px;
 		border-radius: 0;
 		font-weight: 700;
 		margin-left: 0;
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 	}
 
 	.nav-primary .genesis-nav-menu > .menu-highlight > a:hover,
 	.nav-primary .genesis-nav-menu > .menu-highlight > a:focus,
 	.nav-primary .genesis-nav-menu > .cta > a:hover,
 	.nav-primary .genesis-nav-menu > .cta > a:focus {
-		background-color: var(--imf-red-dark);
-		color: var(--imf-white);
+		background-color: var(--client-accent-hover);
+		color: var(--ss-white);
 	}
 
 	/* Dropdown menus */
 	.nav-primary .genesis-nav-menu .sub-menu {
-		background-color: var(--imf-navy);
-		border-top: 2px solid var(--imf-red);
-		top: var(--imf-header-height);
+		background-color: var(--client-nav-bg);
+		top: var(--ss-header-height);
 	}
 
 	.nav-primary .genesis-nav-menu .sub-menu a {
-		background-color: var(--imf-navy);
+		background-color: var(--client-nav-bg);
 		color: rgba(255, 255, 255, 0.85);
 		border: none;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -2188,7 +2144,7 @@ p {
 
 	.nav-primary .genesis-nav-menu .sub-menu a:hover {
 		background-color: rgba(255, 255, 255, 0.08);
-		color: var(--imf-white);
+		color: var(--ss-white);
 	}
 
 }
@@ -2202,8 +2158,8 @@ p {
 
 .simply-utility-bar {
 	background-color: transparent;
-	color: var(--imf-white);
-	font-family: var(--imf-font-display);
+	color: var(--ss-white);
+	font-family: var(--client-font-display);
 	font-size: 11px;
 	font-weight: 700;
 	letter-spacing: 0.1em;
@@ -2216,23 +2172,23 @@ p {
 	left: 0;
 	right: 0;
 	z-index: 10000; /* above header */
-	transition: max-height var(--imf-transition),
-	            opacity var(--imf-transition),
-	            padding var(--imf-transition);
+	transition: max-height var(--ss-transition),
+	            opacity var(--ss-transition),
+	            padding var(--ss-transition);
 	max-height: 40px;
 	overflow: hidden;
 }
 
 .simply-utility-bar a {
-	color: var(--imf-white);
+	color: var(--ss-white);
 	opacity: 0.85;
 	text-decoration: none;
-	transition: opacity var(--imf-transition);
+	transition: opacity var(--ss-transition);
 }
 
 .simply-utility-bar a:hover {
 	opacity: 1;
-	color: var(--imf-white);
+	color: var(--ss-white);
 }
 
 /* When utility bar is present, push header down below it */
@@ -2254,9 +2210,9 @@ p {
 
 /* Header moves up when utility bar hides */
 .has-utility-bar .site-header {
-	transition: top var(--imf-transition),
-	            background-color var(--imf-transition),
-	            box-shadow var(--imf-transition);
+	transition: top var(--ss-transition),
+	            background-color var(--ss-transition),
+	            box-shadow var(--ss-transition);
 }
 
 .has-utility-bar.scrolled .site-header {
@@ -2268,21 +2224,31 @@ p {
    UTILITY CLASSES
    -------------------------------------------------------------------------- */
 
-.imf-script {
-	font-family: var(--imf-font-script);
+.ss-script {
+	font-family: var(--client-font-script);
 	font-weight: 400;
 }
 
-.imf-eyebrow {
-	font-family: var(--imf-font-display);
-	font-size: 12px;
+.ss-eyebrow,
+.wp-block-heading.is-style-eyebrow {
+	font-family: var(--client-font-display);
+	font-size: 12px !important;
 	font-weight: 700;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: var(--imf-dark-gray);
+	color: var(--ss-dark-gray);
+	margin-bottom: 6px;
+	line-height: 1.4;
 }
 
-.imf-sr-only {
+/* Cancel the heading's top margin when it immediately follows an eyebrow */
+.wp-block-heading.is-style-eyebrow + .wp-block-heading,
+.ss-eyebrow + h1, .ss-eyebrow + h2, .ss-eyebrow + h3,
+.ss-eyebrow + h4, .ss-eyebrow + h5, .ss-eyebrow + h6 {
+	margin-top: 0;
+}
+
+.sr-only {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -2297,6 +2263,7 @@ p {
 
 /* --------------------------------------------------------------------------
    BUTTONS
+   All use --client-* tokens — client config overrides automatically apply.
    -------------------------------------------------------------------------- */
 
 .button,
@@ -2304,19 +2271,19 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
-.imf-btn {
-	background-color: var(--imf-red);
+.ss-btn {
+	background-color: var(--client-accent);
 	border: none;
-	border-radius: 100px;
-	color: var(--imf-white);
-	font-family: var(--imf-font-display);
+	border-radius: 0;
+	color: var(--client-accent-text);
+	font-family: var(--client-font-display);
 	font-size: 13px;
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	padding: 12px 24px;
 	cursor: pointer;
-	transition: background-color var(--imf-transition), transform var(--imf-transition);
+	transition: background-color var(--ss-transition), transform var(--ss-transition);
 	text-decoration: none;
 	display: inline-block;
 }
@@ -2325,118 +2292,88 @@ input[type="submit"],
 button:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
-.imf-btn:hover {
-	background-color: var(--imf-red-dark);
-	color: var(--imf-white);
+.ss-btn:hover {
+	background-color: var(--client-accent-hover);
+	color: var(--client-accent-text);
 	transform: translateY(-1px);
 }
 
-.imf-btn-outline {
+/* Outlined variant — transparent fill, accent border */
+.ss-btn-outline {
 	background-color: transparent;
-	border: 2px solid var(--imf-white);
-	color: var(--imf-white);
+	box-shadow: inset 0 0 0 2px var(--client-accent);
+	color: var(--client-accent);
 }
 
-.imf-btn-outline:hover {
-	background-color: var(--imf-white);
-	color: var(--imf-navy);
+.ss-btn-outline:hover {
+	background-color: var(--client-accent);
+	color: var(--client-accent-text);
+	box-shadow: inset 0 0 0 2px var(--client-accent);
 }
 
-.imf-btn-navy {
-	background-color: var(--imf-navy);
-	color: var(--imf-white);
+/* Ghost variant — white outline, for use on dark/image sections */
+.ss-btn-ghost {
+	background-color: transparent;
+	box-shadow: inset 0 0 0 2px var(--ss-white);
+	color: var(--ss-white);
 }
 
-.imf-btn-navy:hover {
-	background-color: var(--imf-navy-dark);
-	color: var(--imf-white);
+.ss-btn-ghost:hover {
+	background-color: var(--ss-white);
+	color: var(--client-accent);
+	box-shadow: inset 0 0 0 2px var(--ss-white);
+}
+
+/* Secondary — nav bg color, for use on light sections */
+.ss-btn-secondary {
+	background-color: var(--client-nav-bg);
+	color: var(--client-nav-text);
+}
+
+.ss-btn-secondary:hover {
+	background-color: var(--client-heading);
+	color: var(--ss-white);
 }
 
 
 /* --------------------------------------------------------------------------
-   BADGES (Series labels)
+   GENERIC BADGE
+   Client config adds color variants.
    -------------------------------------------------------------------------- */
 
-.imf-badge {
+.ss-badge {
 	display: inline-block;
 	padding: 4px 10px;
-	border-radius: 20px;
-	font-family: var(--imf-font-display);
+	border-radius: 0;
+	font-family: var(--client-font-display);
 	font-size: 10px;
 	font-weight: 700;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-}
-
-.imf-badge-devo    { background-color: var(--imf-red);   color: var(--imf-white); }
-.imf-badge-mogul   { background-color: var(--imf-navy);  color: var(--imf-white); }
-.imf-badge-aerial  { background-color: #4a7c59;          color: var(--imf-white); }
-.imf-badge-fis     { background-color: #1a6496;          color: var(--imf-white); }
-
-
-/* --------------------------------------------------------------------------
-   SECTION WRAPPERS
-   -------------------------------------------------------------------------- */
-
-.imf-section {
-	padding: 80px 30px;
-}
-
-.imf-section-navy {
-	background-color: var(--imf-navy);
-	color: var(--imf-white);
-}
-
-.imf-section-navy h1,
-.imf-section-navy h2,
-.imf-section-navy h3,
-.imf-section-navy h4 {
-	color: var(--imf-white);
-}
-
-.imf-section-gray {
-	background-color: var(--imf-light-gray);
-}
-
-.imf-container {
-	max-width: var(--imf-max-width);
-	margin: 0 auto;
+	background-color: var(--client-accent);
+	color: var(--client-accent-text);
 }
 
 
 /* --------------------------------------------------------------------------
-   CARDS
+   GENERIC CARD
    -------------------------------------------------------------------------- */
 
-.imf-card {
-	background-color: var(--imf-white);
-	border-radius: 8px;
+.ss-card {
+	background-color: var(--ss-white);
+	border-radius: 0;
 	overflow: hidden;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-	transition: box-shadow var(--imf-transition), transform var(--imf-transition);
+	transition: box-shadow var(--ss-transition), transform var(--ss-transition);
 }
 
-.imf-card:hover {
+.ss-card:hover {
 	box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 	transform: translateY(-2px);
 }
 
-.imf-card-body {
+.ss-card-body {
 	padding: 16px 20px;
-}
-
-.imf-card-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 24px;
-}
-
-@media (max-width: 768px) {
-	.imf-card-grid { grid-template-columns: 1fr; }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-	.imf-card-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 
@@ -2445,20 +2382,21 @@ input[type="submit"]:hover,
    -------------------------------------------------------------------------- */
 
 .site-footer {
-	background-color: var(--imf-navy);
-	color: rgba(255, 255, 255, 0.75);
+	background-color: var(--client-section-dark-bg);
+	color: var(--client-section-dark-text);
 }
 
 .site-footer a {
-	color: rgba(255, 255, 255, 0.75);
+	color: var(--client-section-dark-text);
 }
 
 .site-footer a:hover {
-	color: var(--imf-white);
+	color: var(--client-section-dark-heading);
 }
 
 .site-footer p {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--client-section-dark-text);
+	font-size: 12px;
 }
 
 
@@ -2507,7 +2445,7 @@ input[type="submit"]:hover,
 @media (min-width: 960px) {
 
 	.site-header {
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 		display: flex;
 		align-items: stretch;
 	}
@@ -2519,11 +2457,11 @@ input[type="submit"]:hover,
 		width: 100%;
 		max-width: 100%;
 		padding: 0 5px 0 0;
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 	}
 
 	.title-area {
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 		display: flex;
 		align-items: center;
 		flex-shrink: 0;
@@ -2531,7 +2469,7 @@ input[type="submit"]:hover,
 
 	/* Nav stretches full header height so CTA block can fill it */
 	.nav-primary {
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 		display: flex;
 		align-items: stretch;
 		margin-left: auto;
@@ -2552,7 +2490,7 @@ input[type="submit"]:hover,
 	/* CTA fills full height — no border radius, flush block */
 	.nav-primary .genesis-nav-menu > .menu-highlight > a,
 	.nav-primary .genesis-nav-menu > .cta > a {
-		height: var(--imf-header-height);
+		height: var(--ss-header-height);
 		display: flex;
 		align-items: center;
 		border-radius: 0;
@@ -2562,30 +2500,12 @@ input[type="submit"]:hover,
 
 /* --------------------------------------------------------------------------
    DESKTOP SUB-NAVIGATION
-   Red caret at top, gap between parent and sub-menu,
-   extra padding on sub-items.
+   Sub-menu punches flush to the nav bar — no gap, no border.
+   Client config adds gap, border, and caret as needed.
    -------------------------------------------------------------------------- */
 
 @media (min-width: 960px) {
 
-	/* Gap between parent and sub-menu */
-	.nav-primary .genesis-nav-menu .sub-menu {
-		top: calc(var(--imf-header-height) + 8px);
-		border-top: 3px solid var(--imf-red);
-	}
-
-	/* Red upward caret — CSS triangle pointing up in red */
-	.nav-primary .genesis-nav-menu .sub-menu::before {
-		content: '';
-		position: absolute;
-		top: -11px; /* sits just above the red border */
-		left: 20px;
-		border-left: 8px solid transparent;
-		border-right: 8px solid transparent;
-		border-bottom: 8px solid var(--imf-red);
-	}
-
-	/* Extra padding on sub-items */
 	.nav-primary .genesis-nav-menu .sub-menu a {
 		padding-top: 15px;
 		padding-bottom: 15px;
@@ -2595,7 +2515,7 @@ input[type="submit"]:hover,
 
 /* --------------------------------------------------------------------------
    MOBILE NAVIGATION
-   Full-height slide-in from left, 75% width, navy bg.
+   Full-height slide-in from left, 75% width, nav bg color.
    Hamburger only — no "Menu" text.
    Accordion sub-items, closed by default.
    -------------------------------------------------------------------------- */
@@ -2628,8 +2548,8 @@ input[type="submit"]:hover,
 	display: block;
 	width: 24px;
 	height: 2px;
-	background-color: var(--imf-white);
-	transition: transform var(--imf-transition), opacity var(--imf-transition);
+	background-color: var(--ss-white);
+	transition: transform var(--ss-transition), opacity var(--ss-transition);
 }
 
 /* Mobile menu overlay — full height, slides in from left */
@@ -2647,7 +2567,7 @@ input[type="submit"]:hover,
 		z-index: 9998;
 		opacity: 0;
 		visibility: hidden;
-		transition: opacity var(--imf-transition), visibility var(--imf-transition);
+		transition: opacity var(--ss-transition), visibility var(--ss-transition);
 	}
 
 	.nav-primary.is-open::before {
@@ -2662,7 +2582,7 @@ input[type="submit"]:hover,
 		left: 0;
 		width: 75%;
 		height: 100vh;
-		background-color: var(--imf-navy);
+		background-color: var(--client-nav-bg);
 		z-index: 9999;
 		transform: translateX(-100%);
 		transition: transform 0.35s ease;
@@ -2689,8 +2609,8 @@ input[type="submit"]:hover,
 
 	/* All links */
 	.nav-primary .genesis-nav-menu a {
-		color: var(--imf-white);
-		font-family: var(--imf-font-display);
+		color: var(--ss-white);
+		font-family: var(--client-font-display);
 		font-size: 15px;
 		font-weight: 700;
 		letter-spacing: 0.06em;
@@ -2704,14 +2624,14 @@ input[type="submit"]:hover,
 
 	.nav-primary .genesis-nav-menu a:hover {
 		background-color: rgba(255, 255, 255, 0.08);
-		color: var(--imf-white);
+		color: var(--ss-white);
 	}
 
 	/* CTA item — red pill in mobile menu */
 	.nav-primary .genesis-nav-menu > .menu-highlight > a,
 	.nav-primary .genesis-nav-menu > .cta > a {
-		background-color: var(--imf-red);
-		border-radius: 100px;
+		background-color: var(--client-accent);
+		border-radius: 0;
 		padding: 12px 20px;
 		margin: 8px 0;
 		justify-content: center;
@@ -2749,7 +2669,7 @@ input[type="submit"]:hover,
 	}
 
 	.nav-primary .genesis-nav-menu .sub-menu a:hover {
-		color: var(--imf-white);
+		color: var(--ss-white);
 	}
 
 	/* Accordion arrow indicator on parent items with sub-menus */
@@ -2759,7 +2679,7 @@ input[type="submit"]:hover,
 		font-weight: 300;
 		line-height: 1;
 		color: rgba(255, 255, 255, 0.6);
-		transition: transform var(--imf-transition);
+		transition: transform var(--ss-transition);
 	}
 
 	.nav-primary .genesis-nav-menu .menu-item-has-children.sub-menu-open > a::after {
@@ -2797,13 +2717,13 @@ input[type="submit"]:hover,
 	.nav-primary .genesis-nav-menu {
 		display: flex !important;
 		align-items: center !important;
-		height: var(--imf-header-height) !important;
+		height: var(--ss-header-height) !important;
 	}
 
 	.nav-primary .genesis-nav-menu > .menu-item {
 		display: flex !important;
 		align-items: stretch !important;
-		height: var(--imf-header-height) !important;
+		height: var(--ss-header-height) !important;
 	}
 
 	/* Links fill full height — full clickable + hover area */
@@ -2818,7 +2738,7 @@ input[type="submit"]:hover,
 	/* CTA full height */
 	.nav-primary .genesis-nav-menu > .menu-highlight > a,
 	.nav-primary .genesis-nav-menu > .cta > a {
-		height: var(--imf-header-height) !important;
+		height: var(--ss-header-height) !important;
 		display: flex !important;
 		align-items: center !important;
 		padding-top: 0 !important;
@@ -2853,7 +2773,7 @@ input[type="submit"]:hover,
 	justify-content: center !important;
 	gap: 5px !important;
 	line-height: 1 !important;
-	color: var(--imf-white) !important;
+	color: var(--ss-white) !important;
 }
 
 /* White hamburger bars via box-shadow trick —
@@ -2862,7 +2782,7 @@ input[type="submit"]:hover,
 	display: block !important;
 	width: 24px !important;
 	height: 2px !important;
-	background-color: var(--imf-white) !important;
+	background-color: var(--ss-white) !important;
 	border-radius: 2px !important;
 	transition: transform 0.3s ease, opacity 0.3s ease !important;
 }
@@ -2874,8 +2794,8 @@ input[type="submit"]:hover,
 	display: block;
 	width: 24px;
 	height: 2px;
-	background: var(--imf-white);
-	box-shadow: 0 7px 0 var(--imf-white), 0 14px 0 var(--imf-white);
+	background: var(--ss-white);
+	box-shadow: 0 7px 0 var(--ss-white), 0 14px 0 var(--ss-white);
 }
 
 
@@ -2951,7 +2871,7 @@ input[type="submit"]:hover,
 		display: block !important;
 		width: 24px !important;
 		height: 2px !important;
-		background-color: var(--imf-white) !important;
+		background-color: var(--ss-white) !important;
 		border-radius: 2px !important;
 		transition: transform 0.3s ease, opacity 0.3s ease !important;
 	}
@@ -2965,7 +2885,7 @@ input[type="submit"]:hover,
    -------------------------------------------------------------------------- */
 
 /* Overlay */
-.imf-menu-overlay {
+.ss-menu-overlay {
 	display: none;
 	position: fixed;
 	top: 0;
@@ -2976,7 +2896,7 @@ input[type="submit"]:hover,
 	z-index: 9998;
 }
 
-.mobile-menu-open .imf-menu-overlay {
+.mobile-menu-open .ss-menu-overlay {
 	display: block;
 }
 
@@ -2989,7 +2909,7 @@ input[type="submit"]:hover,
 		left: 0 !important;
 		width: 75% !important;
 		height: 100vh !important;
-		background-color: var(--imf-navy) !important;
+		background-color: var(--client-nav-text) !important;
 		z-index: 9999 !important;
 		transform: translateX(-100%) !important;
 		transition: transform 0.35s ease !important;
@@ -3023,7 +2943,7 @@ input[type="submit"]:hover,
    -------------------------------------------------------------------------- */
 
 /* Overlay — behind menu panel, clicking it closes menu */
-.imf-menu-overlay {
+.ss-menu-overlay {
 	display: none;
 	position: fixed;
 	top: 0;
@@ -3035,7 +2955,7 @@ input[type="submit"]:hover,
 	cursor: pointer;
 }
 
-.mobile-menu-open .imf-menu-overlay {
+.mobile-menu-open .ss-menu-overlay {
 	display: block;
 }
 
@@ -3049,7 +2969,7 @@ input[type="submit"]:hover,
 		width: 75vw !important;
 		max-width: 320px !important;
 		height: 100vh !important;
-		background: #0D1F3C !important; /* hard-coded navy — no variable risk */
+		background: var(--client-nav-bg) !important;
 		z-index: 9999 !important;
 		transform: translateX(-100%) !important;
 		transition: transform 0.3s ease !important;
@@ -3107,34 +3027,56 @@ input[type="submit"]:hover,
 
 /* Override Genesis footer widget columns for 4-up layout */
 .footer-widgets .wrap {
-	max-width: 100%;
-	padding: 0 30px;
+	display: flex;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 5px !important;
+	box-sizing: border-box;
 }
 
 .footer-widgets-1,
 .footer-widgets-2,
 .footer-widgets-3,
 .footer-widgets-4 {
-	width: 25% !important;
-	padding: 0 15px;
+	flex: 1 !important;
+	width: auto !important;
+	float: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+/* Strip any Genesis inner padding */
+.footer-widgets .footer-widget-area,
+.footer-widgets .widget-wrap {
+	padding: 0 !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+/* Between-column spacing only — higher specificity + later position beats the strip above */
+.footer-widgets .footer-widgets-2,
+.footer-widgets .footer-widgets-3,
+.footer-widgets .footer-widgets-4 {
+	padding-left: 40px !important;
 }
 
 /* Footer widget text styles */
 .footer-widgets {
-	background-color: var(--imf-navy);
+	background-color: var(--client-section-dark-bg);
 	padding: 60px 0 40px;
 }
 
 .footer-widgets .widget-title {
-	color: var(--imf-white);
-	font-family: var(--imf-font-display);
+	color: var(--client-section-dark-heading);
+	font-family: var(--client-font-display);
 	font-size: 14px;
 	font-weight: 700;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
 	margin-bottom: 16px;
 	padding-bottom: 10px;
-	border-bottom: 2px solid var(--imf-red);
+	border-bottom: 2px solid var(--client-section-dark-highlight);
 	display: inline-block;
 }
 
@@ -3142,12 +3084,12 @@ input[type="submit"]:hover,
 .footer-widgets li,
 .footer-widgets a {
 	font-size: 14px;
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--client-section-dark-text);
 	line-height: 1.8;
 }
 
 .footer-widgets a:hover {
-	color: var(--imf-white);
+	color: var(--client-section-dark-heading);
 }
 
 .footer-widgets ul {
@@ -3190,14 +3132,13 @@ input[type="submit"]:hover,
    -------------------------------------------------------------------------- */
 
 .footer-bottom-bar {
-	background-color: var(--imf-navy-dark);
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	background-color: var(--client-section-dark-bg);
 	padding: 24px 30px;
 	width: 100%;
 }
 
 .footer-bottom-bar__inner {
-	max-width: var(--imf-max-width);
+	max-width: var(--ss-max-width);
 	margin: 0 auto;
 	display: flex;
 	align-items: center;
@@ -3211,8 +3152,7 @@ input[type="submit"]:hover,
 	max-height: 48px;
 	width: auto;
 	opacity: 0.75;
-	transition: opacity var(--imf-transition);
-	filter: brightness(0) invert(1); /* make logos white */
+	transition: opacity var(--ss-transition);
 }
 
 .footer-bottom-bar img:hover {
@@ -3234,109 +3174,6 @@ input[type="submit"]:hover,
 }
 
 
-/* --------------------------------------------------------------------------
-   FOOTER STYLE OVERRIDES v1.17.0
-   -------------------------------------------------------------------------- */
-
-.footer-widgets {
-	background-color: rgba(0, 0, 0, 0.05);
-	padding: 60px 0 40px;
-}
-
-.footer-widgets .widget-title {
-	color: var(--imf-navy);
-	font-family: var(--imf-font-display);
-	font-size: 22px;
-	font-weight: 700;
-	letter-spacing: 0;
-	text-transform: uppercase;
-	margin-bottom: 16px;
-	padding-bottom: 0;
-	border-bottom: none;
-	display: inline-block;
-}
-
-.footer-widgets p,
-.footer-widgets li,
-.footer-widgets a {
-	font-family: var(--imf-font-primary);
-	font-size: 14px;
-	color: #091f40;
-	line-height: 1.2;
-}
-
-.footer-widgets a:hover {
-	color: var(--imf-navy);
-	text-decoration: underline;
-}
-
-/* Footer bottom bar — remove logo invert filter, show full color */
-.footer-bottom-bar img {
-	filter: none;
-	opacity: 1;
-}
-
-.footer-bottom-bar img:hover {
-	opacity: 0.85;
-}
-
-
-/* --------------------------------------------------------------------------
-   FOOTER STYLE OVERRIDES v1.18.0
-   -------------------------------------------------------------------------- */
-
-/* Contain footer content to 1200px centered */
-.footer-widgets .wrap {
-	max-width: 1200px !important;
-	margin: 0 auto !important;
-	padding: 0 30px !important;
-}
-
-/* List items — no padding, no border */
-.footer-widgets ul li {
-	padding: 0 !important;
-	border-bottom: none !important;
-}
-
-/* Body text — DIN, 18px, navy, 700, no underline */
-.footer-widgets p,
-.footer-widgets li,
-.footer-widgets a {
-	font-family: var(--imf-font-primary) !important;
-	font-size: 18px !important;
-	color: var(--imf-navy) !important;
-	line-height: 1.2 !important;
-	font-weight: 700 !important;
-	text-decoration: none !important;
-}
-
-/* Hover — no underline, subtle fade */
-.footer-widgets a:hover {
-	text-decoration: none !important;
-	opacity: 0.8 !important;
-	color: var(--imf-navy) !important;
-	transition: opacity 0.3s ease !important;
-}
-
-/* Footer bottom bar — match footer bg, full width gallery */
-.footer-bottom-bar {
-	background-color: rgba(0, 0, 0, 0.05) !important;
-	border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Gallery widget inside bottom bar — full width, no constraints */
-.footer-bottom-bar .widget_media_gallery,
-.footer-bottom-bar .footer-bottom-widget {
-	width: 100% !important;
-	max-width: 100% !important;
-	float: none !important;
-}
-
-.footer-bottom-bar .gallery {
-	width: 100% !important;
-	max-width: 100% !important;
-}
-
 /* Remove WordPress default gallery image border */
 .gallery img,
 .gallery .gallery-item img {
@@ -3344,32 +3181,14 @@ input[type="submit"]:hover,
 	box-shadow: none !important;
 }
 
-
-/* Footer li margin */
 .footer-widgets ul li {
-	margin-bottom: 3px !important;
-}
-
-
-/* --------------------------------------------------------------------------
-   FOOTER BOTTOM BAR — logo white bg removal trick
-   mix-blend-mode: multiply makes white pixels transparent-looking
-   on light backgrounds. Works well with rgba(0,0,0,0.05) bg.
-   Add class "no-blend" to any img that looks wrong.
-   -------------------------------------------------------------------------- */
-
-.footer-bottom-bar img {
-	mix-blend-mode: multiply;
-}
-
-.footer-bottom-bar img.no-blend {
-	mix-blend-mode: normal;
+	margin-bottom: 3px;
 }
 
 
 /* --------------------------------------------------------------------------
    GLOBAL DEFAULT STYLES
-   Applied outside of sections — white bg, dark text.
+   Applied outside of sections - white bg, dark text.
    -------------------------------------------------------------------------- */
 
 body {
@@ -3404,7 +3223,7 @@ input[type="submit"],
 	background-color: var(--client-accent) !important;
 	color: var(--client-accent-text) !important;
 	border-color: var(--client-accent) !important;
-	border-radius: 100px !important;
+	border-radius: 0 !important;
 	font-family: var(--client-font-display) !important;
 	font-weight: 700 !important;
 	letter-spacing: 0.06em !important;
@@ -3484,13 +3303,6 @@ input[type="submit"]:hover,
 	color: var(--client-section-dark-heading);
 }
 
-/* Explicit p/li override — Toolset generates per-container p color CSS
-   with high specificity that beats inherited color. !important wins it back. */
-.is-dark p,
-.is-dark li,
-.is-dark span {
-	color: var(--client-section-dark-text) !important;
-}
 
 .is-dark a {
 	color: var(--client-section-dark-highlight);
@@ -3501,10 +3313,23 @@ input[type="submit"]:hover,
 }
 
 .is-dark .button,
-.is-dark .wp-block-button__link,
 .is-dark .simply-btn {
 	background-color: var(--client-section-dark-highlight) !important;
 	border-color: var(--client-section-dark-highlight) !important;
+}
+
+/* WP block button — outline style on dark sections */
+.is-dark .wp-block-button__link {
+	background: transparent !important;
+	border: 2px solid var(--client-section-dark-text, #fff) !important;
+	color: var(--client-section-dark-text, #fff) !important;
+}
+
+.is-dark .wp-block-button__link:hover,
+.is-dark .wp-block-button__link:focus {
+	background: var(--client-section-dark-highlight, #2563eb) !important;
+	border-color: var(--client-section-dark-highlight, #2563eb) !important;
+	color: #fff !important;
 }
 
 /* --- LIGHT section --- */
@@ -3522,11 +3347,6 @@ input[type="submit"]:hover,
 	color: var(--client-section-light-heading);
 }
 
-.is-light p,
-.is-light li,
-.is-light span {
-	color: var(--client-section-light-text) !important;
-}
 
 .is-light a {
 	color: var(--client-section-light-highlight);
@@ -3558,11 +3378,6 @@ input[type="submit"]:hover,
 	color: var(--client-section-brand1-heading);
 }
 
-.is-brand-1 p,
-.is-brand-1 li,
-.is-brand-1 span {
-	color: var(--client-section-brand1-text) !important;
-}
 
 .is-brand-1 a {
 	color: var(--client-section-brand1-highlight);
@@ -3590,11 +3405,6 @@ input[type="submit"]:hover,
 	color: var(--client-section-brand2-heading);
 }
 
-.is-brand-2 p,
-.is-brand-2 li,
-.is-brand-2 span {
-	color: var(--client-section-brand2-text) !important;
-}
 
 .is-brand-2 a {
 	color: var(--client-section-brand2-highlight);
@@ -3908,6 +3718,136 @@ input[type="submit"]:hover,
 /* Toolset container — outer untouched (Toolset default 25px padding).
    Only .tb-container-inner gets our max-width constraint when present.
    If no inner container: colors apply, Toolset handles padding. */
+
+/* Post Standard layout — 800px centered reading width
+   Applied by default to all single posts, or explicitly via Standard Post template. */
+
+.simply-post-layout .content,
+.page-template-page-templates-post-standard-php .content {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 100px 5px 40px;
+}
+
+.simply-post-layout .entry-content,
+.page-template-page-templates-post-standard-php .entry-content {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+/* You May Also Like — full-width dark section before footer */
+
+.simply-also-like {
+	width: 100%;
+}
+
+.simply-also-like__inner {
+	max-width: var( --ss-max-width, 1200px );
+	margin: 0 auto;
+	padding: 60px 5%;
+}
+
+.simply-also-like h2 {
+	margin-bottom: 40px;
+}
+
+
+/* Featured image — full width, no crop, natural height */
+.simply-post-hero {
+	border-radius: 0;
+	overflow: hidden;
+	margin-bottom: 32px;
+}
+
+.simply-post-hero img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+
+/* Toolset buttons — outline style adapts to section color context
+   Dark section = white outline. Light section = dark outline.
+   Uses section tokens so any client config auto-applies correct colors. */
+
+.is-dark .tb-button__link,
+.is-light .tb-button__link,
+.is-brand-1 .tb-button__link,
+.is-brand-2 .tb-button__link {
+	background: transparent !important;
+	display: inline-flex;
+	align-items: center;
+	padding: 12px 28px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 0;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.is-dark .tb-button__link {
+	border: 2px solid var(--client-section-dark-text, #fff) !important;
+	color: var(--client-section-dark-text, #fff) !important;
+}
+
+.is-dark .tb-button__link:hover,
+.is-dark .tb-button__link:focus {
+	background: var(--client-section-dark-highlight, #cc0000) !important;
+	border-color: var(--client-section-dark-highlight, #cc0000) !important;
+	color: #fff !important;
+}
+
+.is-light .tb-button__link {
+	border: 2px solid var(--client-section-light-heading, #333) !important;
+	color: var(--client-section-light-heading, #333) !important;
+}
+
+.is-light .tb-button__link:hover,
+.is-light .tb-button__link:focus {
+	background: var(--client-section-light-highlight, #cc0000) !important;
+	border-color: var(--client-section-light-highlight, #cc0000) !important;
+	color: #fff !important;
+}
+
+.is-brand-1 .tb-button__link {
+	border: 2px solid var(--client-section-brand1-text, #fff) !important;
+	color: var(--client-section-brand1-text, #fff) !important;
+}
+
+.is-brand-1 .tb-button__link:hover,
+.is-brand-1 .tb-button__link:focus {
+	background: var(--client-section-brand1-highlight, #fff) !important;
+	border-color: var(--client-section-brand1-highlight, #fff) !important;
+	color: var(--client-section-brand1-bg, #333) !important;
+}
+
+.is-brand-2 .tb-button__link {
+	border: 2px solid var(--client-section-brand2-text, #fff) !important;
+	color: var(--client-section-brand2-text, #fff) !important;
+}
+
+.is-brand-2 .tb-button__link:hover,
+.is-brand-2 .tb-button__link:focus {
+	background: var(--client-section-brand2-highlight, #cc0000) !important;
+	border-color: var(--client-section-brand2-highlight, #cc0000) !important;
+	color: #fff !important;
+}
+
+
+/* Landing Page Template
+---------------------------------------------------------------------------- */
+
+.landing-page .site-container {
+	padding-top: 0;
+}
+
+.landing-page .site-inner {
+	padding-top: 0;
+}
+
 
 /* Override Genesis entry margin-bottom at 960px+ */
 @media only screen and (min-width: 960px) {

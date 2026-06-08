@@ -29,14 +29,14 @@
 
 		// Overlay — clicking it closes menu
 		var overlay = document.createElement( 'div' );
-		overlay.className = 'imf-menu-overlay';
+		overlay.className = 'ss-menu-overlay';
 		body.appendChild( overlay );
 
 		function openMenu() {
 			body.classList.add( 'mobile-menu-open' );
 			menuToggle.setAttribute( 'aria-expanded', 'true' );
 			body.style.overflow = 'hidden';
-			console.log( 'IMF: open' );
+			console.log( 'SS: open' );
 		}
 
 		function closeMenu() {
@@ -45,7 +45,7 @@
 			body.style.overflow = '';
 			document.querySelectorAll( '.menu-item-has-children' )
 				.forEach( function( i ) { i.classList.remove( 'sub-menu-open' ); } );
-			console.log( 'IMF: close' );
+			console.log( 'SS: close' );
 		}
 
 		menuToggle.addEventListener( 'click', function () {

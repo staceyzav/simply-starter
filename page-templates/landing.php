@@ -51,6 +51,17 @@ remove_action( 'genesis_header', 'genesis_header_markup_close', 15 );
 // Removes navigation.
 remove_theme_support( 'genesis-menus' );
 
+// Removes the Simply Utility Bar (if active) and its body class so no
+// top-padding offset is applied and content starts at the very top.
+remove_action( 'wp_body_open', 'simply_utility_bar_output', 5 );
+remove_action( 'genesis_before', 'simply_utility_bar_output', 5 );
+remove_filter( 'body_class', 'simply_utility_bar_body_class' );
+
+// Removes footer widget areas and theme footer extras.
+remove_action( 'genesis_before_footer', 'genesis_footer_widget_areas' );
+remove_action( 'genesis_before_footer', 'simply_footer_bottom_bar', 15 );
+remove_action( 'genesis_before_footer', 'simply_also_like_section', 5 );
+
 // Removes site footer elements.
 remove_action( 'genesis_footer', 'genesis_footer_markup_open', 5 );
 remove_action( 'genesis_footer', 'genesis_do_footer' );
