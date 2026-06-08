@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function simply_style_guide_content() {
 	return '
+<!-- wp:simply-blocks/section -->
+
 <!-- wp:paragraph -->
 <p>This page is your visual reference for all styles available in Simply Starter. Use it as a working canvas — edit any block to see how the controls work. <strong>To apply a style:</strong> select a block → look for the Styles panel in the right sidebar, or use the toolbar buttons above the block.</p>
 <!-- /wp:paragraph -->
@@ -24,7 +26,7 @@ function simply_style_guide_content() {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Body copy follows a heading. Use H1 once per page — typically the page or post title. Font size scales fluidly from mobile to desktop using <code>clamp()</code> — no extra work needed.</p>
+<p>Body copy follows a heading. Use H1 once per page — typically the page or post title. Font size scales fluidly from mobile to desktop using clamp() — no extra work needed.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":2} -->
@@ -146,13 +148,15 @@ function simply_style_guide_content() {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Add a color scheme to any Group block via <strong>Advanced → Additional CSS class</strong>. Available classes: <code>is-dark</code> <code>is-light</code> <code>is-brand-1</code> <code>is-brand-2</code>. Colors are set by your client config plugin tokens and update site-wide automatically.</p>
+<p>Add a color scheme to any Group block via <strong>Advanced → Additional CSS class</strong>. Available classes: is-dark, is-light, is-brand-1, is-brand-2. Colors are set by your Simply Branded plugin tokens and update site-wide automatically.</p>
 <!-- /wp:paragraph -->
+
+<!-- /wp:simply-blocks/section -->
 
 <!-- wp:group {"className":"is-dark","style":{"spacing":{"padding":{"top":"48px","bottom":"48px","left":"32px","right":"32px"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-dark" style="padding-top:48px;padding-bottom:48px;padding-left:32px;padding-right:32px">
 <!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Dark Section — <code>is-dark</code></h3>
+<h3 class="wp-block-heading">Dark Section — is-dark</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
 <p>Near-black background, light text. Strong contrast — use for hero areas, CTAs, or visual anchors on the page.</p>
@@ -168,7 +172,7 @@ function simply_style_guide_content() {
 <!-- wp:group {"className":"is-light","style":{"spacing":{"padding":{"top":"48px","bottom":"48px","left":"32px","right":"32px"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-light" style="padding-top:48px;padding-bottom:48px;padding-left:32px;padding-right:32px">
 <!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Light Section — <code>is-light</code></h3>
+<h3 class="wp-block-heading">Light Section — is-light</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
 <p>Very light gray background, dark text. Use to create subtle alternating sections without heavy contrast.</p>
@@ -184,10 +188,10 @@ function simply_style_guide_content() {
 <!-- wp:group {"className":"is-brand-1","style":{"spacing":{"padding":{"top":"48px","bottom":"48px","left":"32px","right":"32px"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-brand-1" style="padding-top:48px;padding-bottom:48px;padding-left:32px;padding-right:32px">
 <!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Brand 1 — <code>is-brand-1</code></h3>
+<h3 class="wp-block-heading">Brand 1 — is-brand-1</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Primary brand accent color as a full section background. Set via <code>--client-section-brand1-*</code> tokens in your Simply Branded plugin.</p>
+<p>Primary brand accent color as a full section background. Set via the --client-section-brand1-* tokens in your Simply Branded plugin.</p>
 <!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
@@ -200,10 +204,10 @@ function simply_style_guide_content() {
 <!-- wp:group {"className":"is-brand-2","style":{"spacing":{"padding":{"top":"48px","bottom":"48px","left":"32px","right":"32px"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group is-brand-2" style="padding-top:48px;padding-bottom:48px;padding-left:32px;padding-right:32px">
 <!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Brand 2 — <code>is-brand-2</code></h3>
+<h3 class="wp-block-heading">Brand 2 — is-brand-2</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Secondary brand color — typically a deep complementary tone. Set via <code>--client-section-brand2-*</code> tokens in your Simply Branded plugin.</p>
+<p>Secondary brand color — typically a deep complementary tone. Set via the --client-section-brand2-* tokens in your Simply Branded plugin.</p>
 <!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->

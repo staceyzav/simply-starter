@@ -3388,6 +3388,7 @@ input[type="submit"]:hover,
 .is-brand-1 .simply-btn {
 	background-color: var(--client-section-brand1-highlight) !important;
 	border-color: var(--client-section-brand1-highlight) !important;
+	color: var(--client-section-brand1-bg) !important;
 }
 
 /* --- BRAND 2 section --- */
@@ -3415,6 +3416,7 @@ input[type="submit"]:hover,
 .is-brand-2 .simply-btn {
 	background-color: var(--client-section-brand2-highlight) !important;
 	border-color: var(--client-section-brand2-highlight) !important;
+	color: var(--client-section-brand2-bg) !important;
 }
 
 
