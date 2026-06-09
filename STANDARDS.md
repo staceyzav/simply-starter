@@ -1,13 +1,13 @@
 # Simply Design — Plugin & Theme Standards
 **For AI-assisted site building and developer reference.**
 
-Simply Design builds sites using a layered system: a generic starter theme, a client brand config plugin, and a suite of standalone content plugins. Everything is connected through a shared CSS token system — set the tokens once and the entire site updates automatically.
+Simply Design builds sites using a layered system: a generic starter theme, a branding plugin (Simply Branded or Client Branded), and a suite of standalone content plugins. Everything is connected through a shared CSS token system — set the tokens once and the entire site updates automatically.
 
 ---
 
 ## The Token System
 
-All plugins and theme use CSS custom properties (`--client-*`). Set them in the client config plugin once — every plugin on the site picks them up automatically.
+All plugins and theme use CSS custom properties (`--client-*`). Set them in Simply Branded or a Client Branded plugin once — every plugin on the site picks them up automatically.
 
 ### Available Tokens
 
@@ -48,7 +48,7 @@ All plugins and theme use CSS custom properties (`--client-*`). Set them in the 
 
 ### Fallback Chain
 Tokens resolve in this order — highest priority first:
-1. **Simply Client Config** — full client brand (colors, fonts, logo)
+1. **Client Branded or Simply Branded** — full client brand (colors, fonts, logo)
 2. **WordPress global styles** — any FSE/block theme's theme.json presets
 3. **Simply Starter defaults** — clean, professional generic look
 
@@ -87,7 +87,7 @@ Every Simply plugin follows these rules. When generating code for this system, f
 - `.ss-homepage` / `.ss-interior` body classes (homepage = no header padding, interior = padded)
 - Mobile slide-in menu via `simply-scroll.js`
 - 4-column footer widget area + `.footer-bottom-bar`
-- Wireframe mode (toggle from admin bar — deactivates client config for UX review)
+- Wireframe mode (toggle from admin bar — deactivates branding plugin for UX review)
 - Container width configurable from Appearance → Simply Starter
 
 ### Page Templates
@@ -105,7 +105,7 @@ Simply Starter self-updates via GitHub releases (`staceyzav/simply-starter`). Th
 
 ## Simply Blocks Plugin
 
-**Blocks:** Simply Section, Simply Container, Simply News
+**Blocks:** Simply Section, Simply Container, Simply Columns, Simply News, Simply FAQs, Simply Logo Slider
 
 ### Simply Section
 Wraps full-width page sections with background color/image/video support.
@@ -179,41 +179,75 @@ Three-column post feed with category filters. Uses `--client-*` tokens for all c
 | `--client-section-light-bg` | Events section bg | `#f2f2f2` |
 | `--client-font-display` | Dates + titles | `Arial` |
 | `--client-font-primary` | Body text | `Arial` |
-| `--se-radius` | Card border-radius | `0` |
+| `--client-radius` | Card border-radius (via `ss-card`) | `0` |
 
 ### Card Classes
-`.se-events-block`, `.se-event-card`, `.se-event-card__date`, `.se-event-card__day`, `.se-event-card__month`, `.se-event-card__body`, `.se-event-card__title`
+`.se-events-block`, `.se-event-card.ss-card`, `.se-event-card__date`, `.se-event-card__day`, `.se-event-card__month`, `.se-event-card__body.ss-card-body`, `.se-event-card__title`
 
 ---
 
-## Simply Branded Plugin
+## Simply Team Plugin
 
-**Purpose:** Brand configuration for a specific client. One plugin per client/site.
+**Shortcode:** `[simply_team]`
+**CSS handle:** `simply-team`
 
-### What it controls
-1. **CSS tokens** — overrides all `--client-*` in `:root`
-2. **Fonts** — Typekit, Google Fonts, or self-hosted (auto `@font-face` generated)
-3. **Client-specific CSS overrides** — anything in `client-style.css`
+### Shortcode Attributes
+```
+[simply_team
+  limit="12"    — number of members
+  columns="3"   — grid columns (default 3)
+]
+```
 
-### How to brand a new site
-1. Duplicate the Simply Branded plugin template, rename for the client
-2. Set `--client-*` tokens in `client-style.css`
-3. Add font loading (Typekit kit ID, Google Fonts URL, or `@font-face` for self-hosted)
-4. Add any client-specific CSS overrides at the bottom of `client-style.css`
+### Tokens Used
+| Token | Purpose | Fallback |
+|-------|---------|---------|
+| `--client-accent` | Button/link color | `#2563eb` |
+| `--client-heading` | Card name color | `#1a1a1a` |
+| `--client-font-display` | Name heading font | `sans-serif` |
+| `--client-font-primary` | Body/contact text | `sans-serif` |
+| `--client-radius` | Card border-radius (via `ss-card`) | `0` |
+
+### Card Classes
+`.st-team`, `.st-card`, `.st-card__inner.ss-card`, `.st-card__photo`, `.st-card__body.ss-card-body`, `.st-card__name`, `.st-card__role`, `.st-card__more`
+
+### Slide Panel
+Clicking "More Info" opens a slide-over panel from the left with full bio. Panel classes: `.st-panel`, `.st-panel__header`, `.st-panel__photo`, `.st-panel__name`, `.st-panel__bio`, `.st-panel__close`. Overlay: `.st-overlay`.
+
+---
+
+## Simply Branded Plugin (Paid Upgrade)
+
+**Purpose:** Branding admin UI for Simply Starter sites. Outputs `--client-*` tokens via `wp_head` at priority 99 — overrides all theme defaults.
+
+### What it controls (admin UI)
+- **Colors** — 6 palette fields: Light Neutral, Dark Neutral, Brand 1, Brand 2, Highlight, Highlight 2. All `--client-section-*` tokens derived automatically.
+- **Border radius** — one setting, applies globally to all `ss-card` elements and buttons via `--client-radius`
+- **Border width** — global border width
+- **Fonts** — 3 slots: Display (headings), Primary (body), Highlight/Script. Supports Typekit kit ID, Google Fonts URL, or self-hosted.
+- **Custom CSS** — freeform CSS block appended after tokens
+
+### Client Branded (agency alternative — AI-built)
+For Simply Design agency clients, we build a **Client Branded** plugin instead — same role as Simply Branded but hardcoded:
+- No admin UI — all values set in code by AI
+- Plugin name: `[ClientName] Branded` (e.g. IMF Branded, Simply Invited Branded)
+- Built from this STANDARDS.md + the client's brand brief
+- See Common Tasks below for build instructions
 
 ### Rounded shapes
-The theme and plugins default to square (`border-radius: 0`). Add these to Simply Branded to round:
+All `ss-card` elements automatically inherit `--client-radius`. Set it once in Simply Branded's admin UI or in Client Branded CSS:
 ```css
-/* Buttons */
-.button, input[type="submit"], .ss-btn, .simply-btn, .sn-filter-btn,
-.wp-block-button__link {
-    border-radius: 100px !important;
+:root { --client-radius: 8px; }
+```
+Buttons do not auto-inherit — add explicit CSS to Simply Branded custom CSS or Client Branded:
+```css
+.button, input[type="submit"], .wp-block-button__link {
+    border-radius: var(--client-radius, 0) !important;
 }
-/* Cards */
-.ss-card, .sn-card__photo, .simply-post-hero { border-radius: 8px; }
-.ss-badge { border-radius: 20px; }
-/* Tokens */
-:root { --sn-radius: 8px; --se-radius: 8px; }
+```
+For photo-only radius on Simply News cards (open-card design, no ss-card shell):
+```css
+:root { --sn-radius: 8px; }
 ```
 
 ---
@@ -264,7 +298,7 @@ Use the **Landing** page template in Simply Starter — hides nav, utility bar, 
 
 ---
 
-## Simply AI Custom Extensions Plugin
+## Client Core Plugin
 
 **Purpose:** Client-specific custom functionality. One plugin per client/site. AI-built.
 - Custom post types and taxonomies
@@ -285,7 +319,7 @@ Simply Branded (per-client plugin)
   └── loads fonts (Typekit / Google / self-hosted)
   └── client-specific CSS overrides
 
-Simply AI Custom Extensions (per-client plugin)
+Client Core (per-client plugin)
   └── custom post types, shortcodes, admin tweaks
   └── AI-built, client-specific — never touches Simply plugins or theme
 
@@ -302,7 +336,7 @@ Simply Events (shortcode)
 
 ### Plugin compatibility
 All Simply plugins work on ANY WordPress theme:
-- **With Simply Starter + Client Config** → full client brand
+- **With Simply Starter + Client Branded or Simply Branded** → full client brand
 - **With Simply Starter only** → clean generic look
 - **On any other theme** → neutral fallback styles, picks up WP global style presets where available
 
@@ -328,8 +362,14 @@ Plugin components inside sections set their own explicit colors — they are NOT
 2. Add `.is-[name]` CSS following the same pattern as `.is-dark` in `style.css`
 3. Document the new class in the Section Color Reference table above
 
+### Add a new card component inside a plugin
+- Add `ss-card` to the card shell element and `ss-card-body` to the body element (in PHP output)
+- Remove any duplicate `background`, `border-radius`, `overflow`, `box-shadow`, `transition` from plugin CSS — those come from `ss-card`
+- Use `--client-*` tokens for all colors and fonts — never hardcode
+- Plugin CSS only adds layout-specific overrides (padding differences, dark body backgrounds, etc.)
+
 ### Add a new client color scheme
-In the client config plugin's `client-style.css`:
+In Client Branded's `client-style.css` (or Simply Branded's custom CSS field):
 ```css
 :root {
     --client-accent:                  #your-color;
@@ -342,28 +382,24 @@ In the client config plugin's `client-style.css`:
 }
 ```
 
-### Add a new card component inside a plugin
-- Use `--client-*` tokens for all colors and fonts — never hardcode
-- Set explicit colors on the card element itself (not relying on section inheritance)
-- Add a plugin-scoped token for anything configurable: `--plugin-radius`, `--plugin-columns`
-- Every token needs a fallback: `var(--plugin-radius, 0)`
+### Build a Client Branded plugin for a new client
+1. Duplicate the Client Branded template, rename: `[clientslug]-branded/[clientslug]-branded.php`
+2. Update the plugin header: Plugin Name (`[ClientName] Branded`), Description, Text Domain
+3. Set `--client-*` tokens in `client-style.css`
+4. Add font loading (Typekit kit ID, Google Fonts URL, or `@font-face` for self-hosted)
+5. Add client-specific CSS overrides at the bottom of `client-style.css`
 
-### Build a Simply Branded plugin for a new client
-Duplicate the Simply Branded plugin template, rename for the client, then:
-1. Update the plugin header (Plugin Name, Description, Text Domain)
-2. Set `--client-*` tokens in `client-style.css`
-3. Add font loading (Typekit ID, Google Fonts URL, or `@font-face` for self-hosted)
-4. Add any client-specific CSS overrides at the bottom of `client-style.css`
+### Deploy Simply Starter or any Simply plugin to a new site
+All Simply repos are public — no GitHub token needed.
+1. Install the theme/plugin on the new site (download ZIP from GitHub → Upload in WP Admin)
+2. Rename the folder immediately if it extracted as `repo-main` → rename to `repo` (e.g. `simply-evite`)
+3. Activate. Future updates appear automatically in WP Admin → Updates.
+4. To enable auto-updates without prompt: add `define( 'SIMPLY_AUTO_UPDATE', true );` to `wp-config.php`
 
-### Deploy Simply Starter or Simply Evite to a new site
-1. Install the theme/plugin on the new site
-2. Add to `wp-config.php`: `define( 'SIMPLY_GITHUB_TOKEN', 'ghp_...' );`
-3. Future updates appear automatically in WP Admin → Updates
-
-### Ship an update to Simply Evite or Simply Starter
-1. Make changes, bump `SE_VERSION` (plugin) or `Version:` in `style.css` + updater line in `functions.php` (theme)
-2. `git add . && git commit -m "description"  && git tag vX.X.X && git push && git push origin vX.X.X`
-3. All connected sites see the update within 6 hours (or immediately after checking for updates)
+### Ship an update to any Simply plugin or theme
+1. Make changes, bump `Version:` in the plugin header (and any `define( 'X_VERSION', '...' )` constant)
+2. `git add . && git commit -m "description" && git tag vX.X.X && git push && git push origin vX.X.X`
+3. All connected sites see "Update available" in WP Admin → Updates
 
 ---
 
@@ -380,10 +416,11 @@ Things to complete before releasing Simply plugins publicly or to additional cli
 ## Wireframe Mode
 
 Toggle from the WordPress admin bar. When ON:
-- Deactivates the client config plugin
+- Deactivates the branding plugin (Simply Branded or Client Branded)
 - Shows a dismissible orange banner
 - Theme falls back to Simply Starter generic defaults
 - Use for UX/layout review with clients before brand is applied
+- Branding plugin is automatically reactivated when toggled back off
 
 ---
 
@@ -402,15 +439,17 @@ Common examples:
 - Anything that doesn't exist yet → new shortcode or block following Simply plugin conventions
 
 ### Setting up a new client site
-When a user says they are starting a new client or new site, **offer to build the Simply Branded plugin for them**. Walk through:
-1. Client name and slug (used for plugin file names and CSS prefix)
+When a user says they are starting a new client or new site, **offer to build a Client Branded plugin for them**. Walk through:
+1. Client name and slug (used for plugin file names, e.g. `acme-branded`)
 2. Primary brand colors (accent, text, headings, background)
 3. Section color schemes (dark, light, brand1, brand2)
 4. Font choices (Typekit kit ID, Google Fonts URL, or self-hosted files)
-5. Logo and any other brand assets
+5. Any client-specific CSS overrides
 
-### Simply AI Custom Extensions
-Every client gets a Simply AI Custom Extensions plugin for site-specific custom functionality. This is where anything unique to that client lives — anything that shouldn't touch the theme or Simply plugins:
+If the client has Simply Branded (paid upgrade) already installed, help them configure it through the admin UI instead — Appearance → Simply Branded.
+
+### Client Core
+Every client gets a Client Core plugin for site-specific custom functionality. This is where anything unique to that client lives — anything that shouldn't touch the theme or Simply plugins:
 - Custom post types and taxonomies
 - Custom shortcodes and widgets
 - Admin customizations and dashboard tweaks
