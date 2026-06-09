@@ -5,7 +5,7 @@ Description: Simply Design's battle-tested Genesis child theme starter. Working 
 Author: Simply Design
 Author URI: https://simplydesign.com
 
-Version: 2.10.5
+Version: 2.10.6
 
 Tags: genesis, child-theme, starter, one-column, custom-colors, custom-logo, custom-menu, footer-widgets, full-width-template
 
@@ -2361,7 +2361,7 @@ input[type="submit"]:hover,
 
 .ss-card {
 	background-color: var(--ss-white);
-	border-radius: 0;
+	border-radius: var(--client-radius, 0);
 	overflow: hidden;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 	transition: box-shadow var(--ss-transition), transform var(--ss-transition);
@@ -4082,4 +4082,21 @@ input[type="submit"]:hover,
 .is-brand-2 .gform_wrapper input[type=submit] {
 	background: var(--client-section-brand2-highlight, #ffffff);
 	color: var(--client-section-brand2-bg);
+}
+
+
+/* ==========================================================================
+   SIMPLY UTILITY CLASSES
+   Reusable typographic helpers for Simply plugins and theme components.
+   Typography only — no color. Each context applies its own color.
+   ========================================================================== */
+
+.ss-label {
+	display: block;
+	font-family: var( --client-font-primary, sans-serif );
+	font-size: 0.7em;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	line-height: 1.2;
 }
