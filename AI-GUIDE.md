@@ -1,6 +1,8 @@
-# Simply Starter — Simply AI Guide
-**Free tier. For AI-assisted site building.**
-*Part of the Simply Suite by Simply Design — simplydesign.com*
+# Simply AI — Simply Starter Guide
+**Free tier guide. For AI-assisted site building.**
+*Simply AI is the AI documentation system for the Simply Suite by Simply Design.*
+*Free guides cover each plugin as-built. The full developer guide unlocks with Simply Suite.*
+*simplydesign.com/suite*
 
 ---
 
@@ -86,5 +88,6 @@ hold up cleanly when plugins update.
 
 ---
 
-*Simply Design — https://simplydesign.com*
-*This guide covers Simply Starter free tier only. Review before each major release.*
+*Simply AI — the AI documentation system for Simply Suite.*
+*Simply Design — https://simplydesign.com/suite*
+*Free tier guide. Covers Simply Starter only. Review and update at each major release.*
