@@ -5,7 +5,7 @@ Description: Simply Design's battle-tested Genesis child theme starter. Working 
 Author: Simply Design
 Author URI: https://simplydesign.com
 
-Version: 2.10.3
+Version: 2.10.4
 
 Tags: genesis, child-theme, starter, one-column, custom-colors, custom-logo, custom-menu, footer-widgets, full-width-template
 
@@ -3222,8 +3222,10 @@ input[type="submit"],
 .simply-btn {
 	background-color: var(--client-accent) !important;
 	color: var(--client-accent-text) !important;
-	border-color: var(--client-accent) !important;
-	border-radius: 0 !important;
+	border-width: var(--client-btn-border-width, 0px) !important;
+	border-style: solid !important;
+	border-color: var(--client-btn-border-color, var(--client-accent)) !important;
+	border-radius: var(--client-radius, 0px) !important;
 	font-family: var(--client-font-display) !important;
 	font-weight: 700 !important;
 	letter-spacing: 0.06em !important;
