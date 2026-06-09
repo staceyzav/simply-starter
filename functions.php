@@ -3,7 +3,7 @@
  * Simply Starter — functions.php
  *
  * Simply Design starter child theme for Genesis Framework.
- * Fonts and brand colors are handled by the Simply Client Config plugin.
+ * Fonts and brand colors are handled by Simply Branded or a Client Branded plugin.
  * Do not add client-specific code here.
  *
  * @package Simply Starter
@@ -17,7 +17,7 @@ require_once get_template_directory() . '/lib/init.php';
 
 // GitHub auto-updater — checks staceyzav/simply-starter for new releases.
 require_once get_stylesheet_directory() . '/includes/class-github-updater.php';
-new Simply_GitHub_Updater( 'theme', 'simply-starter', 'staceyzav/simply-starter', '2.10.6' );
+new Simply_GitHub_Updater( 'theme', 'simply-starter', 'staceyzav/simply-starter', '2.10.7' );
 
 // Sets up the Theme.
 require_once get_stylesheet_directory() . '/lib/theme-defaults.php';
@@ -556,21 +556,18 @@ function simply_render_welcome_page() {
 		<!-- GETTING STARTED -->
 		<h2>Get started with your branded theme by Simply Starter</h2>
 
-		<p>Simply Starter offers a plugin config for your brand.<br>
-		Simply Design will install and configure this for you, or you can
-		<a href="https://simplydesign.com/simply-client-config" target="_blank">download it here</a>
-		and do it yourself. If you would like to hire us, find us at
-		<a href="https://simplydesign.com" target="_blank">SimplyDesign.com</a>.</p>
+		<p>Apply your brand by installing <strong>Simply Branded</strong> (paid upgrade) or a <strong>Client Branded</strong> plugin built by Simply Design.<br>
+		<a href="https://simplydesign.com" target="_blank">SimplyDesign.com</a> — we can install and configure it for you.</p>
 
 		<?php if ( ! $client_active ) : ?>
 		<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:16px 20px;margin:20px 0;">
-			<strong>⚠ Simply Client Config not detected.</strong>
+			<strong>⚠ No branding plugin detected.</strong>
 			Without it the theme shows wireframe neutral styles only.
-			Install and activate the Simply Client Config plugin to apply your brand colors and fonts.
+			Install Simply Branded or a Client Branded plugin to apply your brand colors and fonts.
 		</div>
 		<?php else : ?>
 		<div style="background:#d4edda;border:1px solid #28a745;border-radius:6px;padding:16px 20px;margin:20px 0;">
-			<strong>✓ Client Config active:</strong> <?php echo esc_html( $client_active ); ?>
+			<strong>✓ Branding plugin active:</strong> <?php echo esc_html( $client_active ); ?>
 		</div>
 		<?php endif; ?>
 
@@ -586,7 +583,7 @@ function simply_render_welcome_page() {
 				<?php echo $wireframe_on ? 'Turn Wireframe OFF (go live)' : 'Turn Wireframe ON (show neutral)'; ?>
 			</a>
 			<?php if ( $wireframe_on && $client_active ) : ?>
-				<span style="margin-left:12px;color:#666;font-size:13px;">Client config will be auto-reactivated when you turn wireframe off.</span>
+				<span style="margin-left:12px;color:#666;font-size:13px;">Branding plugin will be auto-reactivated when you turn wireframe off.</span>
 			<?php endif; ?>
 		</p>
 
@@ -666,9 +663,17 @@ function simply_redirect_genesis_onboarding() {
 
 
 // ==========================================================================
-// HELPER — find active client config plugin
-// Returns plugin name string or false.
+// HELPER — find active branding plugin (Simply Branded, Client Branded, or
+// legacy Client Config). Returns plugin name string or false.
+// Matches: simply-branded, *-branded, *-client-config slugs.
 // ==========================================================================
+
+function simply_is_branding_plugin( $plugin_file ) {
+	return (
+		strpos( $plugin_file, '-branded'     ) !== false ||
+		strpos( $plugin_file, 'client-config') !== false
+	);
+}
 
 function simply_get_active_client_config() {
 	if ( ! function_exists( 'get_plugins' ) ) {
@@ -676,10 +681,7 @@ function simply_get_active_client_config() {
 	}
 	$all_plugins = get_plugins();
 	foreach ( $all_plugins as $plugin_file => $plugin_data ) {
-		if (
-			strpos( $plugin_file, 'client-config' ) !== false &&
-			is_plugin_active( $plugin_file )
-		) {
+		if ( simply_is_branding_plugin( $plugin_file ) && is_plugin_active( $plugin_file ) ) {
 			return $plugin_data['Name'];
 		}
 	}
@@ -688,9 +690,9 @@ function simply_get_active_client_config() {
 
 
 // ==========================================================================
-// WIREFRAME MODE — AUTO-TOGGLE CLIENT CONFIG PLUGIN
-// When wireframe turns ON: deactivate client config, store its slug.
-// When wireframe turns OFF: reactivate the stored client config.
+// WIREFRAME MODE — AUTO-TOGGLE BRANDING PLUGIN
+// When wireframe turns ON: deactivate Simply Branded / Client Branded, store slug.
+// When wireframe turns OFF: reactivate the stored branding plugin.
 // ==========================================================================
 
 // Override the existing wireframe toggle handler to add plugin auto-toggle.
@@ -715,13 +717,10 @@ function simply_handle_wireframe_toggle_v2() {
 	if ( ! $currently_on ) {
 
 		// --- Turning wireframe ON ---
-		// Find and deactivate any active client config plugin.
+		// Find and deactivate any active branding plugin.
 		$all_plugins = get_plugins();
 		foreach ( $all_plugins as $plugin_file => $plugin_data ) {
-			if (
-				strpos( $plugin_file, 'client-config' ) !== false &&
-				is_plugin_active( $plugin_file )
-			) {
+			if ( simply_is_branding_plugin( $plugin_file ) && is_plugin_active( $plugin_file ) ) {
 				// Store slug so we can reactivate later.
 				update_option( 'simply_wireframe_saved_plugin', $plugin_file );
 				deactivate_plugins( $plugin_file );
@@ -808,7 +807,7 @@ function simply_welcome_page_output() {
 	$client_config_active = false;
 	$active_plugins = get_option( 'active_plugins', array() );
 	foreach ( $active_plugins as $plugin ) {
-		if ( strpos( $plugin, 'client-config' ) !== false ) {
+		if ( simply_is_branding_plugin( $plugin ) ) {
 			$client_config_active = true;
 			break;
 		}
@@ -827,17 +826,14 @@ function simply_welcome_page_output() {
 
 		<?php if ( ! $client_config_active ) : ?>
 		<div style="background:#fff3cd; border-left:4px solid #f0a500; padding:16px 20px; margin-bottom:24px; border-radius:0 4px 4px 0;">
-			<strong>⚠️ Client Config Plugin Not Active</strong><br>
-			Get started with your branded theme by Simply Starter.<br><br>
-			Simply Starter offers a plugin config for your brand.
-			Simply Design will install and configure this for you or you can
-			<a href="https://simplydesign.com/simply-client-config" target="_blank">download it here</a>
-			and do it yourself. If you would like to hire us, find us at
+			<strong>⚠️ No Branding Plugin Detected</strong><br>
+			Simply Starter is running in wireframe mode — neutral styles only.<br><br>
+			Install <strong>Simply Branded</strong> (paid upgrade) or a <strong>Client Branded</strong> plugin to apply your brand colors and fonts.
 			<a href="https://simplydesign.com" target="_blank">SimplyDesign.com</a>
 		</div>
 		<?php else : ?>
 		<div style="background:#d4edda; border-left:4px solid #4CAF50; padding:16px 20px; margin-bottom:24px; border-radius:0 4px 4px 0;">
-			<strong>✓ Client Config Active</strong> — Your brand is configured and ready.
+			<strong>✓ Branding Plugin Active</strong> — Your brand is configured and ready.
 		</div>
 		<?php endif; ?>
 
