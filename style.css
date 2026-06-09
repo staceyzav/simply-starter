@@ -5,7 +5,7 @@ Description: Simply Design's battle-tested Genesis child theme starter. Working 
 Author: Simply Design
 Author URI: https://simplydesign.com
 
-Version: 2.10.1
+Version: 2.10.2
 
 Tags: genesis, child-theme, starter, one-column, custom-colors, custom-logo, custom-menu, footer-widgets, full-width-template
 
@@ -3868,3 +3868,209 @@ input[type="submit"]:hover,
 	}
 }
 
+
+
+/* ==========================================================================
+   GRAVITY FORMS — TOKEN INTEGRATION
+   Labels, inputs, and submit buttons follow --client-* tokens automatically.
+   Section-specific overrides handle .is-dark, .is-light, .is-brand-1/2.
+   ========================================================================== */
+
+/* ── Base / default (white background sections) ──────────────────── */
+
+.gform_wrapper .gfield_label {
+	color: var(--client-heading);
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.gform_wrapper .gfield_description,
+.gform_wrapper .gfield_required {
+	color: var(--client-text);
+}
+
+.gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]),
+.gform_wrapper textarea,
+.gform_wrapper select {
+	background: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: var(--client-text);
+	padding: 10px 14px;
+	border-radius: var(--client-radius, 0px);
+	width: 100%;
+	box-sizing: border-box;
+	font-family: var(--client-font-primary, inherit);
+	font-size: 15px;
+	transition: border-color 0.2s ease;
+}
+
+.gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]):focus,
+.gform_wrapper textarea:focus,
+.gform_wrapper select:focus {
+	outline: none;
+	border-color: var(--client-accent);
+	box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+}
+
+.gform_wrapper .gform_button,
+.gform_wrapper input[type=submit] {
+	background: var(--client-accent);
+	color: var(--client-accent-text, #ffffff);
+	border: none;
+	border-radius: var(--client-radius, 0px);
+	padding: 12px 32px;
+	font-size: 14px;
+	font-family: var(--client-font-display, inherit);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.gform_wrapper .gform_button:hover,
+.gform_wrapper input[type=submit]:hover {
+	background: var(--client-accent-hover);
+}
+
+.gform_wrapper .validation_message,
+.gform_wrapper .gfield_error .gfield_label {
+	color: #e53e3e;
+}
+
+.gform_wrapper .gfield_error input,
+.gform_wrapper .gfield_error textarea,
+.gform_wrapper .gfield_error select {
+	border-color: #e53e3e;
+}
+
+
+/* ── Dark section (.is-dark) ─────────────────────────────────────── */
+
+.is-dark .gform_wrapper .gfield_label {
+	color: var(--client-section-dark-heading, #ffffff);
+}
+
+.is-dark .gform_wrapper .gfield_description,
+.is-dark .gform_wrapper .gfield_required {
+	color: var(--client-section-dark-text, #f0f0f0);
+	opacity: 0.75;
+}
+
+.is-dark .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]),
+.is-dark .gform_wrapper textarea,
+.is-dark .gform_wrapper select {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.2);
+	color: var(--client-section-dark-text, #f0f0f0);
+}
+
+.is-dark .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]):focus,
+.is-dark .gform_wrapper textarea:focus,
+.is-dark .gform_wrapper select:focus {
+	border-color: var(--client-section-dark-highlight, var(--client-accent));
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.is-dark .gform_wrapper .gform_button,
+.is-dark .gform_wrapper input[type=submit] {
+	background: var(--client-section-dark-highlight, var(--client-accent));
+	color: var(--client-section-dark-bg, #1a1a1a);
+}
+
+.is-dark .gform_wrapper .gform_button:hover,
+.is-dark .gform_wrapper input[type=submit]:hover {
+	opacity: 0.88;
+}
+
+
+/* ── Light section (.is-light) ───────────────────────────────────── */
+
+.is-light .gform_wrapper .gfield_label {
+	color: var(--client-section-light-heading);
+}
+
+.is-light .gform_wrapper .gfield_description,
+.is-light .gform_wrapper .gfield_required {
+	color: var(--client-section-light-text);
+}
+
+.is-light .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]),
+.is-light .gform_wrapper textarea,
+.is-light .gform_wrapper select {
+	border-color: rgba(0, 0, 0, 0.15);
+	color: var(--client-section-light-text);
+}
+
+.is-light .gform_wrapper .gform_button,
+.is-light .gform_wrapper input[type=submit] {
+	background: var(--client-section-light-highlight, var(--client-accent));
+}
+
+
+/* ── Brand 1 section (.is-brand-1) ──────────────────────────────── */
+
+.is-brand-1 .gform_wrapper .gfield_label {
+	color: var(--client-section-brand1-heading, #ffffff);
+}
+
+.is-brand-1 .gform_wrapper .gfield_description,
+.is-brand-1 .gform_wrapper .gfield_required {
+	color: var(--client-section-brand1-text, #ffffff);
+	opacity: 0.75;
+}
+
+.is-brand-1 .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]),
+.is-brand-1 .gform_wrapper textarea,
+.is-brand-1 .gform_wrapper select {
+	background: rgba(255, 255, 255, 0.15);
+	border-color: rgba(255, 255, 255, 0.3);
+	color: var(--client-section-brand1-text, #ffffff);
+}
+
+.is-brand-1 .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]):focus,
+.is-brand-1 .gform_wrapper textarea:focus,
+.is-brand-1 .gform_wrapper select:focus {
+	border-color: rgba(255, 255, 255, 0.7);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+
+.is-brand-1 .gform_wrapper .gform_button,
+.is-brand-1 .gform_wrapper input[type=submit] {
+	background: var(--client-section-brand1-highlight, #ffffff);
+	color: var(--client-section-brand1-bg);
+}
+
+
+/* ── Brand 2 section (.is-brand-2) ──────────────────────────────── */
+
+.is-brand-2 .gform_wrapper .gfield_label {
+	color: var(--client-section-brand2-heading, #ffffff);
+}
+
+.is-brand-2 .gform_wrapper .gfield_description,
+.is-brand-2 .gform_wrapper .gfield_required {
+	color: var(--client-section-brand2-text, #ffffff);
+	opacity: 0.75;
+}
+
+.is-brand-2 .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]),
+.is-brand-2 .gform_wrapper textarea,
+.is-brand-2 .gform_wrapper select {
+	background: rgba(255, 255, 255, 0.15);
+	border-color: rgba(255, 255, 255, 0.3);
+	color: var(--client-section-brand2-text, #ffffff);
+}
+
+.is-brand-2 .gform_wrapper input:not([type=submit]):not([type=radio]):not([type=checkbox]):focus,
+.is-brand-2 .gform_wrapper textarea:focus,
+.is-brand-2 .gform_wrapper select:focus {
+	border-color: rgba(255, 255, 255, 0.7);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+
+.is-brand-2 .gform_wrapper .gform_button,
+.is-brand-2 .gform_wrapper input[type=submit] {
+	background: var(--client-section-brand2-highlight, #ffffff);
+	color: var(--client-section-brand2-bg);
+}
