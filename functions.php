@@ -17,7 +17,7 @@ require_once get_template_directory() . '/lib/init.php';
 
 // GitHub auto-updater — checks staceyzav/simply-starter for new releases.
 require_once get_stylesheet_directory() . '/includes/class-github-updater.php';
-new Simply_GitHub_Updater( 'theme', 'simply-starter', 'staceyzav/simply-starter', '2.10.4' );
+new Simply_GitHub_Updater( 'theme', 'simply-starter', 'staceyzav/simply-starter', '2.10.5' );
 
 // Sets up the Theme.
 require_once get_stylesheet_directory() . '/lib/theme-defaults.php';
