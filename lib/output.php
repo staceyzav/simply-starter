@@ -96,13 +96,7 @@ function genesis_sample_css() {
 		genesis_sample_color_contrast( $color_accent )
 	) : '';
 
-	$css .= ( has_custom_logo() && ( 200 <= $logo_effective_height ) ) ?
-		'
-		.site-header {
-			position: static;
-		}
-		'
-	: '';
+	// Simply Starter always uses a fixed header — never override position based on logo size.
 
 	if ( ! is_customize_preview() ) {
 		$css .= has_custom_logo() ? sprintf(
