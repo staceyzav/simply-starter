@@ -10,6 +10,31 @@
  * @link    https://www.studiopress.com/
  */
 
+// Filter Genesis customizer config before it registers — remove controls we don't need
+add_filter( 'genesis_customizer_theme_settings_config', 'ss_filter_genesis_customizer_config' );
+function ss_filter_genesis_customizer_config( $config ) {
+	$remove = [ 'comments_pages', 'trackbacks_posts', 'trackbacks_pages' ];
+	foreach ( $remove as $key ) {
+		unset( $config['genesis']['sections']['genesis_comments']['controls'][ $key ] );
+	}
+	return $config;
+}
+
+add_action( 'customize_register', 'ss_remove_customizer_sections', 9999 );
+function ss_remove_customizer_sections( $wp_customize ) {
+	// WP core sections not used in Simply Starter
+	$wp_customize->remove_section( 'colors' );
+	$wp_customize->remove_section( 'header_image' );
+	$wp_customize->remove_section( 'background_image' );
+	$wp_customize->remove_panel( 'widgets' );
+
+	// Genesis Theme Settings sections not applicable to Simply Starter
+	$wp_customize->remove_section( 'genesis_layout' );
+	$wp_customize->remove_section( 'genesis_breadcrumbs' );
+	$wp_customize->remove_section( 'genesis_archives' );
+
+}
+
 add_action( 'customize_register', 'genesis_sample_customizer_register' );
 /**
  * Registers settings and controls with the Customizer.
@@ -21,48 +46,6 @@ add_action( 'customize_register', 'genesis_sample_customizer_register' );
 function genesis_sample_customizer_register( $wp_customize ) {
 
 	$appearance = genesis_get_config( 'appearance' );
-
-	$wp_customize->add_setting(
-		'genesis_sample_link_color',
-		[
-			'default'           => $appearance['default-colors']['link'],
-			'sanitize_callback' => 'sanitize_hex_color',
-		]
-	);
-
-	$wp_customize->add_control(
-		new WP_Customize_Color_Control(
-			$wp_customize,
-			'genesis_sample_link_color',
-			[
-				'description' => __( 'Change the color of post info links and button blocks, the hover color of linked titles and menu items, and more.', 'genesis-sample' ),
-				'label'       => __( 'Link Color', 'genesis-sample' ),
-				'section'     => 'colors',
-				'settings'    => 'genesis_sample_link_color',
-			]
-		)
-	);
-
-	$wp_customize->add_setting(
-		'genesis_sample_accent_color',
-		[
-			'default'           => $appearance['default-colors']['accent'],
-			'sanitize_callback' => 'sanitize_hex_color',
-		]
-	);
-
-	$wp_customize->add_control(
-		new WP_Customize_Color_Control(
-			$wp_customize,
-			'genesis_sample_accent_color',
-			[
-				'description' => __( 'Change the default hover color for button links, menu buttons, and submit buttons. The button block uses the Link Color.', 'genesis-sample' ),
-				'label'       => __( 'Accent Color', 'genesis-sample' ),
-				'section'     => 'colors',
-				'settings'    => 'genesis_sample_accent_color',
-			]
-		)
-	);
 
 	$wp_customize->add_setting(
 		'genesis_sample_logo_width',

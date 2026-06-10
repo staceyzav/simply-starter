@@ -589,38 +589,6 @@ function simply_render_welcome_page() {
 
 		<hr>
 
-		<!-- SITE SETTINGS -->
-		<h2>Site Settings</h2>
-
-		<?php if ( isset( $_GET['settings-updated'] ) ) : ?>
-		<div style="background:#d4edda;border:1px solid #28a745;border-radius:6px;padding:12px 16px;margin-bottom:20px;">
-			<strong>✓ Settings saved.</strong>
-		</div>
-		<?php endif; ?>
-
-		<form method="post">
-			<?php wp_nonce_field( 'simply_site_settings', 'simply_site_settings_nonce' ); ?>
-
-			<table class="form-table" style="max-width:600px;">
-				<tr>
-					<th style="width:200px;padding:12px 0;">
-						<label for="simply_disable_comments">Disable Comments</label>
-					</th>
-					<td style="padding:12px 0;">
-						<label>
-							<input type="checkbox" id="simply_disable_comments" name="simply_disable_comments" value="1"
-								<?php checked( get_option( 'simply_disable_comments', 0 ), 1 ); ?>>
-							Disable comments sitewide (hides comment forms, closes comments on all posts)
-						</label>
-					</td>
-				</tr>
-			</table>
-
-			<?php submit_button( 'Save Settings', 'primary', 'submit', false ); ?>
-		</form>
-
-		<hr>
-
 		<!-- SETUP CHECKLIST -->
 		<h2>Setup Checklist</h2>
 		<ol style="line-height:2.2;">
@@ -1357,24 +1325,30 @@ function simply_og_tags() {
 // Controlled via Appearance → Simply Starter → Site Settings.
 // ==========================================================================
 
-add_action( 'admin_init', 'simply_handle_site_settings' );
+// COMMENTS — migrate simply_disable_comments → Genesis setting (one-time, runs on admin_init)
+add_action( 'admin_init', 'simply_migrate_comments_setting' );
+function simply_migrate_comments_setting() {
+	$old = get_option( 'simply_disable_comments' );
+	if ( $old === false ) return; // already migrated or never set
 
-function simply_handle_site_settings() {
-	if ( ! isset( $_POST['simply_site_settings_nonce'] ) ) return;
-	if ( ! wp_verify_nonce( $_POST['simply_site_settings_nonce'], 'simply_site_settings' ) ) return;
-	if ( ! current_user_can( 'manage_options' ) ) return;
+	if ( (int) $old === 1 ) {
+		$genesis = get_option( 'genesis-settings', [] );
+		$genesis['comments_posts'] = 0;
+		update_option( 'genesis-settings', $genesis );
+	}
 
-	update_option( 'simply_disable_comments', isset( $_POST['simply_disable_comments'] ) ? 1 : 0 );
-
-	wp_safe_redirect( admin_url( 'themes.php?page=simply-starter-welcome&settings-updated=1' ) );
-	exit;
+	delete_option( 'simply_disable_comments' );
 }
 
-if ( get_option( 'simply_disable_comments', 0 ) ) {
-	add_filter( 'comments_open',  '__return_false', 20 );
-	add_filter( 'pings_open',     '__return_false', 20 );
-	add_filter( 'comments_array', '__return_empty_array', 20 );
-	add_action( 'admin_menu', function() {
+// Pages: always off — comment forms don't render on pages anyway,
+// but this closes them in the database and hides the customizer control.
+add_filter( 'genesis_pre_get_option_comments_pages',   '__return_zero' );
+add_filter( 'genesis_pre_get_option_trackbacks_posts', '__return_zero' );
+add_filter( 'genesis_pre_get_option_trackbacks_pages', '__return_zero' );
+
+// When posts comments are disabled via Genesis customizer, remove the Comments admin menu.
+add_action( 'admin_menu', function() {
+	if ( ! genesis_get_option( 'comments_posts' ) ) {
 		remove_menu_page( 'edit-comments.php' );
-	}, 99 );
-}
+	}
+}, 99 );
