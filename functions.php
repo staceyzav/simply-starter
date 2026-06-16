@@ -1252,3 +1252,6 @@ add_action( 'admin_menu', function() {
 		remove_menu_page( 'edit-comments.php' );
 	}
 }, 99 );
+
+// Enable shortcodes in text widgets.
+add_filter( 'widget_text', 'do_shortcode' );

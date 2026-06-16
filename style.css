@@ -2666,6 +2666,14 @@ input[type="submit"]:hover,
 		display: block;
 	}
 
+	/* Suppress hover-open inside the hamburger — click-only via .sub-menu-open */
+	.mobile-menu-open .nav-primary .genesis-nav-menu .sub-menu {
+		display: none !important;
+	}
+	.mobile-menu-open .nav-primary .genesis-nav-menu .menu-item.sub-menu-open > .sub-menu {
+		display: block !important;
+	}
+
 	/* Sub-menu links */
 	.nav-primary .genesis-nav-menu .sub-menu a {
 		font-size: 13px;
@@ -2698,6 +2706,15 @@ input[type="submit"]:hover,
 	.nav-primary .genesis-nav-menu .sub-menu,
 	.nav-primary .genesis-nav-menu .sub-menu a {
 		width: 100%;
+	}
+
+}
+
+@media (max-width: 767px) {
+
+	.simply-section.hero .wp-block-button__link,
+	.simply-section.hero .ss-btn {
+		font-size: 12px !important;
 	}
 
 }
