@@ -5,7 +5,7 @@ Description: Simply Design's battle-tested Genesis child theme starter. Working 
 Author: Simply Design
 Author URI: https://simplydesign.com
 
-Version: 2.11.1
+Version: 2.12.0
 
 Tags: genesis, child-theme, starter, one-column, custom-colors, custom-logo, custom-menu, footer-widgets, full-width-template
 
@@ -996,16 +996,16 @@ figcaption,
 }
 
 .site-title {
-	font-size: 20px;
+	font-size: 40px;
 	font-weight: 600;
 	line-height: 1;
-	margin-bottom: 0;
+	margin: 0;
 }
 
 .site-title a,
 .site-title a:focus,
 .site-title a:hover {
-	color: #333;
+	color: var(--ss-white);
 	text-decoration: none;
 }
 
@@ -2097,36 +2097,35 @@ p {
 		display: flex;
 		align-items: center;
 		height: 100%;
-		transition: background-color var(--ss-transition), color var(--ss-transition);
+		box-shadow: inset 0 -3px 0 transparent;
+		transition: box-shadow var(--ss-transition), color var(--ss-transition);
 	}
 
 	.nav-primary .genesis-nav-menu a:hover,
 	.nav-primary .genesis-nav-menu a:focus,
 	.nav-primary .genesis-nav-menu .current-menu-item > a {
 		color: var(--ss-white);
-		background-color: rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 -3px 0 var(--client-nav-highlight);
 		text-decoration: none;
 	}
 
-	/* CTA button — add class "menu-highlight" OR "cta" to menu item
-	   in Appearance -> Menus -> Screen Options -> CSS Classes */
-	.nav-primary .genesis-nav-menu > .menu-highlight > a,
-	.nav-primary .genesis-nav-menu > .cta > a {
+	/* CTA button — add class "cta" to menu item in Appearance -> Menus -> Screen Options -> CSS Classes */
+	.nav-primary li.cta > a {
 		background-color: var(--client-accent);
 		color: var(--ss-white);
-		padding: 0 32px;
+		padding: 10px 28px;
 		border-radius: 0;
 		font-weight: 700;
-		margin-left: 0;
-		height: var(--ss-header-height);
+		align-self: center;
+		height: auto;
+		box-shadow: none;
 	}
 
-	.nav-primary .genesis-nav-menu > .menu-highlight > a:hover,
-	.nav-primary .genesis-nav-menu > .menu-highlight > a:focus,
-	.nav-primary .genesis-nav-menu > .cta > a:hover,
-	.nav-primary .genesis-nav-menu > .cta > a:focus {
+	.nav-primary li.cta > a:hover,
+	.nav-primary li.cta > a:focus {
 		background-color: var(--client-accent-hover);
 		color: var(--ss-white);
+		box-shadow: none;
 	}
 
 	/* Dropdown menus */
@@ -2361,10 +2360,21 @@ input[type="submit"]:hover,
 
 .ss-card {
 	background-color: var(--ss-white);
+	color: var(--client-dark-neutral, #1a1a1a);
 	border-radius: var(--client-radius, 0);
 	overflow: hidden;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 	transition: box-shadow var(--ss-transition), transform var(--ss-transition);
+}
+
+/* Reset heading colors inside cards — overrides section color cascade */
+.simply-section .ss-card h1,
+.simply-section .ss-card h2,
+.simply-section .ss-card h3,
+.simply-section .ss-card h4,
+.simply-section .ss-card h5,
+.simply-section .ss-card h6 {
+	color: var(--client-dark-neutral, #1a1a1a);
 }
 
 .ss-card:hover {
@@ -2487,12 +2497,10 @@ input[type="submit"]:hover,
 		height: 100%;
 	}
 
-	/* CTA fills full height — no border radius, flush block */
-	.nav-primary .genesis-nav-menu > .menu-highlight > a,
-	.nav-primary .genesis-nav-menu > .cta > a {
-		height: var(--ss-header-height);
-		display: flex;
-		align-items: center;
+	/* CTA — compact button, centered in nav, not full height */
+	.nav-primary li.cta > a {
+		height: auto;
+		align-self: center;
 		border-radius: 0;
 	}
 }
@@ -2730,20 +2738,18 @@ input[type="submit"]:hover,
 	.nav-primary .genesis-nav-menu > .menu-item > a {
 		display: flex !important;
 		align-items: center !important;
-		height: 100% !important;
-		padding-top: 0 !important;
-		padding-bottom: 0 !important;
+		height: 100%;
+		padding-top: 0;
+		padding-bottom: 0;
 	}
 
-	/* CTA full height */
-	.nav-primary .genesis-nav-menu > .menu-highlight > a,
-	.nav-primary .genesis-nav-menu > .cta > a {
-		height: var(--ss-header-height) !important;
-		display: flex !important;
-		align-items: center !important;
-		padding-top: 0 !important;
-		padding-bottom: 0 !important;
-		border-radius: 0 !important;
+	/* CTA — compact button, not full height */
+	.nav-primary .genesis-nav-menu > li.cta > a {
+		height: auto;
+		align-self: center;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		border-radius: 0;
 	}
 }
 
