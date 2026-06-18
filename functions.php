@@ -683,7 +683,7 @@ function simply_welcome_page_output() {
 
 	$wireframe_on = get_option( 'simply_wireframe_mode', false );
 	?>
-	<div class="wrap" style="max-width:800px;">
+	<div class="wrap" style="max-width:1200px;">
 
 		<h1 style="font-size:28px; font-weight:700; margin-bottom:4px;">
 			Simply Starter <span style="font-size:16px; color:#888; font-weight:400;">v<?php echo wp_get_theme()->get( 'Version' ); ?></span>
@@ -694,10 +694,7 @@ function simply_welcome_page_output() {
 
 		<?php if ( ! $client_config_active ) : ?>
 		<div style="background:#fff3cd; border-left:4px solid #f0a500; padding:16px 20px; margin-bottom:24px; border-radius:0 4px 4px 0;">
-			<strong>⚠️ No Branding Plugin Detected</strong><br>
-			Simply Starter is running in wireframe mode — neutral styles only.<br><br>
-			Install <strong>Simply Branded</strong> (paid upgrade) or a <strong>Client Branded</strong> plugin to apply your brand colors and fonts.
-			<a href="https://simplydesign.com" target="_blank">SimplyDesign.com</a>
+			<strong>⚠️ No Branding Plugin Detected</strong> — Simply Starter is running in wireframe mode. Install <strong>Simply Branded</strong> or a <strong>Client Branded</strong> plugin to apply your brand.
 		</div>
 		<?php else : ?>
 		<div style="background:#d4edda; border-left:4px solid #4CAF50; padding:16px 20px; margin-bottom:24px; border-radius:0 4px 4px 0;">
@@ -705,77 +702,103 @@ function simply_welcome_page_output() {
 		</div>
 		<?php endif; ?>
 
-		<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
-			<h2 style="margin-top:0; font-size:18px;">🚀 Setup Checklist</h2>
-			<ul style="line-height:2;">
-				<li><?php echo $client_config_active ? '✅' : '⬜'; ?> Install &amp; activate Simply Client Config plugin</li>
-				<li>⬜ Upload logo via <a href="<?php echo admin_url('customize.php'); ?>">Appearance → Customize → Site Identity</a></li>
-				<li>⬜ Set homepage via <a href="<?php echo admin_url('customize.php'); ?>">Appearance → Customize → Homepage Settings</a></li>
-				<li>⬜ Add menus via <a href="<?php echo admin_url('nav-menus.php'); ?>">Appearance → Menus</a> — Primary + Utility locations</li>
-				<li>⬜ Add <code>menu-highlight</code> CSS class to CTA nav item (Screen Options → CSS Classes)</li>
-				<li>⬜ Populate footer widgets via <a href="<?php echo admin_url('widgets.php'); ?>">Appearance → Widgets</a> (4 columns + Footer Bottom Bar)</li>
-				<li>⬜ Update tagline in <a href="<?php echo admin_url('options-general.php'); ?>">Settings → General → Tagline</a></li>
-			</ul>
-		</div>
+		<div style="display:grid; grid-template-columns:1fr 380px; gap:24px; align-items:start;">
 
-		<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
-			<h2 style="margin-top:0; font-size:18px;">🎨 Section Color Schemes</h2>
-			<p>Add these classes to any <strong>Toolset container</strong> or <strong>Gutenberg Group block</strong>:</p>
-			<table style="width:100%; border-collapse:collapse;">
-				<tr style="background:#f5f5f5;">
-					<th style="padding:8px 12px; text-align:left; border:1px solid #e2e2e2;">Toolset class</th>
-					<th style="padding:8px 12px; text-align:left; border:1px solid #e2e2e2;">Gutenberg style</th>
-					<th style="padding:8px 12px; text-align:left; border:1px solid #e2e2e2;">Use for</th>
-				</tr>
-				<tr>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;"><code>is-dark</code></td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Dark Section</td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Dark bg, light text</td>
-				</tr>
-				<tr style="background:#f9f9f9;">
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;"><code>is-light</code></td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Light Section</td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Light bg, dark text</td>
-				</tr>
-				<tr>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;"><code>is-brand-1</code></td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Brand Section 1</td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Optional brand color</td>
-				</tr>
-				<tr style="background:#f9f9f9;">
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;"><code>is-brand-2</code></td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Brand Section 2</td>
-					<td style="padding:8px 12px; border:1px solid #e2e2e2;">Optional brand color</td>
-				</tr>
-			</table>
-			<p style="margin-bottom:0; color:#666; font-size:13px;">Containers are full-width bg with 1200px inner content constraint automatically.</p>
-		</div>
+			<?php /* ── LEFT: Plugin Installer ── */ ?>
+			<div>
+				<?php simply_render_plugin_installer(); ?>
+			</div>
 
-		<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
-			<h2 style="margin-top:0; font-size:18px;">🔭 Wireframe Mode</h2>
-			<p>Toggle wireframe mode from the <strong>admin bar</strong> at the top of any page.
-			When ON, neutral charcoal styles apply and a banner shows to all visitors indicating
-			the site is in UX preview mode.</p>
-			<p style="margin-bottom:0;">
-				Current state: <strong><?php echo $wireframe_on ? '<span style="color:#f0a500;">⬤ ON</span>' : '<span style="color:#4CAF50;">◯ OFF</span>'; ?></strong>
-				&nbsp;&nbsp;
-				<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'simply_wireframe_toggle', '1' ), 'simply_wireframe_toggle' ) ); ?>">
-					<?php echo $wireframe_on ? 'Turn off' : 'Turn on'; ?> wireframe mode
-				</a>
-			</p>
-		</div>
+			<?php /* ── RIGHT: Setup + Reference ── */ ?>
+			<div>
 
-		<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px;">
-			<h2 style="margin-top:0; font-size:18px;">📋 Notes &amp; Tips</h2>
-			<ul style="line-height:2; color:#444;">
-				<li>Put <code>[simply_hero]</code> shortcode on <strong>one line</strong> in the editor — line breaks break the shortcode parser</li>
-				<li>Typekit fonts require Adobe Fonts privacy disclosure in your Privacy Policy</li>
-				<li>Footer Bottom Bar widget area outputs only when it has content — safe to leave empty</li>
-				<li>Add <code>full-width</code> class to Toolset container to remove the 1200px constraint</li>
-				<li>Add <code>narrow</code> class to Toolset container for 800px width</li>
-				<li>Logo supports PNG and SVG — drop SVG in <code>/images/</code> and it auto-detects</li>
-			</ul>
-		</div>
+				<?php
+				$cl = get_option( 'simply_setup_checklist', [] );
+				$checked = fn( $k ) => ! empty( $cl[ $k ] ) ? 'checked' : '';
+				$cb = fn( $key, $label ) =>
+					'<li style="display:flex;align-items:center;gap:8px;line-height:1.8;">'
+					. '<input type="checkbox" class="ss-checklist-item" id="ss-cl-' . $key . '" data-key="' . $key . '" ' . $checked( $key ) . ' style="width:16px;height:16px;cursor:pointer;flex-shrink:0;">'
+					. '<label for="ss-cl-' . $key . '" style="cursor:pointer;font-size:13px;">' . $label . '</label>'
+					. '</li>';
+				?>
+				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
+					<h2 style="margin-top:0; font-size:16px;">🚀 Setup Checklist</h2>
+					<ul style="list-style:none;margin:0;padding:0;">
+						<li style="display:flex;align-items:center;gap:8px;line-height:1.8;">
+							<?php if ( $client_config_active ) : ?>
+							<span style="color:#4CAF50;font-size:16px;">✓</span>
+							<span style="font-size:13px;text-decoration:line-through;color:#aaa;">Install &amp; activate a Branding plugin</span>
+							<?php else : ?>
+							<span style="font-size:16px;">⬜</span>
+							<span style="font-size:13px;">Install &amp; activate a Branding plugin</span>
+							<?php endif; ?>
+						</li>
+						<?php echo $cb( 'logo',    'Upload logo via <a href="' . admin_url('customize.php') . '">Customize → Site Identity</a>' ); ?>
+						<?php echo $cb( 'homepage','Set homepage via <a href="' . admin_url('customize.php') . '">Customize → Homepage Settings</a>' ); ?>
+						<?php echo $cb( 'menus',   'Add menus via <a href="' . admin_url('nav-menus.php') . '">Appearance → Menus</a>' ); ?>
+						<?php echo $cb( 'navcta',  'Add <code>cta</code> CSS class to nav CTA item' ); ?>
+						<?php echo $cb( 'widgets', 'Populate footer widgets via <a href="' . admin_url('widgets.php') . '">Appearance → Widgets</a>' ); ?>
+						<?php echo $cb( 'tagline', 'Update tagline in <a href="' . admin_url('options-general.php') . '">Settings → General</a>' ); ?>
+					</ul>
+					<script>
+					jQuery(function($){
+						$('.ss-checklist-item').on('change', function(){
+							$.post(simplyInstaller.ajaxUrl, {
+								action:   'simply_toggle_checklist',
+								nonce:    simplyInstaller.nonce,
+								item:     $(this).data('key'),
+								checked:  $(this).is(':checked') ? 1 : 0,
+							});
+						});
+					});
+					</script>
+				</div>
+
+				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
+					<h2 style="margin-top:0; font-size:16px;">🔭 Wireframe Mode</h2>
+					<p style="font-size:13px; color:#555;">Toggle from the <strong>admin bar</strong>. When ON, neutral styles apply and a preview banner shows.</p>
+					<p style="margin-bottom:0;">
+						State: <strong><?php echo $wireframe_on ? '<span style="color:#f0a500;">⬤ ON</span>' : '<span style="color:#4CAF50;">◯ OFF</span>'; ?></strong>
+						&nbsp;
+						<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'simply_wireframe_toggle', '1' ), 'simply_wireframe_toggle' ) ); ?>" style="font-size:13px;">
+							<?php echo $wireframe_on ? 'Turn off' : 'Turn on'; ?>
+						</a>
+					</p>
+				</div>
+
+				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
+					<h2 style="margin-top:0; font-size:16px;">🎨 Section Color Classes</h2>
+					<table style="width:100%; border-collapse:collapse; font-size:13px;">
+						<tr style="background:#f5f5f5;">
+							<th style="padding:6px 10px; text-align:left; border:1px solid #e2e2e2;">Class</th>
+							<th style="padding:6px 10px; text-align:left; border:1px solid #e2e2e2;">Use for</th>
+						</tr>
+						<?php foreach ( [
+							[ 'is-dark',    'Dark bg, light text' ],
+							[ 'is-light',   'Light bg, dark text' ],
+							[ 'is-brand-1', 'Brand color 1' ],
+							[ 'is-brand-2', 'Brand color 2' ],
+						] as $i => $row ) : ?>
+						<tr<?php echo $i % 2 ? ' style="background:#f9f9f9"' : ''; ?>>
+							<td style="padding:6px 10px; border:1px solid #e2e2e2;"><code><?php echo $row[0]; ?></code></td>
+							<td style="padding:6px 10px; border:1px solid #e2e2e2; color:#555;"><?php echo $row[1]; ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
+				</div>
+
+				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px;">
+					<h2 style="margin-top:0; font-size:16px;">📋 Tips</h2>
+					<ul style="line-height:2; color:#444; margin:0; padding-left:20px; font-size:13px;">
+						<li>Typekit fonts require Adobe Fonts privacy disclosure in your Privacy Policy</li>
+						<li>Footer Bottom Bar widget area outputs only when it has content</li>
+						<li>Logo supports PNG and SVG</li>
+					</ul>
+				</div>
+
+			</div><?php /* end right column */ ?>
+
+		</div><?php /* end grid */ ?>
 
 		<p style="color:#aaa; font-size:12px; margin-top:24px; text-align:center;">
 			Simply Starter <?php echo wp_get_theme()->get( 'Version' ); ?> — Built by
@@ -786,6 +809,573 @@ function simply_welcome_page_output() {
 	<?php
 }
 
+
+// ==========================================================================
+// SIMPLY PLUGIN INSTALLER
+// Registry, AJAX handlers, and welcome-page UI.
+//
+// To flip a plugin from GitHub → WP.org when it ships:
+//   change  'source' => 'github'  to  'source' => 'wporg'
+// The UI, install flow, and activate flow are identical either way.
+// ==========================================================================
+
+function simply_plugin_registry() {
+	return [
+		[
+			'name'        => 'Simply Blocks',
+			'slug'        => 'simply-blocks',
+			'file'        => 'simply-blocks/simply-blocks.php',
+			'description' => 'Gutenberg blocks for the Simply suite — Section, Container, Columns, Events, FAQs, News, and Logo Slider.',
+			'github'      => 'staceyzav/simply-blocks',
+			'source'      => 'github',
+			'tier'        => 'paid',
+		],
+		[
+			'name'        => 'Simply Branded',
+			'slug'        => 'simply-branded',
+			'file'        => 'simply-branded/simply-branded.php',
+			'description' => 'Brand admin UI — colors, border radius, fonts, and custom CSS. Outputs --client-* tokens to the theme.',
+			'github'      => 'staceyzav/simply-branded',
+			'source'      => 'github',
+			'tier'        => 'paid',
+		],
+		[
+			'name'        => 'Simply Events',
+			'slug'        => 'simply-events',
+			'file'        => 'simply-events/simply-events.php',
+			'description' => 'Events CPT with date blocks, category filters, list/grid views, and single event pages.',
+			'github'      => 'staceyzav/simply-events',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+		[
+			'name'        => 'Simply News',
+			'slug'        => 'simply-news',
+			'file'        => 'simply-news/simply-news.php',
+			'description' => 'Post feed with photo, category badge, source publication, and optional external link.',
+			'github'      => 'staceyzav/simply-news',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+		[
+			'name'        => 'Simply Team',
+			'slug'        => 'simply-team',
+			'file'        => 'simply-team/simply-team.php',
+			'description' => 'Team member CPT with headshot, role, contact info, and slide-over bio panel.',
+			'github'      => 'staceyzav/simply-team',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+		[
+			'name'        => 'Simply FAQs',
+			'slug'        => 'simply-faqs',
+			'file'        => 'simply-faqs/simply-faqs.php',
+			'description' => 'Accordion FAQ shortcode with category filters and smooth open/close animation.',
+			'github'      => 'staceyzav/simply-faqs',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+		[
+			'name'        => 'Simply Logo Slider',
+			'slug'        => 'simply-logo-slider',
+			'file'        => 'simply-logo-slider/simply-logo-slider.php',
+			'description' => 'Partner/sponsor logo carousel with static mode, drag support, and order control.',
+			'github'      => 'staceyzav/simply-logo-slider',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+		[
+			'name'        => 'Simply Utility Bar',
+			'slug'        => 'simply-utility-bar',
+			'file'        => 'simply-utility-bar/simply-utility-bar.php',
+			'description' => 'Sticky top bar that hides on scroll-down and returns on scroll-up.',
+			'github'      => 'staceyzav/simply-utility-bar',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+		[
+			'name'        => 'Simply Reviews',
+			'slug'        => 'simply-reviews',
+			'file'        => 'simply-reviews/simply-reviews.php',
+			'description' => 'Curated review slider with star ratings, source labels, dot navigation, and autoplay.',
+			'github'      => 'staceyzav/simply-reviews',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
+	];
+}
+
+// ── Inject nonce + ajaxUrl into welcome page head ─────────────────────────────
+
+add_action( 'admin_head', 'simply_installer_head' );
+function simply_installer_head() {
+	$screen = get_current_screen();
+	if ( ! $screen || $screen->id !== 'appearance_page_simply-starter-welcome' ) return;
+	printf(
+		'<script>var simplyInstaller=%s;</script>',
+		wp_json_encode( [
+			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'simply_installer_nonce' ),
+		] )
+	);
+}
+
+// ── AJAX: Install plugin ───────────────────────────────────────────────────────
+
+add_action( 'wp_ajax_simply_install_plugin', 'simply_ajax_install_plugin' );
+function simply_ajax_install_plugin() {
+	// Buffer any stray output so PHP warnings don't corrupt the JSON response
+	ob_start();
+
+	check_ajax_referer( 'simply_installer_nonce', 'nonce' );
+	if ( ! current_user_can( 'install_plugins' ) ) {
+		ob_end_clean();
+		wp_send_json_error( 'Permission denied.' );
+	}
+
+	$slug        = sanitize_key( $_POST['slug']        ?? '' );
+	$source      = sanitize_key( $_POST['source']      ?? 'github' );
+	$github      = sanitize_text_field( $_POST['github']      ?? '' );
+	$plugin_file = sanitize_text_field( $_POST['plugin_file'] ?? '' );
+	$is_update   = ! empty( $_POST['is_update'] );
+
+	if ( ! $slug ) { ob_end_clean(); wp_send_json_error( 'Missing plugin slug.' ); }
+
+	require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+	require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/misc.php';
+	WP_Filesystem();
+	global $wp_filesystem;
+
+	// For updates: remove the existing plugin folder first so install() doesn't
+	// hit the "destination already exists" error (more reliable than overwrite_package).
+	if ( $is_update && $plugin_file ) {
+		$plugin_dir = WP_PLUGIN_DIR . '/' . dirname( $plugin_file );
+		if ( $wp_filesystem->is_dir( $plugin_dir ) ) {
+			$wp_filesystem->delete( $plugin_dir, true );
+		}
+		// Clear the cached version transient so it refreshes after update
+		delete_transient( 'spi_latest_' . $slug );
+	}
+
+	if ( $source === 'wporg' ) {
+		$api = plugins_api( 'plugin_information', [
+			'slug'   => $slug,
+			'fields' => [ 'download_link' => true ],
+		] );
+		if ( is_wp_error( $api ) ) { ob_end_clean(); wp_send_json_error( $api->get_error_message() ); }
+		$package = $api->download_link;
+	} else {
+		// GitHub ZIP extracts as {slug}-main — rename it to {slug} before WP moves it
+		$package = "https://github.com/{$github}/archive/refs/heads/main.zip";
+
+		add_filter( 'upgrader_source_selection', function( $source_path, $remote_source ) use ( $slug ) {
+			global $wp_filesystem;
+			$basename = basename( untrailingslashit( $source_path ) );
+			if ( $basename !== $slug ) {
+				$new_path = trailingslashit( $remote_source ) . $slug;
+				if ( $wp_filesystem->move( $source_path, $new_path ) ) {
+					return trailingslashit( $new_path );
+				}
+			}
+			return $source_path;
+		}, 1, 2 );
+	}
+
+	$skin   = new WP_Ajax_Upgrader_Skin();
+	$result = ( new Plugin_Upgrader( $skin ) )->install( $package );
+	ob_end_clean();
+
+	if ( is_wp_error( $result ) )            wp_send_json_error( $result->get_error_message() );
+	if ( $result === false )                 wp_send_json_error( 'Download failed. Check the server can make outbound HTTPS requests (curl/allow_url_fopen).' );
+	if ( $skin->get_errors()->has_errors() ) wp_send_json_error( implode( ' ', $skin->get_error_messages() ) );
+
+	wp_send_json_success();
+}
+
+// ── AJAX: Activate plugin ──────────────────────────────────────────────────────
+
+add_action( 'wp_ajax_simply_activate_plugin', 'simply_ajax_activate_plugin' );
+function simply_ajax_activate_plugin() {
+	check_ajax_referer( 'simply_installer_nonce', 'nonce' );
+	if ( ! current_user_can( 'activate_plugins' ) ) wp_send_json_error( 'Permission denied.' );
+
+	$plugin_file = sanitize_text_field( $_POST['plugin_file'] ?? '' );
+	if ( ! $plugin_file ) wp_send_json_error( 'Missing plugin file.' );
+
+	$result = activate_plugin( $plugin_file );
+	if ( is_wp_error( $result ) ) wp_send_json_error( $result->get_error_message() );
+
+	wp_send_json_success();
+}
+
+// ── AJAX: Deactivate plugin ────────────────────────────────────────────────────
+
+add_action( 'wp_ajax_simply_deactivate_plugin', 'simply_ajax_deactivate_plugin' );
+function simply_ajax_deactivate_plugin() {
+	check_ajax_referer( 'simply_installer_nonce', 'nonce' );
+	if ( ! current_user_can( 'deactivate_plugins' ) ) wp_send_json_error( 'Permission denied.' );
+
+	$plugin_file = sanitize_text_field( $_POST['plugin_file'] ?? '' );
+	if ( ! $plugin_file ) wp_send_json_error( 'Missing plugin file.' );
+
+	deactivate_plugins( $plugin_file );
+	wp_send_json_success();
+}
+
+// ── AJAX: Save setup checklist state ──────────────────────────────────────────
+
+add_action( 'wp_ajax_simply_toggle_checklist', 'simply_ajax_toggle_checklist' );
+function simply_ajax_toggle_checklist() {
+	check_ajax_referer( 'simply_installer_nonce', 'nonce' );
+	if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error( 'Permission denied.' );
+
+	$item    = sanitize_key( $_POST['item']    ?? '' );
+	$checked = ! empty( $_POST['checked'] );
+
+	if ( ! $item ) wp_send_json_error( 'Missing item.' );
+
+	$cl = get_option( 'simply_setup_checklist', [] );
+	if ( $checked ) {
+		$cl[ $item ] = true;
+	} else {
+		unset( $cl[ $item ] );
+	}
+	update_option( 'simply_setup_checklist', $cl, false );
+
+	wp_send_json_success();
+}
+
+// ── AJAX: Batch version check (GitHub releases + transient cache) ─────────────
+
+add_action( 'wp_ajax_simply_check_versions', 'simply_ajax_check_versions' );
+function simply_ajax_check_versions() {
+	check_ajax_referer( 'simply_installer_nonce', 'nonce' );
+	if ( ! current_user_can( 'install_plugins' ) ) wp_send_json_error( 'Permission denied.' );
+
+	$plugins  = simply_plugin_registry();
+	$versions = [];
+
+	foreach ( $plugins as $plugin ) {
+		$slug   = $plugin['slug'];
+		$cached = get_transient( 'spi_latest_' . $slug );
+
+		if ( $cached !== false ) {
+			$versions[ $slug ] = $cached;
+			continue;
+		}
+
+		$latest = null;
+
+		if ( $plugin['source'] === 'wporg' ) {
+			$api    = plugins_api( 'plugin_information', [ 'slug' => $slug, 'fields' => [ 'version' => true ] ] );
+			$latest = is_wp_error( $api ) ? null : ( $api->version ?? null );
+		} elseif ( ! empty( $plugin['github'] ) ) {
+			$resp = wp_remote_get( "https://api.github.com/repos/{$plugin['github']}/releases/latest", [
+				'timeout' => 5,
+				'headers' => [ 'User-Agent' => 'WordPress/Simply-Starter' ],
+			] );
+			if ( ! is_wp_error( $resp ) && 200 === wp_remote_retrieve_response_code( $resp ) ) {
+				$body   = json_decode( wp_remote_retrieve_body( $resp ), true );
+				$latest = ltrim( $body['tag_name'] ?? '', 'v' );
+			}
+		}
+
+		if ( $latest ) {
+			set_transient( 'spi_latest_' . $slug, $latest, HOUR_IN_SECONDS );
+			$versions[ $slug ] = $latest;
+		}
+	}
+
+	wp_send_json_success( $versions );
+}
+
+// ── Detect active client-specific plugins (branded/core, not in registry) ─────
+
+function simply_get_custom_plugins() {
+	if ( ! function_exists( 'get_plugin_data' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+
+	// Registry slugs — exclude these from custom detection
+	$registry_slugs = array_column( simply_plugin_registry(), 'slug' );
+
+	$custom = [];
+	foreach ( get_option( 'active_plugins', [] ) as $plugin_file ) {
+		$slug = dirname( $plugin_file );
+
+		// Skip anything already in the registry
+		if ( in_array( $slug, $registry_slugs, true ) ) continue;
+
+		// Detect client-specific plugins: branding (-branded, client-config) or core (-core)
+		$is_branded = simply_is_branding_plugin( $plugin_file );
+		$is_core    = substr( $slug, -5 ) === '-core';
+
+		if ( ! $is_branded && ! $is_core ) continue;
+
+		$data     = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_file, false, false );
+		$custom[] = [
+			'name'        => $data['Name']        ?? $slug,
+			'description' => $data['Description'] ?? ( $is_core ? 'Client-specific functions and custom post types.' : 'Client-specific branding plugin.' ),
+			'version'     => $data['Version']     ?? '',
+			'slug'        => $slug,
+			'file'        => $plugin_file,
+			'source'      => 'custom',
+			'github'      => '',
+			'tier'        => 'custom',
+		];
+	}
+	return $custom;
+}
+
+// ── Plugin installer UI (called from simply_welcome_page_output) ───────────────
+
+function simply_render_plugin_installer() {
+	if ( ! function_exists( 'get_plugin_data' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+
+	$registry       = simply_plugin_registry();
+	$custom_plugins = simply_get_custom_plugins();
+
+	// Tier order, labels, and pill styles
+	$tiers = [
+		'custom' => [ 'label' => '✦ Custom',      'pill' => 'background:#d97706;color:#fff' ],
+		'paid'   => [ 'label' => '⭐ Paid Suite',  'pill' => 'background:#1d2327;color:#fff' ],
+		'free'   => [ 'label' => '✓ Free Plugins', 'pill' => 'background:#0073aa;color:#fff' ],
+	];
+
+	// Bucket registry plugins by tier; prepend custom plugins
+	$by_tier = [ 'custom' => $custom_plugins ];
+	foreach ( $registry as $p ) {
+		$by_tier[ $p['tier'] ][] = $p;
+	}
+
+	// If a custom branding plugin is active, note it for the Simply Branded row
+	$custom_branding_active = ! empty( $custom_plugins );
+	?>
+	<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
+		<h2 style="margin-top:0; font-size:18px;">🔌 Simply Plugins</h2>
+		<p style="color:#666; margin:-8px 0 16px; font-size:13px;">Manage Simply plugins directly. Status and versions update live — no page reload.</p>
+
+		<?php foreach ( $tiers as $tier => $tier_info ) :
+			$tier_plugins = $by_tier[ $tier ] ?? [];
+			if ( empty( $tier_plugins ) ) continue;
+		?>
+		<span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;<?php echo $tier_info['pill']; ?>;padding:3px 10px;border-radius:3px;margin:20px 0 8px;display:inline-block;">
+			<?php echo esc_html( $tier_info['label'] ); ?>
+		</span>
+		<table style="width:100%; border-collapse:collapse; margin-bottom:4px;">
+			<?php foreach ( $tier_plugins as $plugin ) :
+				$installed  = file_exists( WP_PLUGIN_DIR . '/' . $plugin['file'] );
+				$active     = $installed && is_plugin_active( $plugin['file'] );
+				$row_id     = 'spi-' . esc_attr( $plugin['slug'] );
+				$is_custom  = ( $plugin['source'] === 'custom' );
+
+				// Installed version (fast local read)
+				$inst_ver = '';
+				if ( $installed ) {
+					$pdata    = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin['file'], false, false );
+					$inst_ver = $pdata['Version'] ?? ( $plugin['version'] ?? '' );
+				}
+
+				// Escape data attrs
+				$d = array_map( 'esc_attr', [
+					'slug'   => $plugin['slug'],
+					'source' => $plugin['source'],
+					'github' => $plugin['github'] ?? '',
+					'file'   => $plugin['file'],
+					'row'    => $row_id,
+				] );
+
+				// Badge
+				if ( $active ) {
+					$badge = '<span style="color:#4CAF50;font-size:12px;font-weight:700;">● Active</span>';
+				} elseif ( $installed ) {
+					$badge = '<span style="color:#aaa;font-size:12px;font-weight:700;">○ Installed</span>';
+				} elseif ( $plugin['slug'] === 'simply-branded' && $custom_branding_active ) {
+					$badge = '<span style="color:#4CAF50;font-size:12px;font-weight:700;">● Custom Active</span>';
+				} else {
+					$badge = '<span style="color:#ccc;font-size:12px;font-weight:700;">— Not installed</span>';
+				}
+
+				// Actions
+				$update_btn = '<button class="button spi-update" style="display:none;margin-left:4px"
+					data-slug="' . $d['slug'] . '" data-source="' . $d['source'] . '"
+					data-github="' . $d['github'] . '" data-file="' . $d['file'] . '"
+					data-row="' . $d['row'] . '">Update</button>';
+
+				$deact_btn = '<button class="button spi-deactivate" style="color:#a00;margin-left:4px"
+					data-file="' . $d['file'] . '" data-row="' . $d['row'] . '">Deactivate</button>';
+
+				if ( $active ) {
+					$action = $is_custom ? $deact_btn : ( $update_btn . $deact_btn );
+				} elseif ( $installed ) {
+					$action = '<button class="button button-primary spi-activate"
+						data-file="' . $d['file'] . '" data-row="' . $d['row'] . '">Activate</button>' . $update_btn;
+				} elseif ( $plugin['slug'] === 'simply-branded' && $custom_branding_active ) {
+					$action = '<span style="color:#999;font-size:11px;">Not needed<br><span style="color:#4CAF50;">Custom Branding Applied</span></span>';
+				} else {
+					$action = '<button class="button button-primary spi-install"
+						data-slug="' . $d['slug'] . '" data-source="' . $d['source'] . '"
+						data-github="' . $d['github'] . '" data-file="' . $d['file'] . '"
+						data-row="' . $d['row'] . '">Install</button>';
+				}
+
+				// Version line (installed version shown immediately; latest filled async)
+				$ver_html = '';
+				if ( ! $is_custom ) {
+					$inst_label = $inst_ver ? 'v' . esc_html( $inst_ver ) : '';
+					$ver_html   = '<span style="font-size:11px;color:#aaa;display:block;margin-top:2px;">'
+						. $inst_label
+						. '<span class="spi-ver-check" data-slug="' . $d['slug'] . '" data-installed="' . esc_attr( $inst_ver ) . '"> · checking…</span>'
+						. '</span>';
+				} elseif ( $inst_ver ) {
+					$ver_html = '<span style="font-size:11px;color:#aaa;display:block;margin-top:2px;">v' . esc_html( $inst_ver ) . '</span>';
+				}
+			?>
+			<tr id="<?php echo $row_id; ?>" style="border-bottom:1px solid #f5f5f5;">
+				<td style="padding:12px 10px 12px 0; width:130px; vertical-align:middle;"><?php echo $badge; ?></td>
+				<td style="padding:12px 10px; vertical-align:top;">
+					<strong style="font-size:13px;"><?php echo esc_html( $plugin['name'] ); ?></strong>
+					<?php echo $ver_html; ?>
+					<span style="color:#777; font-size:12px; line-height:1.4; display:block; margin-top:2px;"><?php echo esc_html( $plugin['description'] ); ?></span>
+				</td>
+				<td style="padding:12px 0 12px 10px; text-align:right; vertical-align:middle; white-space:nowrap; width:170px;"><?php echo $action; ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</table>
+		<?php endforeach; ?>
+	</div>
+
+	<script>
+	(function($){
+		var ajaxUrl = simplyInstaller.ajaxUrl, nonce = simplyInstaller.nonce;
+
+		// ── Version comparison ──────────────────────────────────────────────
+		function versionGt(a, b) {
+			var av = String(a||'0').split('.').map(Number);
+			var bv = String(b||'0').split('.').map(Number);
+			for (var i = 0; i < 3; i++) {
+				var ai = av[i]||0, bi = bv[i]||0;
+				if (ai > bi) return true;
+				if (ai < bi) return false;
+			}
+			return false;
+		}
+
+		// ── Async version check on page load ────────────────────────────────
+		$.post(ajaxUrl, { action:'simply_check_versions', nonce:nonce })
+		.done(function(res){
+			if (!res.success) return;
+			$.each(res.data, function(slug, latest){
+				var $vc = $('.spi-ver-check[data-slug="'+slug+'"]');
+				if (!$vc.length) return;
+				var installed = $vc.data('installed');
+				if (installed && versionGt(latest, installed)) {
+					$vc.html(' · <span style="color:#d97706;font-weight:600;">v'+latest+' available</span>');
+					// Show the Update button for this row
+					$('#spi-'+slug+' .spi-update').show();
+				} else if (installed) {
+					$vc.html(' · <span style="color:#4CAF50;">✓ up to date</span>');
+				} else {
+					// Not installed — just show latest
+					$vc.html('Latest: v'+latest);
+				}
+			});
+		})
+		.fail(function(){ $('.spi-ver-check').html(''); }); // fail silently
+
+		// ── Helpers ─────────────────────────────────────────────────────────
+		function badge(color, label) {
+			return '<span style="color:'+color+';font-size:12px;font-weight:700;">'+label+'</span>';
+		}
+		function updateRow(rowId, badgeHtml, actionHtml) {
+			$('#'+rowId).find('td:first-child').html(badgeHtml);
+			$('#'+rowId).find('td:last-child').html(actionHtml||'');
+		}
+		function mkUpdate(slug, source, github, file, row) {
+			return '<button class="button spi-update" style="margin-left:4px" data-slug="'+slug+'" data-source="'+source+'" data-github="'+github+'" data-file="'+file+'" data-row="'+row+'">Update</button>';
+		}
+		function activeActions(file, row, slug, source, github) {
+			return mkUpdate(slug,source,github,file,row)
+				+ ' <button class="button spi-deactivate" data-file="'+file+'" data-row="'+row+'" style="color:#a00;margin-left:4px">Deactivate</button>';
+		}
+		function installedActions(file, row, slug, source, github) {
+			return '<button class="button button-primary spi-activate" data-file="'+file+'" data-row="'+row+'">Activate</button>'
+				+ ' ' + mkUpdate(slug,source,github,file,row);
+		}
+		function getRowData($btn) {
+			var $row = $('#'+$btn.data('row'));
+			return {
+				slug:   $btn.data('slug')   || $row.find('.spi-update').data('slug'),
+				source: $btn.data('source') || $row.find('.spi-update').data('source'),
+				github: $btn.data('github') || $row.find('.spi-update').data('github'),
+				file:   $btn.data('file'),
+				row:    $btn.data('row'),
+			};
+		}
+
+		// ── Install ─────────────────────────────────────────────────────────
+		$(document).on('click', '.spi-install', function(){
+			var $btn = $(this), p = getRowData($btn);
+			$btn.prop('disabled',true).text('Installing…');
+			$.post(ajaxUrl, { action:'simply_install_plugin', nonce:nonce, slug:p.slug, source:p.source, github:p.github, plugin_file:p.file })
+			.done(function(res){
+				if (res.success) updateRow(p.row, badge('#aaa','○ Installed'), installedActions(p.file,p.row,p.slug,p.source,p.github));
+				else { $btn.prop('disabled',false).text('Install'); alert('Install failed: '+(res.data||'Unknown error')); }
+			})
+			.fail(function(xhr){ $btn.prop('disabled',false).text('Install'); alert('Install failed ('+xhr.status+'): '+xhr.responseText.substring(0,200)); });
+		});
+
+		// ── Activate ────────────────────────────────────────────────────────
+		$(document).on('click', '.spi-activate', function(){
+			var $btn = $(this), p = getRowData($btn);
+			$btn.prop('disabled',true).text('Activating…');
+			$.post(ajaxUrl, { action:'simply_activate_plugin', nonce:nonce, plugin_file:p.file })
+			.done(function(res){
+				if (res.success) updateRow(p.row, badge('#4CAF50','● Active'), activeActions(p.file,p.row,p.slug,p.source,p.github));
+				else { $btn.prop('disabled',false).text('Activate'); alert('Activation failed: '+(res.data||'Unknown error')); }
+			})
+			.fail(function(){ $btn.prop('disabled',false).text('Activate'); alert('Activation failed.'); });
+		});
+
+		// ── Deactivate ──────────────────────────────────────────────────────
+		$(document).on('click', '.spi-deactivate', function(){
+			var $btn = $(this), p = getRowData($btn);
+			if (!confirm('Deactivate '+$('#'+p.row+' strong').first().text()+'?')) return;
+			$btn.prop('disabled',true).text('Deactivating…');
+			$.post(ajaxUrl, { action:'simply_deactivate_plugin', nonce:nonce, plugin_file:p.file })
+			.done(function(res){
+				if (res.success) updateRow(p.row, badge('#aaa','○ Installed'), installedActions(p.file,p.row,p.slug,p.source,p.github));
+				else { $btn.prop('disabled',false).text('Deactivate'); alert('Deactivation failed: '+(res.data||'Unknown error')); }
+			})
+			.fail(function(){ $btn.prop('disabled',false).text('Deactivate'); alert('Deactivation failed.'); });
+		});
+
+		// ── Update ──────────────────────────────────────────────────────────
+		$(document).on('click', '.spi-update', function(){
+			var $btn = $(this), p = getRowData($btn);
+			var name = $('#'+p.row+' strong').first().text();
+			if (!confirm('Update '+name+' to the latest version from GitHub?')) return;
+			$btn.prop('disabled',true).text('Updating…');
+			$.post(ajaxUrl, { action:'simply_install_plugin', nonce:nonce, slug:p.slug, source:p.source, github:p.github, plugin_file:p.file, is_update:1 })
+			.done(function(res){
+				if (res.success) {
+					$btn.prop('disabled',false).hide();
+					$('#'+p.row+' .spi-ver-check').html(' · <span style="color:#4CAF50;">✓ updated</span>');
+				} else {
+					$btn.prop('disabled',false).text('Update');
+					alert('Update failed: '+(res.data||'Unknown error'));
+				}
+			})
+			.fail(function(xhr){ $btn.prop('disabled',false).text('Update'); alert('Update failed ('+xhr.status+'): '+xhr.responseText.substring(0,200)); });
+		});
+	})(jQuery);
+	</script>
+	<?php
+}
 
 // ==========================================================================
 // TOOLSET CONTAINER DEFAULTS — EDITOR SCRIPT
@@ -885,20 +1475,28 @@ add_filter( 'edit_post_link', '__return_empty_string' );
 
 // ==========================================================================
 // FOOTER CREDITS
-// Appends "Website by Simply Design" to the Genesis footer text.
-// Falls back to copyright + site name if no footer text is set in Genesis.
+// On first admin load after activation, replaces the Genesis default footer shortcodes
+// (Genesis Framework link, login link, child theme link) with a clean Simply Starter credit.
+// After that the customizer field is live — admin changes take effect normally.
 // ==========================================================================
 
-add_filter( 'genesis_pre_get_option_footer_text', 'simply_footer_credits' );
+add_action( 'admin_init', 'simply_footer_credits' );
 
-function simply_footer_credits( $value ) {
-	$settings    = get_option( 'genesis-settings', array() );
-	$footer_text = ! empty( $settings['footer_text'] )
-		? $settings['footer_text']
-		: 'Copyright &copy; ' . date( 'Y' ) . ' &middot; ' . get_bloginfo( 'name' );
+function simply_footer_credits() {
+	$settings    = get_option( 'genesis-settings', [] );
+	$footer_text = $settings['footer_text'] ?? '';
 
-	return $footer_text
-		. ' &nbsp;&nbsp;&bull;&nbsp;&nbsp; Website by <a href="https://simplydesign.com" target="_blank" rel="noopener noreferrer">Simply Design</a>';
+	// Only overwrite while the Genesis default shortcodes are still present.
+	// Once an admin customizes the field and saves, we leave it alone.
+	$has_genesis_defaults = strpos( $footer_text, 'footer_genesis_link' ) !== false
+		|| strpos( $footer_text, 'footer_loginout' ) !== false
+		|| strpos( $footer_text, 'footer_childtheme_link' ) !== false
+		|| empty( $footer_text );
+
+	if ( $has_genesis_defaults ) {
+		$settings['footer_text'] = '[footer_copyright before="Copyright "] &nbsp;&middot;&nbsp; Simply Starter by <a href="https://simplydesign.com" target="_blank" rel="noopener noreferrer">Simply Design</a>';
+		update_option( 'genesis-settings', $settings );
+	}
 }
 
 // Replace linked author with plain name in post meta
