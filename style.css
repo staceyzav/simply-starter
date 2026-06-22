@@ -3446,52 +3446,79 @@ input[type="submit"]:hover,
 
 
 /* --------------------------------------------------------------------------
-   WIREFRAME MODE BANNER
+   WIREFRAME MODE POPUP
    Shown when simply_wireframe_mode option is true.
-   Clients see it. Admin bar toggle turns it off.
+   Centered modal overlay — clients see it, admin bar toggle turns it off.
    -------------------------------------------------------------------------- */
 
-.simply-wireframe-banner {
-	background-color: #f0a500;
-	color: #1a1a1a;
-	font-family: Arial, sans-serif;
-	font-size: 13px;
-	font-weight: 600;
-	text-align: center;
-	padding: 10px 20px;
-	position: relative;
+.simply-wireframe-popup {
+	position: fixed;
+	inset: 0;
 	z-index: 99999;
-	letter-spacing: 0.04em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.simply-wireframe-banner a {
-	color: #1a1a1a;
-	text-decoration: underline;
-	margin-left: 16px;
-	font-weight: 700;
-}
-
-.simply-wireframe-banner a:hover {
-	opacity: 0.7;
-}
-
-.simply-wireframe-banner__dismiss {
+.simply-wireframe-popup__overlay {
 	position: absolute;
-	right: 16px;
-	top: 50%;
-	transform: translateY(-50%);
+	inset: 0;
+	background: rgba(0, 0, 0, 0.55);
 	cursor: pointer;
-	font-size: 18px;
+}
+
+.simply-wireframe-popup__box {
+	position: relative;
+	background: #fff;
+	border: 3px solid #2563eb;
+	border-radius: 10px;
+	padding: 40px 48px;
+	max-width: 500px;
+	width: calc(100% - 48px);
+	text-align: center;
+	box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+	z-index: 1;
+}
+
+.simply-wireframe-popup__close {
+	position: absolute;
+	top: 14px;
+	right: 16px;
+	cursor: pointer;
+	font-size: 22px;
 	line-height: 1;
-	opacity: 0.6;
+	opacity: 0.35;
 	background: none;
 	border: none;
 	padding: 0;
 	color: #1a1a1a;
 }
 
-.simply-wireframe-banner__dismiss:hover {
+.simply-wireframe-popup__close:hover {
 	opacity: 1;
+}
+
+.simply-wireframe-popup__message {
+	font-family: Arial, sans-serif;
+	font-size: 15px;
+	font-weight: 400;
+	color: #444;
+	line-height: 1.65;
+	margin: 0 0 20px;
+}
+
+.simply-wireframe-popup__toggle {
+	display: inline-block;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 600;
+	color: #aaa;
+	text-decoration: underline;
+	letter-spacing: 0.03em;
+}
+
+.simply-wireframe-popup__toggle:hover {
+	color: #333;
 }
 
 

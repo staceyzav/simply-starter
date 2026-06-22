@@ -478,22 +478,37 @@ function simply_wireframe_admin_bar( $wp_admin_bar ) {
 	) );
 }
 
-// --- Wireframe banner output ---
+// --- Wireframe popup output ---
 add_action( 'genesis_before', 'simply_wireframe_banner' );
 
 function simply_wireframe_banner() {
 	if ( ! get_option( 'simply_wireframe_mode', false ) ) return;
+	$default = "UX Preview — You're viewing the layout and content structure. Design and branding is not applied so you can focus on content review and UX flow.";
+	$message = get_option( 'simply_wireframe_message', '' );
+	if ( '' === $message ) $message = $default;
 	?>
-	<div class="simply-wireframe-banner" id="simply-wireframe-banner">
-		<strong>UX Preview</strong> — You're viewing the layout and content structure.
-		Final design and branding coming soon.
-		<?php if ( current_user_can( 'manage_options' ) ) : ?>
-			<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'simply_wireframe_toggle', '1' ), 'simply_wireframe_toggle' ) ); ?>">
+	<div class="simply-wireframe-popup" id="simply-wireframe-popup">
+		<div class="simply-wireframe-popup__overlay" onclick="simplyDismissWireframe()"></div>
+		<div class="simply-wireframe-popup__box">
+			<button class="simply-wireframe-popup__close" onclick="simplyDismissWireframe()" aria-label="Dismiss">&times;</button>
+			<p class="simply-wireframe-popup__message"><?php echo nl2br( esc_html( $message ) ); ?></p>
+			<?php if ( current_user_can( 'manage_options' ) ) : ?>
+			<a class="simply-wireframe-popup__toggle" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'simply_wireframe_toggle', '1' ), 'simply_wireframe_toggle' ) ); ?>">
 				Turn off wireframe mode
 			</a>
-		<?php endif; ?>
-		<button class="simply-wireframe-banner__dismiss" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">×</button>
+			<?php endif; ?>
+		</div>
 	</div>
+	<script>
+	var simplyWfMsg = <?php echo wp_json_encode( $message ); ?>;
+	function simplyDismissWireframe() {
+		localStorage.setItem( 'simply_wireframe_dismissed', simplyWfMsg );
+		document.getElementById( 'simply-wireframe-popup' ).style.display = 'none';
+	}
+	if ( localStorage.getItem( 'simply_wireframe_dismissed' ) === simplyWfMsg ) {
+		document.getElementById( 'simply-wireframe-popup' ).style.display = 'none';
+	}
+	</script>
 	<?php
 }
 
@@ -650,6 +665,10 @@ function simply_save_settings() {
 		}
 	}
 
+	if ( isset( $_POST['simply_wireframe_message'] ) ) {
+		update_option( 'simply_wireframe_message', sanitize_textarea_field( wp_unslash( $_POST['simply_wireframe_message'] ) ) );
+	}
+
 	wp_safe_redirect( add_query_arg( array(
 		'page'  => 'simply-starter-welcome',
 		'saved' => '1',
@@ -756,14 +775,25 @@ function simply_welcome_page_output() {
 
 				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
 					<h2 style="margin-top:0; font-size:16px;">🔭 Wireframe Mode</h2>
-					<p style="font-size:13px; color:#555;">Toggle from the <strong>admin bar</strong>. When ON, neutral styles apply and a preview banner shows.</p>
-					<p style="margin-bottom:0;">
+					<p style="font-size:13px; color:#555;">Toggle from the <strong>admin bar</strong>. When ON, neutral styles apply and a centered popup shows.</p>
+					<p>
 						State: <strong><?php echo $wireframe_on ? '<span style="color:#f0a500;">⬤ ON</span>' : '<span style="color:#4CAF50;">◯ OFF</span>'; ?></strong>
 						&nbsp;
 						<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'simply_wireframe_toggle', '1' ), 'simply_wireframe_toggle' ) ); ?>" style="font-size:13px;">
 							<?php echo $wireframe_on ? 'Turn off' : 'Turn on'; ?>
 						</a>
 					</p>
+					<?php
+					$wf_default = "UX Preview — You're viewing the layout and content structure. Design and branding is not applied so you can focus on content review and UX flow.";
+					$wf_saved   = get_option( 'simply_wireframe_message', '' );
+					?>
+					<form method="post" style="margin-top:4px;">
+						<?php wp_nonce_field( 'simply_save_settings', 'simply_settings_nonce' ); ?>
+						<label for="simply_wireframe_message" style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Popup message</label>
+						<textarea id="simply_wireframe_message" name="simply_wireframe_message" rows="3" style="width:100%; font-size:13px; padding:8px; border:1px solid #ccc; border-radius:4px; resize:vertical;"><?php echo esc_textarea( $wf_saved ); ?></textarea>
+						<p style="font-size:11px; color:#aaa; margin:4px 0 10px;">Leave blank to use the default message.</p>
+						<input type="submit" class="button button-secondary" value="Save Message" style="font-size:12px;">
+					</form>
 				</div>
 
 				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
