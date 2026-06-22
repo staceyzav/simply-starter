@@ -1890,19 +1890,19 @@ p.entry-meta {
 	--client-bg:              var(--wp--preset--color--base,     #ffffff);
 	--client-text:            var(--wp--preset--color--contrast, #374151);
 	--client-heading:         var(--wp--preset--color--contrast, #111827);
-	--client-link:            var(--wp--preset--color--primary,  #2563eb);
-	--client-link-hover:      var(--wp--preset--color--primary,  #1d4ed8);
+	/* Accent / buttons sitewide — set this one token to brand the whole site */
+	--client-accent:          var(--wp--preset--color--primary, #2563eb);
+	--client-accent-text:     #ffffff;
+	--client-accent-hover:    var(--wp--preset--color--primary, #1d4ed8);
+
+	--client-link:            var(--client-accent, #2563eb);
+	--client-link-hover:      var(--client-accent-hover, #1d4ed8);
 
 	/* Navigation */
 	--client-nav-bg:             #111827;
 	--client-nav-text:           #ffffff;
-	--client-nav-highlight:      var(--wp--preset--color--primary, #2563eb);
+	--client-nav-highlight:      var(--client-accent, #2563eb);
 	--client-nav-highlight-text: #ffffff;
-
-	/* Accent / buttons sitewide */
-	--client-accent:          var(--wp--preset--color--primary, #2563eb);
-	--client-accent-text:     #ffffff;
-	--client-accent-hover:    var(--wp--preset--color--primary, #1d4ed8);
 
 	/* Fonts — WP global styles first, system UI fallback, no web requests */
 	--client-font-display:    var(--wp--preset--font-family--heading, system-ui, -apple-system, 'Segoe UI', sans-serif);
@@ -1913,25 +1913,25 @@ p.entry-meta {
 	--client-section-dark-bg:        #111827;
 	--client-section-dark-text:      #f9fafb;
 	--client-section-dark-heading:   #ffffff;
-	--client-section-dark-highlight: #2563eb;
+	--client-section-dark-highlight: var(--client-accent, #2563eb);
 
 	/* Section — Light (very light gray, clean) */
 	--client-section-light-bg:        #f9fafb;
 	--client-section-light-text:      #374151;
 	--client-section-light-heading:   #111827;
-	--client-section-light-highlight: #2563eb;
+	--client-section-light-highlight: var(--client-accent, #2563eb);
 
 	/* Section — Brand 1 (accent color as section) */
-	--client-section-brand1-bg:         #2563eb;
-	--client-section-brand1-text:       #ffffff;
-	--client-section-brand1-heading:    #ffffff;
-	--client-section-brand1-highlight:  #ffffff;
+	--client-section-brand1-bg:        var(--client-accent, #2563eb);
+	--client-section-brand1-text:      #ffffff;
+	--client-section-brand1-heading:   #ffffff;
+	--client-section-brand1-highlight: #ffffff;
 
 	/* Section — Brand 2 (deep complementary) */
-	--client-section-brand2-bg:         #0f2444;
-	--client-section-brand2-text:       #e0eaff;
-	--client-section-brand2-heading:    #ffffff;
-	--client-section-brand2-highlight:  #60a5fa;
+	--client-section-brand2-bg:        #0f2444;
+	--client-section-brand2-text:      #e0eaff;
+	--client-section-brand2-heading:   #ffffff;
+	--client-section-brand2-highlight: var(--client-accent, #60a5fa);
 }
 
 
