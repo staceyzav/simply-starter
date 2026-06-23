@@ -4150,3 +4150,13 @@ input[type="submit"]:hover,
 	text-transform: uppercase;
 	line-height: 1.2;
 }
+
+
+/* ==========================================================================
+   BLOCK OVERRIDES
+   Neutralize WP/Genesis default block styles that interfere with layouts.
+   ========================================================================== */
+
+.wp-block-image {
+	margin: 0;
+}
