@@ -1592,6 +1592,72 @@ add_filter( 'genesis_post_meta', function( $meta ) {
 
 
 // ==========================================================================
+// DUPLICATE POST / PAGE
+// Adds a "Duplicate" row action in the admin list. Creates a draft copy
+// with all meta and taxonomy terms. Works on posts and pages.
+// ==========================================================================
+
+add_filter( 'post_row_actions', 'simply_duplicate_row_action', 10, 2 );
+add_filter( 'page_row_actions', 'simply_duplicate_row_action', 10, 2 );
+
+function simply_duplicate_row_action( $actions, $post ) {
+	if ( ! current_user_can( 'edit_posts' ) ) return $actions;
+	$url = wp_nonce_url(
+		admin_url( 'admin.php?action=simply_duplicate&post=' . $post->ID ),
+		'simply_duplicate_' . $post->ID
+	);
+	$actions['duplicate'] = '<a href="' . esc_url( $url ) . '">Duplicate</a>';
+	return $actions;
+}
+
+add_action( 'admin_action_simply_duplicate', 'simply_duplicate_post' );
+
+function simply_duplicate_post() {
+	if ( ! isset( $_GET['post'], $_GET['_wpnonce'] ) ) wp_die( 'Missing parameters.' );
+
+	$post_id = absint( $_GET['post'] );
+
+	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'simply_duplicate_' . $post_id ) ) wp_die( 'Security check failed.' );
+
+	$post = get_post( $post_id );
+	if ( ! $post || ! current_user_can( 'edit_post', $post_id ) ) wp_die( 'Not allowed.' );
+
+	$new_id = wp_insert_post( array(
+		'post_title'   => $post->post_title . ' (Copy)',
+		'post_content' => $post->post_content,
+		'post_excerpt' => $post->post_excerpt,
+		'post_status'  => 'draft',
+		'post_type'    => $post->post_type,
+		'post_author'  => get_current_user_id(),
+		'post_parent'  => $post->post_parent,
+		'menu_order'   => $post->menu_order,
+		'post_name'    => '',
+	) );
+
+	if ( is_wp_error( $new_id ) ) wp_die( 'Could not create duplicate.' );
+
+	// Copy all meta
+	foreach ( get_post_meta( $post_id ) as $key => $values ) {
+		if ( in_array( $key, array( '_edit_lock', '_edit_last' ), true ) ) continue;
+		foreach ( $values as $value ) {
+			add_post_meta( $new_id, $key, maybe_unserialize( $value ) );
+		}
+	}
+
+	// Copy taxonomy terms
+	foreach ( get_object_taxonomies( $post->post_type ) as $taxonomy ) {
+		$terms = wp_get_object_terms( $post_id, $taxonomy, array( 'fields' => 'ids' ) );
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			wp_set_object_terms( $new_id, $terms, $taxonomy );
+		}
+	}
+
+	wp_redirect( admin_url( 'post.php?action=edit&post=' . $new_id ) );
+	exit;
+}
+
+
+// ==========================================================================
 // STYLE GUIDE PAGE
 // Created automatically on theme activation. Skipped if already exists.
 // ==========================================================================
