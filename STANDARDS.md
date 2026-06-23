@@ -305,6 +305,55 @@ Each logo CPT entry supports: featured image, link URL (`_logo_url`), boost flag
 
 ---
 
+## Simply Podcasts Plugin
+
+**Shortcode:** `[simply_podcasts]`
+**CPT:** `simply_podcast`
+**CSS handle:** `simply-podcasts`
+**Path:** `wp-content/plugins/simply-podcasts/`
+
+RSS-synced podcast CPT. Pulls episodes from any podcast RSS feed (Buzzsprout, Libsyn, etc.) into WP. Displays as a responsive card grid with inline audio player, optional season filter buttons, and a full-description popup.
+
+**Setup:** Settings → Simply Podcasts → paste RSS feed URL → Save → WP Admin → Podcast → Sync Podcasts Now.
+
+### Shortcode Attributes
+```
+[simply_podcasts
+  columns="3"    — cards per row 1–4 (default: 3)
+  limit="10"     — max episodes (ignored when filters="1") (default: 10)
+  order="DESC"   — DESC = newest first, ASC = oldest first (default: DESC)
+  season="2"     — show only this season number (default: all)
+  filters="1"    — enables season filter buttons + full-description popup (default: off)
+]
+```
+
+### Meta Keys
+| Key | Contents |
+|-----|----------|
+| `_podcast_guid` | RSS GUID — dedup key for sync |
+| `_podcast_audio_url` | MP3/audio file URL |
+| `_podcast_duration` | Duration in seconds |
+| `_podcast_episode` | Episode number |
+| `_podcast_season` | Season number |
+| `_podcast_art_url` | Episode artwork URL (external OK — Buzzsprout `?.jpg` URLs display fine) |
+
+### Tokens
+`--client-accent` (badge + filter buttons), `--client-heading` (title), `--client-font-display` (title font), `--client-text` (body), `--client-radius` (cards + buttons + popup)
+
+### CSS Classes
+Card: `.sp-podcast-card`, `.sp-podcast-card__art`, `.sp-podcast-card__ep`, `.sp-podcast-card__title`, `.sp-podcast-card__desc`, `.sp-podcast-card__player`, `.sp-podcast-card__more`
+Filters: `.sp-podcast-filters`, `.sp-podcast-filter`, `.sp-podcast-filter.is-active`
+Popup: `.sp-podcast-popup`, `.sp-podcast-popup__art`, `.sp-podcast-popup__title`, `.sp-podcast-popup__desc`, `.sp-podcast-overlay`
+
+### Developer Notes
+- Podcast GUID dedup excludes trash — empty trash before re-syncing after deletes
+- `filters="1"` loads all episodes so filter counts are always accurate
+- Popup data stored as base64-encoded JSON in `data-podcast` attribute
+- Feed URL in `sp_podcast_feed_url` wp_option; cron hook `sp_podcast_cron` (daily)
+- GitHub: `staceyzav/simply-podcasts` (public)
+
+---
+
 ## Simply Evite Plugin
 
 **Shortcode:** `[simply_evite]`
