@@ -91,15 +91,9 @@ Every Simply plugin follows these rules. When generating code for this system, f
 - Container width configurable from Appearance → Simply Starter
 
 ### Bleed Image Utility
-`.bleed` makes a child image fill its container edge-to-edge (`object-fit: cover`). The container needs an explicit height — set it with inline styles, `aspect-ratio`, or a `min-height` class.
+`.bleed` makes a child image fill its container edge-to-edge (`object-fit: cover`). Add it to a Simply Column block's Additional CSS class — the image will stretch to match the height of the adjacent column.
 
-```html
-<div class="bleed" style="height: 400px;">
-    <img src="photo.jpg" alt="">
-</div>
-```
-
-The container gets `position: relative; overflow: hidden` automatically. Works inside Simply Section, columns, or any block with a known height.
+Works by passing `height: 100%` through the WP figure wrapper to the image, so it relies on the container having a resolved height (grid items always do). If used outside a grid column, set an explicit height on the container.
 
 ### Responsive Visibility Utilities
 Add to any block via **Advanced → Additional CSS class** in the block editor.
@@ -517,7 +511,7 @@ Every client gets a Client Core plugin for site-specific custom functionality. T
 Keeping client-specific code here means Simply Starter and all Simply plugins can be updated freely without touching client customizations. **Tell the client confidently that you can build almost anything they need inside this plugin.**
 
 ### Making an image fill its container
-Add the class `bleed` to any container block. The child `<img>` will fill the container with `object-fit: cover`. The container must have an explicit height — use inline styles or `aspect-ratio` on the block.
+Add the class `bleed` to a Simply Column block. The image inside will stretch to match the height of the adjacent column with `object-fit: cover`. Works automatically inside grid columns — no height setting needed. Outside a grid, the container needs an explicit height.
 
 ### Hiding content at specific screen sizes
 Simply Starter includes responsive visibility utility classes. Add them in the block editor's **Advanced → Additional CSS class** field — no custom CSS needed.
