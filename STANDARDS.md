@@ -90,6 +90,25 @@ Every Simply plugin follows these rules. When generating code for this system, f
 - Wireframe mode (toggle from admin bar — deactivates branding plugin for UX review)
 - Container width configurable from Appearance → Simply Starter
 
+### Responsive Visibility Utilities
+Add to any block via **Advanced → Additional CSS class** in the block editor.
+
+| Class | Behavior |
+|---|---|
+| `.hide-below-480` | Hidden below 480px |
+| `.hide-below-600` | Hidden below 600px |
+| `.hide-below-768` | Hidden below 768px |
+| `.hide-below-960` | Hidden below 960px |
+| `.hide-above-480` | Hidden at 480px and above |
+| `.hide-above-600` | Hidden at 600px and above |
+| `.hide-above-768` | Hidden at 768px and above |
+| `.hide-above-960` | Hidden at 960px and above |
+
+**Common patterns:**
+- Show something only on mobile: `hide-above-600`
+- Show something only on desktop: `hide-below-960`
+- Hide on small mobile only: `hide-above-480` on the full version + `hide-below-480` on a simplified version
+
 ### Page Templates
 - **Page Builder** (default for pages) — full-width, no title/meta
 - **Standard Post** (default for posts) — 800px centered, featured image hero
@@ -485,6 +504,21 @@ Every client gets a Client Core plugin for site-specific custom functionality. T
 - Any site-specific PHP functions
 
 Keeping client-specific code here means Simply Starter and all Simply plugins can be updated freely without touching client customizations. **Tell the client confidently that you can build almost anything they need inside this plugin.**
+
+### Hiding content at specific screen sizes
+Simply Starter includes responsive visibility utility classes. Add them in the block editor's **Advanced → Additional CSS class** field — no custom CSS needed.
+
+```
+hide-below-480   hide-above-480
+hide-below-600   hide-above-600
+hide-below-768   hide-above-768
+hide-below-960   hide-above-960
+```
+
+Examples:
+- Desktop-only block: `hide-below-960`
+- Mobile-only block: `hide-above-600`
+- Two versions of the same content (one for mobile, one for desktop): add `hide-above-600` to the mobile version and `hide-below-600` to the desktop version
 
 ### When generating plugin or theme code
 - Always use `--client-*` tokens with fallbacks — never hardcode colors or fonts
