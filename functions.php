@@ -1534,6 +1534,57 @@ add_filter( 'genesis_post_info', function( $info ) {
 	return str_replace( '[post_author_posts_link]', '[post_author]', $info );
 } );
 
+// Per-post: hide date when _simply_hide_date meta is set
+add_filter( 'genesis_post_info', function( $info ) {
+	if ( get_post_meta( get_the_ID(), '_simply_hide_date', true ) ) {
+		$info = preg_replace( '/\[post_date[^\]]*\]/', '', $info );
+		$info = trim( preg_replace( '/\s{2,}/', ' ', $info ) );
+	}
+	return $info;
+} );
+
+
+// ==========================================================================
+// POST OPTIONS META BOX — per-post display toggles
+// ==========================================================================
+
+add_action( 'add_meta_boxes', function () {
+	add_meta_box(
+		'simply_post_options',
+		__( 'Post Display Options', 'simply-starter' ),
+		'simply_post_options_cb',
+		'post',
+		'side',
+		'default'
+	);
+} );
+
+function simply_post_options_cb( $post ) {
+	wp_nonce_field( 'simply_post_options', 'simply_post_options_nonce' );
+	$hide_date = get_post_meta( $post->ID, '_simply_hide_date', true );
+	?>
+	<label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+		<input type="checkbox" name="simply_hide_date" value="1" <?php checked( $hide_date, '1' ); ?>>
+		<?php esc_html_e( 'Hide date on front end', 'simply-starter' ); ?>
+	</label>
+	<?php
+}
+
+add_action( 'save_post_post', function ( $post_id ) {
+	if (
+		! isset( $_POST['simply_post_options_nonce'] ) ||
+		! wp_verify_nonce( $_POST['simply_post_options_nonce'], 'simply_post_options' ) ||
+		( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ||
+		! current_user_can( 'edit_post', $post_id )
+	) return;
+
+	if ( ! empty( $_POST['simply_hide_date'] ) ) {
+		update_post_meta( $post_id, '_simply_hide_date', '1' );
+	} else {
+		delete_post_meta( $post_id, '_simply_hide_date' );
+	}
+} );
+
 // Remove "Filed Under" categories from post footer meta
 add_filter( 'genesis_post_meta', function( $meta ) {
 	return str_replace( '[post_categories]', '', trim( $meta ) );
