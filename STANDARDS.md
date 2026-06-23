@@ -122,6 +122,10 @@ Colors are set by the `--client-section-*` tokens. Section color is inherited by
 
 **Background options:** solid color, image (via block settings), video (YouTube or self-hosted)
 
+**Hero sections** (`.is-home-hero`, `.is-page-hero`) — both get the `hero` class automatically. When a hero section contains two buttons, the first is outlined automatically via `box-shadow: inset` using `--client-section-dark-bg`. No extra configuration needed.
+
+**Mobile padding override** — in the Layout panel, toggle "Override padding on mobile" to reveal top/bottom padding sliders that only apply at `max-width: 767px`. Outputs a scoped `<style>` tag per block instance — no CSS cascade issues, no `!important` needed. Use this instead of fighting block editor inline styles from the theme/branded CSS.
+
 ### Simply Container
 Inner content container. Controls max-width and padding.
 
@@ -249,6 +253,31 @@ For photo-only radius on Simply News cards (open-card design, no ss-card shell):
 ```css
 :root { --sn-radius: 8px; }
 ```
+
+---
+
+## Simply Logo Slider Plugin
+
+**Shortcode:** `[simply_logos]`
+**CSS handle:** `simply-logo-slider`
+
+Auto-scrolling logo strip. Grayscale by default, full color on hover, pauses on hover. Only animates when logos exceed container width.
+
+### Shortcode Attributes
+```
+[simply_logos
+  height="60"     — logo height in px (default: 60)
+  speed="30"      — scroll duration in seconds — lower = faster (default: 30)
+  gap="80"        — space between logos in px (default: 80)
+  limit="-1"      — max logos to show, -1 for all (default: -1)
+  order="ASC"     — sort order by menu_order: ASC or DESC (default: ASC)
+  static="1"      — static mode: no animation, full color, no repeat (default: off)
+]
+```
+
+**Static mode** — use `static="1"` for footer logo bars, partner grids, or anywhere logos should display without scrolling. Logos appear full color at rest (opacity 0.8 on hover). Combines cleanly with the footer-bottom-bar widget. Example: `[simply_logos static="1" height="120" gap="1"]`
+
+Each logo CPT entry supports: featured image, link URL (`_logo_url`), boost flag (`_logo_boost` — makes that logo 30% taller). Links open in new tab automatically when URL is set.
 
 ---
 
