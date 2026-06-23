@@ -400,6 +400,104 @@ Use the **Landing** page template in Simply Starter — hides nav, utility bar, 
 
 ---
 
+## Simply Reviews Plugin
+
+**Shortcode:** `[simply_reviews]`
+**CPT:** `simply_review`
+**CSS handle:** `simply-reviews`
+**Path:** `wp-content/plugins/simply-reviews/`
+
+Curated testimonial slider. Hand-picked reviews entered manually — not a live feed. Pairs with Trustindex (raw Google/Yelp feed) if both are needed; they serve different purposes.
+
+### Shortcode Attributes
+```
+[simply_reviews
+  limit="-1"       — number of reviews, -1 for all (default: -1)
+  show_name="1"    — show reviewer name (default: 1)
+  show_source="0"  — show source icon (Google/Yelp/etc.) (default: 0)
+  show_date="0"    — show review date (default: 0)
+  min_stars="1"    — minimum star rating to show (default: 1)
+  source=""        — filter by source slug (default: all)
+  category=""      — filter by sr_category slug (default: all)
+  autoplay="0"     — seconds between auto-advance, 0 = off (default: 0)
+]
+```
+
+### CPT Fields
+| Field | Source / Meta key |
+|-------|------------------|
+| Reviewer name | post title |
+| Review text | post content |
+| Star rating | `_sr_rating` (1–5) |
+| Source | `_sr_source` (google/yelp/tripadvisor/facebook/direct) |
+| Date | `_sr_date` (text field) |
+
+Taxonomy: `sr_category` — group reviews for filtered display.
+Order: drag to reorder via WP menu_order.
+
+### Tokens
+`--client-accent` (stars), `--client-heading` (review text), `--client-dark` (dots), `--client-font-display`, `--client-font-primary`
+
+### CSS Classes
+`.sr-slider`, `.sr-slide`, `.sr-quote`, `.sr-stars`, `.sr-name`, `.sr-source`, `.sr-dots`, `.sr-dot.is-active`
+
+---
+
+## Simply FAQs Plugin
+
+**Shortcode:** `[simply_faqs]`
+**CPT:** `simply_faq`
+**CSS handle:** `simply-faqs`
+**Path:** `wp-content/plugins/simply-faqs/`
+
+Accordion FAQ with category taxonomy. Auto-detects category from the current page's assigned term — assign a `simply_faq_cat` term to the page instead of hardcoding in the shortcode.
+
+### Shortcode Attributes
+```
+[simply_faqs
+  category=""   — filter by simply_faq_cat slug (default: auto-detects from page term, then all)
+  limit="-1"    — max FAQs, -1 for all (default: from Settings)
+]
+```
+
+### CPT Fields
+- Question → post title
+- Answer → post content (full WP editor)
+- Taxonomy: `simply_faq_cat`
+- Order: WP menu_order (drag to reorder)
+
+### Tokens
+`--client-accent` (border + icon + open state), `--client-accent-text` (open header text), `--client-font-primary`
+
+### CSS Classes
+`.sf-faqs`, `.sf-item`, `.sf-item.is-open`, `.sf-item__question`, `.sf-item__icon`, `.sf-item__answer`
+
+---
+
+## Simply Utility Bar Plugin
+
+**No shortcode** — outputs automatically when activated
+**CSS handle:** `simply-utility-bar`
+**Path:** `wp-content/plugins/simply-utility-bar/`
+
+Sticky bar above the main nav. Hides on scroll-down, reappears on scroll-up. Content managed via WP menu assigned to "Utility Bar" location. Configured via Settings → Utility Bar.
+
+### Settings
+`simply_utility_bar_enabled` (on/off), `simply_utility_bar_bg_color`, `simply_utility_bar_text_color`, `simply_utility_bar_height` (default 40px), `simply_utility_bar_scroll_threshold` (default 20px)
+
+Leave bg/text color blank to inherit `--client-nav-bg` / `--client-nav-text` tokens automatically.
+
+### Body class
+`.has-utility-bar` is added to `<body>` when active — theme uses this to offset the fixed header:
+```css
+.has-utility-bar .site-header { top: 40px; }
+```
+
+### CSS Classes
+`.simply-utility-bar`, `.simply-utility-bar__inner`, `.simply-utility-bar.is-hidden`
+
+---
+
 ## Client Core Plugin
 
 **Purpose:** Client-specific custom functionality. One plugin per client/site. AI-built.
