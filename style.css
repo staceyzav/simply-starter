@@ -4180,10 +4180,12 @@ input[type="submit"]:hover,
 	overflow: hidden;
 }
 
-.bleed figure,
-.bleed .wp-block-image {
+.bleed .wp-block-image,
+.bleed figure {
 	height: 100%;
+	width: 100%;
 	margin: 0;
+	float: none;
 }
 
 .bleed img {
