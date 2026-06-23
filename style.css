@@ -4159,5 +4159,5 @@ input[type="submit"]:hover,
 
 .wp-block-image .alignleft,
 .wp-block-image .alignright {
-	margin: 0;
+	margin: 0 !important;
 }
