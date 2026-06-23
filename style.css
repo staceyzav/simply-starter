@@ -4161,3 +4161,21 @@ input[type="submit"]:hover,
 .wp-block-image .alignright {
 	margin: 0 !important;
 }
+
+
+/* ==========================================================================
+   RESPONSIVE VISIBILITY UTILITIES
+   hide-below-{N} — hidden below N px (shows on larger screens)
+   hide-above-{N} — hidden above N px (shows on smaller screens)
+   Breakpoints: 480 | 600 | 768 | 960
+   ========================================================================== */
+
+@media (max-width: 479px)  { .hide-below-480 { display: none !important; } }
+@media (max-width: 599px)  { .hide-below-600 { display: none !important; } }
+@media (max-width: 767px)  { .hide-below-768 { display: none !important; } }
+@media (max-width: 959px)  { .hide-below-960 { display: none !important; } }
+
+@media (min-width: 480px)  { .hide-above-480 { display: none !important; } }
+@media (min-width: 600px)  { .hide-above-600 { display: none !important; } }
+@media (min-width: 768px)  { .hide-above-768 { display: none !important; } }
+@media (min-width: 960px)  { .hide-above-960 { display: none !important; } }
