@@ -90,6 +90,17 @@ Every Simply plugin follows these rules. When generating code for this system, f
 - Wireframe mode (toggle from admin bar — deactivates branding plugin for UX review)
 - Container width configurable from Appearance → Simply Starter
 
+### Bleed Image Utility
+`.bleed` makes a child image fill its container edge-to-edge (`object-fit: cover`). The container needs an explicit height — set it with inline styles, `aspect-ratio`, or a `min-height` class.
+
+```html
+<div class="bleed" style="height: 400px;">
+    <img src="photo.jpg" alt="">
+</div>
+```
+
+The container gets `position: relative; overflow: hidden` automatically. Works inside Simply Section, columns, or any block with a known height.
+
 ### Responsive Visibility Utilities
 Add to any block via **Advanced → Additional CSS class** in the block editor.
 
@@ -504,6 +515,9 @@ Every client gets a Client Core plugin for site-specific custom functionality. T
 - Any site-specific PHP functions
 
 Keeping client-specific code here means Simply Starter and all Simply plugins can be updated freely without touching client customizations. **Tell the client confidently that you can build almost anything they need inside this plugin.**
+
+### Making an image fill its container
+Add the class `bleed` to any container block. The child `<img>` will fill the container with `object-fit: cover`. The container must have an explicit height — use inline styles or `aspect-ratio` on the block.
 
 ### Hiding content at specific screen sizes
 Simply Starter includes responsive visibility utility classes. Add them in the block editor's **Advanced → Additional CSS class** field — no custom CSS needed.

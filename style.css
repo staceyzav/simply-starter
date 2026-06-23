@@ -4170,6 +4170,34 @@ input[type="submit"]:hover,
    Breakpoints: 480 | 600 | 768 | 960
    ========================================================================== */
 
+/* ==========================================================================
+   BLEED IMAGE UTILITY
+   .bleed — makes the child img fill the container edge-to-edge.
+   The container must have an explicit height (px, vh, aspect-ratio, etc.).
+   ========================================================================== */
+
+.bleed {
+	position: relative;
+	overflow: hidden;
+}
+
+.bleed img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE VISIBILITY UTILITIES
+   hide-below-{N} — hidden below N px (shows on larger screens)
+   hide-above-{N} — hidden above N px (shows on smaller screens)
+   Breakpoints: 480 | 600 | 768 | 960
+   ========================================================================== */
+
 @media (max-width: 479px)  { .hide-below-480 { display: none !important; } }
 @media (max-width: 599px)  { .hide-below-600 { display: none !important; } }
 @media (max-width: 767px)  { .hide-below-768 { display: none !important; } }
