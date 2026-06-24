@@ -7,6 +7,28 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function simply_style_guide_content() {
 	return '
+<!-- wp:simply-blocks/section {"sectionColor":"is-home-hero","paddingTop":160,"paddingBottom":160} -->
+
+<!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Hero Headline Goes Here</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"ss-script"} -->
+<p class="ss-script">A script tagline sits right here beneath the headline.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Primary Button</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline"} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button">Outline Button</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- /wp:simply-blocks/section -->
+
 <!-- wp:simply-blocks/section -->
 
 <!-- wp:paragraph -->

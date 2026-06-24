@@ -2228,6 +2228,11 @@ p {
 	font-weight: 400;
 }
 
+.ss-script {
+	font-family: var(--client-font-script, cursive);
+	font-weight: normal;
+}
+
 .ss-eyebrow,
 .wp-block-heading.is-style-eyebrow {
 	font-family: var(--client-font-display);

@@ -669,6 +669,8 @@ function simply_save_settings() {
 		update_option( 'simply_wireframe_message', sanitize_textarea_field( wp_unslash( $_POST['simply_wireframe_message'] ) ) );
 	}
 
+	update_option( 'simply_resize_uploads', isset( $_POST['simply_resize_uploads'] ) ? '1' : '0' );
+
 	wp_safe_redirect( add_query_arg( array(
 		'page'  => 'simply-starter-welcome',
 		'saved' => '1',
@@ -817,6 +819,20 @@ function simply_welcome_page_output() {
 					</table>
 				</div>
 
+				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px; margin-bottom:24px;">
+					<h2 style="margin-top:0; font-size:16px;">🖼️ Image Upload Size</h2>
+					<p style="font-size:13px; color:#555; margin:0 0 12px;">When enabled, uploaded photos are automatically resized to a maximum of 1920px on their longest side. The resized version becomes the full-size original — large originals are never saved, keeping your media library lean.</p>
+					<form method="post">
+						<?php wp_nonce_field( 'simply_save_settings', 'simply_settings_nonce' ); ?>
+						<label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; cursor:pointer;">
+							<input type="checkbox" name="simply_resize_uploads" value="1" <?php checked( get_option( 'simply_resize_uploads', '1' ), '1' ); ?> style="width:16px; height:16px;">
+							Resize uploads to 1920px max
+						</label>
+						<p style="font-size:11px; color:#aaa; margin:6px 0 10px;">Applies to JPG, PNG, and WebP. GIFs and SVGs are never resized.</p>
+						<input type="submit" class="button button-secondary" value="Save" style="font-size:12px;">
+					</form>
+				</div>
+
 				<div style="background:#fff; border:1px solid #e2e2e2; border-radius:6px; padding:24px;">
 					<h2 style="margin-top:0; font-size:16px;">📋 Tips</h2>
 					<ul style="line-height:2; color:#444; margin:0; padding-left:20px; font-size:13px;">
@@ -837,6 +853,37 @@ function simply_welcome_page_output() {
 
 	</div>
 	<?php
+}
+
+
+// ==========================================================================
+// IMAGE UPLOAD RESIZE
+// Resizes uploaded images to 1920px max on longest side before WP processes
+// them, so the "full" size is always 1920px. Toggle in Appearance → Simply Starter.
+// ==========================================================================
+
+add_filter( 'wp_handle_upload', 'simply_resize_on_upload' );
+
+function simply_resize_on_upload( $upload ) {
+	if ( get_option( 'simply_resize_uploads', '1' ) !== '1' ) return $upload;
+
+	$type = $upload['type'] ?? '';
+	if ( strpos( $type, 'image/' ) !== 0 )       return $upload;
+	if ( in_array( $type, [ 'image/gif', 'image/svg+xml' ], true ) ) return $upload;
+
+	$file   = $upload['file'];
+	$editor = wp_get_image_editor( $file );
+	if ( is_wp_error( $editor ) ) return $upload;
+
+	$size = $editor->get_size();
+	$max  = 1920;
+	if ( $size['width'] <= $max && $size['height'] <= $max ) return $upload;
+
+	$editor->resize( $max, $max, false );
+	$editor->set_quality( 85 );
+	$editor->save( $file );
+
+	return $upload;
 }
 
 
