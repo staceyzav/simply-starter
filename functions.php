@@ -979,6 +979,15 @@ function simply_plugin_registry() {
 			'source'      => 'github',
 			'tier'        => 'free',
 		],
+		[
+			'name'        => 'Simply Pop-Up',
+			'slug'        => 'simply-popup',
+			'file'        => 'simply-popup/simply-popup.php',
+			'description' => 'Lightweight popup with image, CTA, expiration, and layout options. Auto-injects on every page.',
+			'github'      => 'staceyzav/simply-popup',
+			'source'      => 'github',
+			'tier'        => 'free',
+		],
 	];
 }
 
