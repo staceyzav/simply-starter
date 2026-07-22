@@ -2717,6 +2717,11 @@ input[type="submit"]:hover,
 
 @media (max-width: 767px) {
 
+	.simply-section__inner {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+
 	.simply-section.hero .wp-block-button__link,
 	.simply-section.hero .ss-btn {
 		font-size: 12px !important;
