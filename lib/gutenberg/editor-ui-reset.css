@@ -1,0 +1,29 @@
+/*
+ * Editor UI Reset
+ * Loaded after style.css via add_editor_style() so it wins the cascade.
+ * Resets the theme's generic `button` rule (which applies --client-accent)
+ * back to browser defaults for Gutenberg's own editor UI buttons.
+ * Content buttons (.ss-btn, .wp-block-button__link) are unaffected — they
+ * carry their own class selectors with equal or higher specificity.
+ */
+
+.components-button,
+.block-editor-button-block-appender,
+.block-list-appender button,
+.block-editor-inserter__toggle,
+.block-editor-block-mover__control,
+.block-editor-block-toolbar button,
+.block-editor-writing-flow button:not(.ss-btn):not(.wp-block-button__link) {
+	background-color: unset;
+	font-family: unset;
+	font-size: unset;
+	font-weight: unset;
+	letter-spacing: unset;
+	text-transform: unset;
+	padding: unset;
+	color: unset;
+	border: unset;
+	border-radius: unset;
+	transform: unset;
+	transition: unset;
+}
