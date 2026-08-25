@@ -3013,12 +3013,13 @@ input[type="submit"]:hover,
 		align-items: flex-start !important;
 		margin: 0 !important;
 		border: none !important;
-		box-shadow: 4px 0 20px rgba(0,0,0,0.4) !important;
+		box-shadow: none !important;
 	}
 
 	/* Slide in when body has mobile-menu-open */
 	.mobile-menu-open .nav-primary .genesis-nav-menu {
 		transform: translateX(0) !important;
+		box-shadow: 4px 0 20px rgba(0,0,0,0.4) !important;
 	}
 
 }
@@ -3061,6 +3062,7 @@ input[type="submit"]:hover,
 /* Override Genesis footer widget columns for 4-up layout */
 .footer-widgets .wrap {
 	display: flex;
+	flex-wrap: wrap;
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
@@ -3142,8 +3144,9 @@ input[type="submit"]:hover,
 	.footer-widgets-2,
 	.footer-widgets-3,
 	.footer-widgets-4 {
-		width: 100% !important;
+		flex: 0 0 100% !important;
 		margin-bottom: 32px;
+		padding-left: 0 !important;
 	}
 }
 
@@ -3152,8 +3155,12 @@ input[type="submit"]:hover,
 	.footer-widgets-2,
 	.footer-widgets-3,
 	.footer-widgets-4 {
-		width: 50% !important;
+		flex: 0 0 50% !important;
 		margin-bottom: 32px;
+	}
+	.footer-widgets .footer-widgets-1,
+	.footer-widgets .footer-widgets-3 {
+		padding-left: 0 !important;
 	}
 }
 
