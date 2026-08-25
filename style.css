@@ -3143,10 +3143,15 @@ input[type="submit"]:hover,
 	.footer-widgets-1,
 	.footer-widgets-2,
 	.footer-widgets-3,
-	.footer-widgets-4 {
+	.footer-widgets-4,
+	.footer-widgets .footer-widgets-1,
+	.footer-widgets .footer-widgets-2,
+	.footer-widgets .footer-widgets-3,
+	.footer-widgets .footer-widgets-4 {
 		flex: 0 0 100% !important;
 		margin-bottom: 32px;
-		padding-left: 0 !important;
+		padding-left: 20px !important;
+		padding-right: 40px !important;
 	}
 }
 
