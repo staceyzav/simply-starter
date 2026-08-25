@@ -701,7 +701,9 @@ function simply_welcome_page_output() {
 		}
 	}
 
-	$wireframe_on = get_option( 'simply_wireframe_mode', false );
+	$wireframe_on       = get_option( 'simply_wireframe_mode', false );
+	$blocks_dir         = WP_PLUGIN_DIR . '/simply-blocks';
+	$simply_blocks_ok   = is_dir( $blocks_dir ) && count( scandir( $blocks_dir ) ) > 2;
 	?>
 	<div class="wrap" style="max-width:1200px;">
 
@@ -711,6 +713,13 @@ function simply_welcome_page_output() {
 		<p style="color:#888; margin-top:0;">By <a href="https://simplydesign.com" target="_blank">Simply Design</a></p>
 
 		<hr>
+
+		<?php if ( ! $simply_blocks_ok ) : ?>
+		<div style="background:#f8d7da; border-left:4px solid #dc3545; padding:16px 20px; margin-bottom:24px; border-radius:0 4px 4px 0;">
+			<strong>🚨 Simply Blocks Missing</strong> — The <code>simply-blocks</code> plugin folder is empty or gone. This usually means Local wiped it on a site switch. Re-clone it:<br><br>
+			<code style="display:block;background:#fff;padding:8px 12px;border-radius:4px;font-size:12px;word-break:break-all;">git clone https://[token]@github.com/staceyzav/simply-blocks.git "<?php echo esc_html( WP_PLUGIN_DIR ); ?>/simply-blocks"</code>
+		</div>
+		<?php endif; ?>
 
 		<?php if ( ! $client_config_active ) : ?>
 		<div style="background:#fff3cd; border-left:4px solid #f0a500; padding:16px 20px; margin-bottom:24px; border-radius:0 4px 4px 0;">
