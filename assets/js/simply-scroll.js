@@ -27,10 +27,14 @@
 
 		if ( ! menuToggle ) return;
 
-		// Overlay — clicking it closes menu
-		var overlay = document.createElement( 'div' );
+		// Overlay — clicking it closes menu.
+		// Appended to site-header (not body) so both overlay and menu panel share
+		// the same stacking context — guarantees menu panel (z-index 9999) is
+		// always above overlay (z-index 9990) regardless of outer page z-indices.
+		var overlay    = document.createElement( 'div' );
 		overlay.className = 'ss-menu-overlay';
-		body.appendChild( overlay );
+		var siteHeader = document.querySelector( '.site-header' );
+		( siteHeader || body ).appendChild( overlay );
 
 		function openMenu() {
 			body.classList.add( 'mobile-menu-open' );
