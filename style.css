@@ -2926,7 +2926,7 @@ input[type="submit"]:hover,
 	width: 100%;
 	height: 100%;
 	background: rgba(0, 0, 0, 0.5);
-	z-index: 9998;
+	z-index: 99;
 }
 
 .mobile-menu-open .ss-menu-overlay {
@@ -2975,7 +2975,9 @@ input[type="submit"]:hover,
    Menu panel must have explicit background and be clearly visible.
    -------------------------------------------------------------------------- */
 
-/* Overlay — behind menu panel, clicking it closes menu */
+/* Overlay — behind menu panel, clicking it closes menu.
+   z-index 99 keeps it below site-header (9999) which creates
+   a stacking context containing the menu panel. */
 .ss-menu-overlay {
 	display: none;
 	position: fixed;
@@ -2984,7 +2986,7 @@ input[type="submit"]:hover,
 	width: 100%;
 	height: 100%;
 	background: rgba(0, 0, 0, 0.55);
-	z-index: 9990; /* below menu panel at 9999 */
+	z-index: 99;
 	cursor: pointer;
 }
 
