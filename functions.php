@@ -337,6 +337,22 @@ function simply_enqueue_lightbox() {
 	);
 }
 
+add_action( 'wp_head', 'simply_lightbox_css', 20 );
+
+function simply_lightbox_css() {
+	echo '<style id="simply-lightbox-css">
+.simply-lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:99999;display:flex;align-items:center;justify-content:center;}
+.simply-lightbox[hidden]{display:none;}
+.simply-lightbox__img{max-width:90vw;max-height:88vh;object-fit:contain;display:block;border-radius:3px;}
+.simply-lightbox__close,.simply-lightbox__prev,.simply-lightbox__next{position:fixed;background:transparent;border:none;color:#fff;cursor:pointer;line-height:1;padding:12px;z-index:100000;opacity:0.8;transition:opacity 0.2s;}
+.simply-lightbox__close:hover,.simply-lightbox__prev:hover,.simply-lightbox__next:hover{opacity:1;}
+.simply-lightbox__close{top:16px;right:20px;font-size:2.5rem;}
+.simply-lightbox__prev{left:16px;top:50%;transform:translateY(-50%);font-size:3.5rem;}
+.simply-lightbox__next{right:16px;top:50%;transform:translateY(-50%);font-size:3.5rem;}
+body.simply-lightbox-open{overflow:hidden;}
+</style>' . "\n";
+}
+
 
 
 // Hero functionality — use Simply Hero plugin (https://simplydesign.com/simply-hero)
