@@ -44,22 +44,19 @@
 		document.body.appendChild( overlay );
 
 		// ── Resolve full-size URL ──────────────────────────────────────────────
+		// WP thumbnails have size suffixes like image-300x225.jpg — strip them
+		// to reconstruct the original upload URL (image.jpg).
 
 		function getFullSrc( source ) {
-			// Prefer parent <a> href — set "Link to: Media File" in gallery block
+			// Prefer parent <a> href if available (set by "Link to: Media File")
 			var anchor = source.closest( 'a' );
-			if ( anchor && anchor.href ) return anchor.href;
-
-			// Fall back to largest srcset candidate
-			if ( source.srcset ) {
-				var candidates = source.srcset.split( ',' ).map( function ( s ) {
-					var parts = s.trim().split( /\s+/ );
-					return { url: parts[0], w: parseInt( parts[1] ) || 0 };
-				} );
-				candidates.sort( function ( a, b ) { return b.w - a.w; } );
-				if ( candidates[0] && candidates[0].url ) return candidates[0].url;
+			if ( anchor && anchor.href && ! anchor.href.match( /attachment/ ) ) {
+				return anchor.href;
 			}
-			return source.src;
+
+			// Strip WP size suffix from src to get original
+			var original = source.src.replace( /-\d+x\d+(\.[^.?]+)/, '$1' );
+			return original;
 		}
 
 		// ── State ─────────────────────────────────────────────────────────────
