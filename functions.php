@@ -332,7 +332,7 @@ function simply_enqueue_lightbox() {
 		'simply-lightbox',
 		get_stylesheet_directory_uri() . '/assets/js/simply-lightbox.js',
 		array(),
-		'1.0.0',
+		'1.0.2',
 		true     // load in footer
 	);
 }
