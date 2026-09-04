@@ -95,16 +95,7 @@ add_action( 'wp_enqueue_scripts', 'genesis_sample_enqueue_scripts_styles' );
  */
 function genesis_sample_enqueue_scripts_styles() {
 
-	$appearance = genesis_get_config( 'appearance' );
-
-	wp_enqueue_style( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- see https://core.trac.wordpress.org/ticket/49742
-		genesis_get_theme_handle() . '-fonts',
-		$appearance['fonts-url'],
-		[],
-		null
-	);
-
-	wp_enqueue_style( 'dashicons' );
+	// Fonts and dashicons are loaded by the client branded plugin, not the theme.
 
 	if ( genesis_is_amp() ) {
 		wp_enqueue_style(
@@ -330,6 +321,18 @@ function simply_enqueue_scroll_js() {
 		get_stylesheet_directory_uri() . '/assets/js/simply-scroll.js',
 		array(),
 		'1.8.0', // bump this version any time simply-scroll.js changes to bust cache
+		true     // load in footer
+	);
+}
+
+add_action( 'wp_enqueue_scripts', 'simply_enqueue_lightbox' );
+
+function simply_enqueue_lightbox() {
+	wp_enqueue_script(
+		'simply-lightbox',
+		get_stylesheet_directory_uri() . '/assets/js/simply-lightbox.js',
+		array(),
+		'1.0.0',
 		true     // load in footer
 	);
 }
