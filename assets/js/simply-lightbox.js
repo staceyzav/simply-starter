@@ -2,7 +2,11 @@
 	'use strict';
 
 	function initLightbox() {
-		var imgs = Array.from( document.querySelectorAll( '.wp-block-gallery .wp-block-image img' ) );
+		var imgs = Array.from( document.querySelectorAll(
+			'.wp-block-gallery .wp-block-image img, ' +
+			'.wp-block-gallery .blocks-gallery-item img, ' +
+			'.gallery .gallery-item img'
+		) );
 		if ( ! imgs.length ) return;
 
 		// ── Build overlay ──────────────────────────────────────────────────────
