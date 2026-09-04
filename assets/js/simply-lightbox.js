@@ -1,18 +1,6 @@
 ( function () {
 	'use strict';
 
-	function getLargestSrc( img ) {
-		if ( img.srcset ) {
-			var candidates = img.srcset.split( ',' ).map( function ( s ) {
-				var parts = s.trim().split( /\s+/ );
-				return { url: parts[0], w: parseInt( parts[1] ) || 0 };
-			} );
-			candidates.sort( function ( a, b ) { return b.w - a.w; } );
-			if ( candidates[0] && candidates[0].url ) return candidates[0].url;
-		}
-		return img.src;
-	}
-
 	function initLightbox() {
 		var imgs = Array.from( document.querySelectorAll( '.wp-block-gallery .wp-block-image img' ) );
 		if ( ! imgs.length ) return;
@@ -26,9 +14,9 @@
 		overlay.setAttribute( 'aria-label', 'Image viewer' );
 		overlay.hidden = true;
 
-		var img = document.createElement( 'img' );
-		img.className = 'simply-lightbox__img';
-		img.alt = '';
+		var lightboxImg = document.createElement( 'img' );
+		lightboxImg.className = 'simply-lightbox__img';
+		lightboxImg.alt = '';
 
 		var close = document.createElement( 'button' );
 		close.className = 'simply-lightbox__close';
@@ -47,9 +35,28 @@
 
 		overlay.appendChild( close );
 		overlay.appendChild( prev );
-		overlay.appendChild( img );
+		overlay.appendChild( lightboxImg );
 		overlay.appendChild( next );
 		document.body.appendChild( overlay );
+
+		// ── Resolve full-size URL ──────────────────────────────────────────────
+
+		function getFullSrc( source ) {
+			// Prefer parent <a> href — set "Link to: Media File" in gallery block
+			var anchor = source.closest( 'a' );
+			if ( anchor && anchor.href ) return anchor.href;
+
+			// Fall back to largest srcset candidate
+			if ( source.srcset ) {
+				var candidates = source.srcset.split( ',' ).map( function ( s ) {
+					var parts = s.trim().split( /\s+/ );
+					return { url: parts[0], w: parseInt( parts[1] ) || 0 };
+				} );
+				candidates.sort( function ( a, b ) { return b.w - a.w; } );
+				if ( candidates[0] && candidates[0].url ) return candidates[0].url;
+			}
+			return source.src;
+		}
 
 		// ── State ─────────────────────────────────────────────────────────────
 
@@ -58,8 +65,8 @@
 		function show( index ) {
 			current = ( index + imgs.length ) % imgs.length;
 			var source = imgs[ current ];
-			img.src = getLargestSrc( source );
-			img.alt = source.alt || '';
+			lightboxImg.src = getFullSrc( source );
+			lightboxImg.alt = source.alt || '';
 			prev.hidden = next.hidden = imgs.length < 2;
 		}
 
@@ -73,35 +80,23 @@
 		function closeLightbox() {
 			overlay.hidden = true;
 			document.body.classList.remove( 'simply-lightbox-open' );
-			imgs[ current ].focus();
 		}
 
-		// ── Make gallery images clickable — attach to <a> if present ────────
+		// ── Intercept clicks — use capture to fire before WP native handlers ──
 
 		imgs.forEach( function ( source, i ) {
 			source.style.cursor = 'zoom-in';
 
-			var anchor = source.closest( 'a' );
-			var target = anchor || source;
-
-			if ( ! anchor ) {
-				target.setAttribute( 'tabindex', '0' );
-				target.setAttribute( 'role', 'button' );
-			}
-
-			target.setAttribute( 'aria-label', ( source.alt || 'Image ' + ( i + 1 ) ) + ' — click to enlarge' );
+			// Attach in capture phase on the figure so we catch the click before
+			// WP's Interactivity API or any other handler on the anchor/image
+			var figure = source.closest( 'figure' );
+			var target = figure || source.closest( 'a' ) || source;
 
 			target.addEventListener( 'click', function ( e ) {
 				e.preventDefault();
-				e.stopPropagation();
+				e.stopImmediatePropagation();
 				open( i );
-			} );
-
-			if ( ! anchor ) {
-				target.addEventListener( 'keydown', function ( e ) {
-					if ( e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); open( i ); }
-				} );
-			}
+			}, true ); // true = capture phase
 		} );
 
 		// ── Overlay events ────────────────────────────────────────────────────
