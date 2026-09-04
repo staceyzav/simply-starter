@@ -76,18 +76,32 @@
 			imgs[ current ].focus();
 		}
 
-		// ── Make gallery images keyboard-focusable and clickable ──────────────
+		// ── Make gallery images clickable — attach to <a> if present ────────
 
 		imgs.forEach( function ( source, i ) {
 			source.style.cursor = 'zoom-in';
-			source.setAttribute( 'tabindex', '0' );
-			source.setAttribute( 'role', 'button' );
-			source.setAttribute( 'aria-label', ( source.alt || 'Image ' + ( i + 1 ) ) + ' — click to enlarge' );
 
-			source.addEventListener( 'click', function () { open( i ); } );
-			source.addEventListener( 'keydown', function ( e ) {
-				if ( e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); open( i ); }
+			var anchor = source.closest( 'a' );
+			var target = anchor || source;
+
+			if ( ! anchor ) {
+				target.setAttribute( 'tabindex', '0' );
+				target.setAttribute( 'role', 'button' );
+			}
+
+			target.setAttribute( 'aria-label', ( source.alt || 'Image ' + ( i + 1 ) ) + ' — click to enlarge' );
+
+			target.addEventListener( 'click', function ( e ) {
+				e.preventDefault();
+				e.stopPropagation();
+				open( i );
 			} );
+
+			if ( ! anchor ) {
+				target.addEventListener( 'keydown', function ( e ) {
+					if ( e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); open( i ); }
+				} );
+			}
 		} );
 
 		// ── Overlay events ────────────────────────────────────────────────────
