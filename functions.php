@@ -346,11 +346,11 @@ function simply_lightbox_css() {
 .simply-lightbox__img{max-width:90vw;max-height:88vh;object-fit:contain;display:block;border-radius:3px;}
 .simply-lightbox__close,.simply-lightbox__prev,.simply-lightbox__next{position:fixed;background:transparent!important;border:none!important;border-radius:0!important;box-shadow:none!important;color:#fff!important;cursor:pointer;line-height:1;padding:12px;z-index:100000;opacity:0.25;transition:opacity 0.3s ease;transform:none!important;}
 .simply-lightbox__close:hover,.simply-lightbox__prev:hover,.simply-lightbox__next:hover{opacity:1!important;background:transparent!important;transform:none!important;}
-.simply-lightbox__close svg{width:44px!important;height:44px!important;display:block;}
+.simply-lightbox__close svg{width:80px!important;height:80px!important;display:block;}
 .simply-lightbox__close{top:12px;right:16px;}
-.simply-lightbox__prev svg,.simply-lightbox__next svg{width:64px!important;height:64px!important;display:block;}
-.simply-lightbox__prev{left:16px;top:50%;margin-top:-44px;}
-.simply-lightbox__next{right:16px;top:50%;margin-top:-44px;}
+.simply-lightbox__prev svg,.simply-lightbox__next svg{width:140px!important;height:140px!important;display:block;}
+.simply-lightbox__prev{left:0;top:50%;margin-top:-70px;}
+.simply-lightbox__next{right:0;top:50%;margin-top:-70px;}
 body.simply-lightbox-open{overflow:hidden;}
 </style>' . "\n";
 }
