@@ -25,17 +25,17 @@
 		var close = document.createElement( 'button' );
 		close.className = 'simply-lightbox__close';
 		close.setAttribute( 'aria-label', 'Close' );
-		close.innerHTML = '&times;';
+		close.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
 		var prev = document.createElement( 'button' );
 		prev.className = 'simply-lightbox__prev';
 		prev.setAttribute( 'aria-label', 'Previous image' );
-		prev.innerHTML = '&#8249;';
+		prev.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>';
 
 		var next = document.createElement( 'button' );
 		next.className = 'simply-lightbox__next';
 		next.setAttribute( 'aria-label', 'Next image' );
-		next.innerHTML = '&#8250;';
+		next.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
 
 		overlay.appendChild( close );
 		overlay.appendChild( prev );
